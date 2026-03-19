@@ -4,6 +4,8 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-03-19
+
 ### Added
 
 - Package scaffold for MKG client services.
