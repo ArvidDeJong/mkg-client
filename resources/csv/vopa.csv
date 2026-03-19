@@ -1,0 +1,17 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+admi_num;Administratie;999;integer;;WAAR
+parm_code;Parameter code;x(20);character;;WAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_parm_eenheid;Eenheid;x(10);character;;ONWAAR
+vopa_keuzelijst;Keuzelijst;x(2500);memo;;WAAR
+vopa_parm_aanpasbaar;Parameters aanpasbaar;ja/nee;logical;;WAAR
+vopa_volgorde;Volgorde;>>>>>9;integer;;WAAR
+vopa_waarde;Waarde;x(200);Multi editor;;WAAR
+vopa_zichtbaar;Zichtbaar;ja/nee;logical;;WAAR
+vorh_num;Verkooporder;x(10);character;;WAAR
+vorr_num;Verkooporder regel;>>9;integer;;WAAR

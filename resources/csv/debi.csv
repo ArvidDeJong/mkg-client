@@ -1,0 +1,220 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+admi_num;Administratie;999;integer;;WAAR
+agtn_num;Agent;>>9;integer;;WAAR
+bank_num;Banktype;>>9;integer;;WAAR
+betc_num;Betalingsconditie;>>9;integer;;WAAR
+btkr_num;Betalingskorting;>9;integer;;WAAR
+c_debe;Grafiek betalingen;;Grafiek;;ONWAAR
+c_fctr;Grafiek factuurregels;;Grafiek;;ONWAAR
+c_offertes_orders;Grafiek offertes orders;;Grafiek;;ONWAAR
+c_opde;Grafiek open posten;;Grafiek;;ONWAAR
+c_pkbr;Grafiek pakbonregels;;Grafiek;;ONWAAR
+d_dashboard;Dashboard;;Dashboard;;ONWAAR
+debi_aantal_fact;Aantal facturen;>9;integer;;WAAR
+debi_actief;Actief;ja/nee;logical;;WAAR
+debi_adres_btw_verificatie;BTW verificatie adres;x(70);character;;WAAR
+debi_arbv;Artikel bestelcodes verkoop;X(8);verzameling;;ONWAAR
+debi_arti;Artikelen;X(8);verzameling;;ONWAAR
+debi_bankcode;Bankcode;x(10);character;;WAAR
+debi_bet_wijze;Betaalwijze;9;integer;Op rekening,1,Automatische incasso,2,Contant,3,Overig,4;WAAR
+debi_bic;BIC;x(11);character;;WAAR
+debi_blok;Blokkeren verkoop;ja/nee;logical;;WAAR
+debi_btw;BTW keuze;9;integer;Standaard,1,BTW binnenland vrijgesteld,2,BTW binnenland verlegd,3,Fiscale eenheid,4;WAAR
+debi_btw_num;BTW nummer;x(20);character;;WAAR
+debi_comm_opslag;Commerciele opslag;>9.99;percentage;;WAAR
+debi_dat_btw_verificatie;BTW verificatiedatum;99-99-9999;datum;;WAAR
+debi_dbnk;Debiteur banken;X(8);verzameling;;ONWAAR
+debi_debe;Betalingen;;verzameling;;ONWAAR
+debi_debe_fy;Betalingen boekjaar;;verzameling;;ONWAAR
+debi_debg;Debiteur budgetten;;verzameling;;ONWAAR
+debi_debi_fact;Factuurdebiteur;x(10);character;;WAAR
+debi_deelfact;Deelfacturering;9;integer;Alleen volledige order,0,Alleen volledige regel,1,Geen beperkingen,2;WAAR
+debi_deellev;Deellevering;9;integer;Alleen volledige order,0,Alleen volledige regel,1,Geen beperkingen,2;WAAR
+debi_deok;Debiteur orderkorting;;verzameling;;ONWAAR
+debi_depl;Debiteur prijslijsten;;verzameling;;ONWAAR
+debi_docs;Documenten;;Documenten;;ONWAAR
+debi_email;E-mail;x(60);e-mail;;WAAR
+debi_fact_naam;Factuurdeb naam;x(40);omschrijving;;WAAR
+debi_fact_naam_2;Factuurdeb naam 2;x(40);omschrijving;;WAAR
+debi_fcth;Facturen;;verzameling;;ONWAAR
+debi_fcth_fy;Facturen boekjaar;;verzameling;;ONWAAR
+debi_fcth_verz_type;Facturen verzamelen;9;integer;Volgens administratie instelling,0,Alles verzamelen,1,Verzamelen per pakbon,2,Verzamelen per order,3,Verzamelen per regel,4;WAAR
+debi_fctr;Factuurregels;;verzameling;;ONWAAR
+debi_fctr_fy;Factuurregels boekjaar;;verzameling;;ONWAAR
+debi_fctr_fy_min1;Factuurregels boekjaar min 1;;verzameling;;ONWAAR
+debi_fctr_fy_min2;Factuurregels boekjaar min 2;;verzameling;;ONWAAR
+debi_fctr_fy_min3;Factuurregels boekjaar min 3;;verzameling;;ONWAAR
+debi_fmut;Financiele mutaties;;verzameling;;ONWAAR
+debi_iban;IBAN;x(34);character;;WAAR
+debi_id;ID;x(40);omschrijving;;WAAR
+debi_incasso;Via incasso bureau;ja/nee;logical;;WAAR
+debi_kredietlimiet;Kredietlimiet;>>>,>>>,>>9.99;bedrag;;WAAR
+debi_kredietlimiet2;Kredietlimiet 2;>>>,>>>,>>9.99;bedrag;;WAAR
+debi_kvk_num;KvK nummer;x(20);character;;WAAR
+debi_max_regels_fact;Max aantal factuurregels;>>9;integer;;WAAR
+debi_max_regels_pakb;Max aantal pakbonregels;>>9;integer;;WAAR
+debi_memo_extern;Memo extern;x(2500);memo;;WAAR
+debi_memo_intern;Memo intern;x(2500);memo;;WAAR
+debi_memo_kredietbewaking;Memo kredietbewaking;x(2500);memo;;WAAR
+debi_naam;Bedrijfsnaam;x(40);omschrijving;;WAAR
+debi_naam_2;Bedrijfsnaam 2;x(40);omschrijving;;WAAR
+debi_naam_btw_verificatie;BTW verificatie naam;x(70);character;;WAAR
+debi_num;Debiteur;x(10);character;;WAAR
+debi_opde;Openstaande posten debiteuren;;verzameling;;ONWAAR
+debi_peppol_id;Peppol ID;X(25);character;;WAAR
+debi_pkbh;Pakbonnen;;verzameling;;ONWAAR
+debi_pkbh_fy;Pakbonnen boekjaar;;verzameling;;ONWAAR
+debi_pkbh_verz_type;Pakbonnen verzamelen;9;integer;Volgens administratie instelling,0,Alles verzamelen,1,Verzamelen per order,2,Verzamelen per regel,3;WAAR
+debi_pkbr;Pakbonregels;;verzameling;;ONWAAR
+debi_pkbr_fy;Pakbonregels boekjaar;;verzameling;;ONWAAR
+debi_plaats_bank;Plaats;x(40);omschrijving;;WAAR
+debi_pmld;Meldingen;X(8);verzameling;;ONWAAR
+debi_rekening;Rekening;x(22);character;;WAAR
+debi_scsn_id;SCSN ID;x(25);character;;WAAR
+debi_status_btw_verificatie;BTW verificatie status;9;integer;Niet gecontroleerd,0,correct gecontroleerd,1,fout gecontroleerd,2;WAAR
+debi_toon_opslagen;Opslagen zichtbaar;ja/nee;logical;;WAAR
+debi_vofh;Offertes;;verzameling;;ONWAAR
+debi_vofh_fy;Offertes boekjaar;;verzameling;;ONWAAR
+debi_vofr;Offerte regels;;verzameling;;ONWAAR
+debi_vofr_fy;Offerte regels boekjaar;;verzameling;;ONWAAR
+debi_vofr_fy_25;Offerteregels boekjaar aangeboden;X(8);verzameling;;ONWAAR
+debi_vofr_fy_30;Offerteregels boekjaar order;X(8);verzameling;;ONWAAR
+debi_vofr_fy_35;Offerteregels boekjaar gesloten;X(8);verzameling;;ONWAAR
+debi_vofr_fy_45;Offerteregels boekjaar afgewezen;X(8);verzameling;;ONWAAR
+debi_vorh;Orders;;verzameling;;ONWAAR
+debi_vorh_fy;Orders boekjaar;;verzameling;;ONWAAR
+debi_vorr;Verkooporder regels;;verzameling;;ONWAAR
+debi_vorr_fy;Verkooporder regels boekjaar;;verzameling;;ONWAAR
+debi_vorr_fy_min1;Verkooporder regels boekjaar min 1;;verzameling;;ONWAAR
+debi_vorr_fy_min2;Verkooporder regels boekjaar min 2;;verzameling;;ONWAAR
+debi_vorr_fy_min3;Verkooporder regels boekjaar min 3;;verzameling;;ONWAAR
+debi_vpaa;Debiteur prijsafspraken;;verzameling;;ONWAAR
+debi_vrij_datum_1;Vrij datum 1;99-99-9999;datum;;WAAR
+debi_vrij_datum_2;Vrij datum 2;99-99-9999;datum;;WAAR
+debi_vrij_datum_3;Vrij datum 3;99-99-9999;datum;;WAAR
+debi_vrij_datum_4;Vrij datum 4;99-99-9999;datum;;WAAR
+debi_vrij_datum_5;Vrij datum 5;99-99-9999;datum;;WAAR
+debi_vrij_memo_1;Vrij memo 1;x(2500);memo;;WAAR
+debi_vrij_memo_2;Vrij memo 2;x(2500);memo;;WAAR
+debi_vrij_memo_3;Vrij memo 3;x(2500);memo;;WAAR
+debi_vrij_memo_4;Vrij memo 4;x(2500);memo;;WAAR
+debi_vrij_memo_5;Vrij memo 5;x(2500);memo;;WAAR
+debi_vrij_veld_1;Vrij veld 1;x(40);omschrijving;;WAAR
+debi_vrij_veld_2;Vrij veld 2;x(40);omschrijving;;WAAR
+debi_vrij_veld_3;Vrij veld 3;x(40);omschrijving;;WAAR
+debi_vrij_veld_4;Vrij veld 4;x(40);omschrijving;;WAAR
+debi_vrij_veld_5;Vrij veld 5;x(40);omschrijving;;WAAR
+debi_zoeknaam;Zoeknaam;x(20);character;;WAAR
+degr_num;Debiteurgroep;>9;integer;;WAAR
+dekg_num;Debiteur kortingsgroep;>9;integer;;WAAR
+g_title_offertes;Titel offertes;;omschrijving;;ONWAAR
+g_title_orders;Titel orders;;omschrijving;;ONWAAR
+grbk_num;Grootboekrekening;x(6);character;;WAAR
+krdb_num;Kredietbeperking;>9;integer;;WAAR
+krdh_num;Kredietbewaking;>>9;integer;;WAAR
+levc_num;Leveringsconditie;>9;integer;;WAAR
+mkg_gbrv_debi;MKG debiteuren;;omschrijving;;ONWAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+s_btw_verificatie;BTW verificatie;;Service;;ONWAAR
+s_copy_debi_to_admi;Kopieer debiteur naar administratie;;Service;;ONWAAR
+s_debiteurnummer_wijzigen;Debiteurnummer wijzigen;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_agreements;Verkoop prijsafspraken totaal;X(8);verzameling;;ONWAAR
+t_begin_saldo;Begin saldo;;bedrag;;ONWAAR
+t_boekjaar;Boekjaar;9999;integer;;ONWAAR
+t_brpa;Briefpapier;;character;;ONWAAR
+t_change_debi_bestand;CSV Bestand;X(40);bestand;;ONWAAR
+t_change_debi_new;Nieuw debiteurnummer;x(10);character;;ONWAAR
+t_change_debi_old;Oude debiteurnummer;x(10);character;;ONWAAR
+t_change_debi_type;Wijzig debiteurnummer;9;integer;Huidige debiteurnummer,1,Debiteurnummers uit CSV bestand,2;ONWAAR
+t_debi_brief;Briefpapier afbeelding;;Afbeelding;;ONWAAR
+t_debi_debe_bedrag;Totaal bedrag betalingen;;bedrag;;ONWAAR
+t_debi_debe_count;Aantal betalingen;>>>>>9;integer;;ONWAAR
+t_debi_debg_totaal;Budget;;bedrag;;ONWAAR
+t_debi_fcth_bedrag;Omzet bedrag verkoopfacturen;;bedrag;;ONWAAR
+t_debi_fcth_count;Aantal facturen;>>>>>9;integer;;ONWAAR
+t_debi_fcth_credit_count;Aantal credit facturen;>>>>>9;integer;;ONWAAR
+t_debi_fctr_bedrag;Omzet bedrag regels;;bedrag;;ONWAAR
+t_debi_fctr_bedrag_met_kp_av;Omzet met kostprijs;;bedrag;;ONWAAR
+t_debi_fctr_bedrag_min1;Omzet jaar - 1;;bedrag;;ONWAAR
+t_debi_fctr_bedrag_min2;Omzet jaar - 2;;bedrag;;ONWAAR
+t_debi_fctr_bedrag_min3;Omzet jaar - 3;;bedrag;;ONWAAR
+t_debi_fctr_count;Aantal factuurregels;>>>>>9;integer;;ONWAAR
+t_debi_fctr_credit_bedrag_av;Bedrag credit facturen;;bedrag;;ONWAAR
+t_debi_fctr_dekking_machine_av;Dekking machine;;bedrag;;ONWAAR
+t_debi_fctr_dekking_man_av;Dekking man;;bedrag;;ONWAAR
+t_debi_fctr_dekking_materiaal_av;Dekking materiaal;;bedrag;;ONWAAR
+t_debi_fctr_dekking_totaal_av;Dekking totaal;;bedrag;;ONWAAR
+t_debi_fctr_dekking_uitbesteding_av;Dekking uitbesteding;;bedrag;;ONWAAR
+t_debi_fctr_ksp_totaal_av;Kostprijs totaal;;bedrag;;ONWAAR
+t_debi_fctr_netto_machine_av;Netto machine;;bedrag;;ONWAAR
+t_debi_fctr_netto_man_av;Netto man;;bedrag;;ONWAAR
+t_debi_fctr_netto_materiaal_av;Netto materiaal;;bedrag;;ONWAAR
+t_debi_fctr_netto_totaal_av;Netto totaal;;bedrag;;ONWAAR
+t_debi_fctr_netto_uitbesteding_av;Netto uitbesteding;;bedrag;;ONWAAR
+t_debi_fctr_resultaat_av;Resultaat totaal;;bedrag;;ONWAAR
+t_debi_fctr_resultaat_percentage;Resultaat percentage;;percentage;;ONWAAR
+t_debi_grafiek;Grafiek aantal orders;;Rapport;;ONWAAR
+t_debi_opde;Totaalbedrag open posten;;bedrag;;ONWAAR
+t_debi_opde_count;Aantal open posten;>>>>>9;integer;;ONWAAR
+t_debi_pkbh_count;Aantal pakbonnen;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_count;Aantal pakbonregels;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_laat_count;Aantal pakbonregels te laat;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_laat_max;Max aantal dagen te laat;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_laat_perc;Percentage pakbonregels te laat;;percentage;;ONWAAR
+t_debi_pkbr_tijd_count;Aantal pakbonregels op tijd;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_tijd_perc;Percentage pakbonregels op tijd;>>>>>9;percentage;;ONWAAR
+t_debi_pkbr_vroeg_count;Aantal pakbonregels te vroeg;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_vroeg_max;Max aantal dagen te vroeg;>>>>>9;integer;;ONWAAR
+t_debi_pkbr_vroeg_perc;Percentage pakbonregels te vroeg;;percentage;;ONWAAR
+t_debi_vofh_actueel;Aantal actuele offertes;>>>>>9;integer;;ONWAAR
+t_debi_vofh_count;Aantal offertes;>>>>>9;integer;;ONWAAR
+t_debi_vofr_aangeboden_bedrag;Offerteregels aangeboden bedrag;;bedrag;;ONWAAR
+t_debi_vofr_aangeboden_count;Aantal offerteregels aangeboden;>>>>>9;integer;;ONWAAR
+t_debi_vofr_afgewezen_bedrag;Offerteregels afgewezen bedrag;;bedrag;;ONWAAR
+t_debi_vofr_afgewezen_count;Aantal offerteregels afgewezen;>>>>>9;integer;;ONWAAR
+t_debi_vofr_count;Aantal offerteregels;>>>>>9;integer;;ONWAAR
+t_debi_vofr_gesloten_bedrag;Offerteregels gesloten bedrag;;bedrag;;ONWAAR
+t_debi_vofr_gesloten_count;Aantal offerteregels gesloten;>>>>>9;integer;;ONWAAR
+t_debi_vofr_order_bedrag;Offerteregels order bedrag;;bedrag;;ONWAAR
+t_debi_vofr_order_count;Aantal offerteregels order;>>>>>9;integer;;ONWAAR
+t_debi_vorh_actueel;Aantal actuele orders;>>>>>9;integer;;ONWAAR
+t_debi_vorh_count;Aantal orders;>>>>>9;integer;;ONWAAR
+t_debi_vorr_bedrag;Orderwaarde;;bedrag;;ONWAAR
+t_debi_vorr_bedrag_min1;Intake jaar -1;;bedrag;;ONWAAR
+t_debi_vorr_bedrag_min2;Intake jaar -2;;bedrag;;ONWAAR
+t_debi_vorr_bedrag_min3;Intake jaar -3;;bedrag;;ONWAAR
+t_debi_vorr_count;Aantal orderregels;>>>>>9;integer;;ONWAAR
+t_debi_vorr_vofr_bedrag;Bedrag orderregels uit offerte;;bedrag;;ONWAAR
+t_debi_vorr_vofr_count;Aantal orderregels uit offerte;>>>>>9;integer;;ONWAAR
+t_factuur_adres;Factuuradres;x(150);NAW;;ONWAAR
+t_factuur_adrs;Adres nummer factuuradres;>>9;integer;;ONWAAR
+t_factuur_cprs;Contactpersoon nummer factuur;>>9;integer;;ONWAAR
+t_form_debiteuren;formulier container debiteuren;;Formulier container;;ONWAAR
+t_form_debiteuren_go;Formulier debiteuren go;;Formulier container;;ONWAAR
+t_letop_kredietlimiet;Let op kredietlimiet;x(50);character;;ONWAAR
+t_mkg_gbrv_payment_debi;MKG betaling debiteuren;;character;;ONWAAR
+t_opde_afwijking;Gemiddeld aantal dagen afwijking;>>>9,99;aantal;;ONWAAR
+t_opde_bdr_open_av;Openstaand bedrag;;bedrag;;ONWAAR
+t_opde_betaaldagen;Gemiddeld aantal dagen betaling;>>>9,99;aantal;;ONWAAR
+t_openstaand_bedrag_disp_excl;Openstaand bedrag open posten debiteuren met dispuut excl BTW;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_openstaand_bedrag_disp_incl;Openstaand bedrag open posten debiteuren met dispuut incl BTW;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_openstaand_bedrag_excl;Openstaand bedrag open posten debiteuren excl BTW;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_openstaand_bedrag_incl;Openstaand bedrag open posten debiteuren incl BTW;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_sum_vofh_totaal;Totaalbedrag offertes;;bedrag;;ONWAAR
+t_target_administrations;Doel administraties;X(40);character;,;ONWAAR
+t_te_factureren;Te factureren waarde van de lopende verkooporderregels excl btw;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_vervallenposten;Heeft vervallen posten;;logical;;ONWAAR
+t_vofh_aantal;Aantal offertes;>>>>>9;integer;;ONWAAR
+t_vorh_totaalbedrag;Totaalbedrag orders;;bedrag;;ONWAAR
+taal_code;Taal;x(4);character;;WAAR
+valu_code;Valuta;x(4);character;;WAAR
+verk_num;Verkoper;>9;integer;;WAAR
+vklg_num;Verkoop layoutgroep;>>>9;integer;;WAAR
+vrkg_num;Verkoopgroep;>>>>>9;integer;;WAAR
+vrzm_num;Verzendmethode;>9;integer;;WAAR

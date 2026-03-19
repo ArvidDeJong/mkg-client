@@ -1,0 +1,159 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+admi_num;Administratie;999;integer;;WAAR
+betc_num;Betalingsconditie;>>9;integer;;WAAR
+btkr_num;Betalingskorting;>9;integer;;WAAR
+d_dashboard;Dashboard;;Dashboard;;ONWAAR
+dashboard_verkoopvcnc;Verkoop VCNC overzicht;X(8);verzameling;;ONWAAR
+debi_num;Debiteur;x(10);character;;WAAR
+g_label_vorr;Label groep verkooporderregel;x(40);omschrijving;;ONWAAR
+g_title_termijnen;Termijn informatie;;omschrijving;;ONWAAR
+krdb_num;Kredietbeperking;>9;integer;;WAAR
+land_code;Land;x(4);character;;WAAR
+levc_num;Leveringsconditie;>9;integer;;WAAR
+mkg_gbrv_vorh;MKG Verkooporder header;;character;;ONWAAR
+proj_num;Project;x(8);character;;WAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+s_actie_list;Actielijst;;Service;;ONWAAR
+s_forecastlijst;Forecastlijst;;Service;;ONWAAR
+s_inkoopoffertelijst;Offerteaanvraaglijst;;Service;;ONWAAR
+s_offertelijst;Offertelijst;;Service;;ONWAAR
+s_retour;Retouren;;Service;;ONWAAR
+s_term_lines;Toekennen verkooporder regels;;Service;;ONWAAR
+s_term_plan;Termijnplan sjabloon;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_behoefteinfo;Behoefte info;;Behoefte info;;ONWAAR
+t_bestand_export;Bestand export;;character;;ONWAAR
+t_betaal_status;Betaalstatus;9;integer;Niet volledig gefactureerd,1,Volledig gefactureerd,2,Gedeeltelijk betaald,3,Volledig betaald,4,Onbekend,5;ONWAAR
+t_bron;Bron;9;integer;Verkooporder regel,0,Verkooporder termijnen,1;ONWAAR
+t_brpa;Briefpapier;;character;;ONWAAR
+t_btw_keuze;BTW keuze;9;integer;Standaard,1,BTW binnenland vrijgesteld,2,BTW binnenland verlegd,3;ONWAAR
+t_calculate_valuta;Ingaveprijzen berekenen met de nieuwe koers;ja/nee;logical;;ONWAAR
+t_copy_docs_bron;Documenten kopieerder;x(40);character;;ONWAAR
+t_copy_docs_vofh;Documenten kopieeren offerte;;logical;;ONWAAR
+t_copy_docs_vofh_process;Procesocumenten kopieeren offerte;;logical;;ONWAAR
+t_copy_docs_vorh_forecast;Dcumenten kopieeren forecast order;;logical;;ONWAAR
+t_cprs_email;Contactpersoon email;X(40);e-mail;;ONWAAR
+t_cprs_mobiel;Contactpersoon mobiel;X(40);omschrijving;;ONWAAR
+t_cprs_naam;Contactpersoon naam;X(40);omschrijving;;ONWAAR
+t_cprs_telefoon;Contactpersoon telefoon;X(40);omschrijving;;ONWAAR
+t_delta_term_regels;Verschil termijn en regels;;bedrag;;ONWAAR
+t_display_statusinfo;Omschrijving status info;;omschrijving;;ONWAAR
+t_geen_termijn;Geen termijnplan gekoppeld;;logical;;ONWAAR
+t_grafiek_aantalorders;Grafiek aantal orders;;Service interface;;ONWAAR
+t_has_status_geimporteerd;Heeft status geimporteerd;ja/nee;logical;;ONWAAR
+t_import_referentie;Import referentie;x(50);character;;ONWAAR
+t_label_valu;Label ordervaluta;x(4);character;;ONWAAR
+t_message_termijn;Melding afwijking termijnplan;x(100);character;;ONWAAR
+t_paper_vorh;Briefpapier afbeelding;;Afbeelding;;ONWAAR
+t_prdr;Productieorderregels;;verzameling;;ONWAAR
+t_priceinfo;Prijsoverzicht;;Service interface;;ONWAAR
+t_si_debi;Service interface debiteur;;Service interface;;ONWAAR
+t_statusinfo;Status info;;Status info;;ONWAAR
+t_task_tree;Activiteiten selectieboom;;Selectie boom;;ONWAAR
+t_tmph;Termijnplan;>9;integer;;ONWAAR
+t_tmph_advies;Advies bedrag;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_tmph_datum;Startdatum termijnplan;99-99-9999;datum;;ONWAAR
+t_tmph_ingave;Ingave bedrag;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_tot_term_regels;Totaalbedrag regels (termijnen);;bedrag;;ONWAAR
+t_tot_termijnen;Totaalbedrag termijnen;;bedrag;;ONWAAR
+t_validation;Validatie meldingen;X(8);verzameling;;ONWAAR
+t_versie;Versie;>>>9;integer;;ONWAAR
+t_vlag_historisch;Vlag historisch;;Afbeelding;;ONWAAR
+t_vofh;Verkoopofferte;x(20);character;;ONWAAR
+t_vorh;Verkooporder;x(20);character;;ONWAAR
+t_vorh_afw_bestelcode;Afwijkende uw ordernummer regels;>>>>9;integer;;ONWAAR
+t_vorh_afw_gewenste_leverdatum;Afwijkende gewenste leverdatum regels;>>>>9;integer;;ONWAAR
+t_vorh_afw_leverdatum;Afwijkende leverdatum regels;>>>>9;integer;;ONWAAR
+t_vorh_afw_referentie;Afwijkende referentie regels;>>>>9;integer;;ONWAAR
+t_vorr_behoefte;Heeft behoefte;;logical;;ONWAAR
+t_vorr_list;Verkooporder regel lijst;x(400);character;,0;ONWAAR
+taal_code;Taal;x(4);character;;WAAR
+valu_code;Valuta;x(4);character;;WAAR
+verk_num;Verkoper;>9;integer;;WAAR
+vfcl_num;Factuur layout;>9;integer;;WAAR
+vobl_num;Opdrachtbevestiging layout;>9;integer;;WAAR
+vopl_num;Pakbon layout;>9;integer;;WAAR
+vorh_aanhef;Aanhef brief;x(70);omschrijving;;WAAR
+vorh_adres_aflever;Afleveradres;x(150);NAW;;WAAR
+vorh_adres_factuur;Factuuradres;x(150);NAW;;WAAR
+vorh_adres_opdbev;Opdrachtbevestiging adres;x(150);NAW;;WAAR
+vorh_adviesprijs_av;Adviesprijs av;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_adviesprijs_inc_ovk;Adviesprijs inc ovk;ja/nee;logical;;WAAR
+vorh_adviesprijs_ov;Adviesprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_aflever_adrs;Adres nummer afleveradres;>>9;integer;;WAAR
+vorh_aflever_cprs;Contactpersoon nummer aflever;>>9;integer;;WAAR
+vorh_aflever_rela;Aflever relatie;>>>>>9;integer;;WAAR
+vorh_bestelcode_extern;Uw ordernummer;x(40);omschrijving;;WAAR
+vorh_btw_num;BTW nummer;x(20);character;;WAAR
+vorh_com_opslag;Commerciele opslag;>>9.99-;decimal;;WAAR
+vorh_dat_gewenst;Gewenste leverdatum;99-99-9999;datum;;WAAR
+vorh_dat_historisch;Datum historisch;99-99-9999;datum;;WAAR
+vorh_dat_levering;Leverdatum;99-99-9999;datum;;WAAR
+vorh_dat_order;Orderdatum;99-99-9999;datum;;WAAR
+vorh_dat_transport;Transportdatum;99-99-9999;datum;;WAAR
+vorh_debi_fact;Factuurdebiteur;x(10);character;;WAAR
+vorh_deelfact;Deelfacturering;9;integer;Alleen volledige order,0,Alleen volledige regel,1,Geen beperkingen,2;WAAR
+vorh_deellev;Deellevering;9;integer;Alleen volledige order,0,Alleen volledige regel,1,Geen beperkingen,2;WAAR
+vorh_docs;Document koppelingen;;Documenten;;ONWAAR
+vorh_fact_koers;Facturatie koers;9;integer;Per orderdatum,1,Per afleverdatum,2,Per factuurdatum,3;WAAR
+vorh_factuur_adrs;Adres nummer factuuradres;>>9;integer;;WAAR
+vorh_factuur_cprs;Contactpersoon nummer factuur;>>9;integer;;WAAR
+vorh_factuur_extern;Factuur extern;x(2500);memo;;WAAR
+vorh_factuur_intern;Factuur intern;x(2500);memo;;WAAR
+vorh_factuur_rela;Factuur relatie;>>>>>9;integer;;WAAR
+vorh_fmut;Financiele mutaties;;verzameling;;ONWAAR
+vorh_forecast;Forecast order;ja/nee;logical;;WAAR
+vorh_geac;Activiteiten obv geac;X(8);verzameling;;ONWAAR
+vorh_hdr_ovk_av;Overige kosten av;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_hdr_ovk_ov;Overige kosten;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_historisch;Historisch;ja/nee;logical;;WAAR
+vorh_ingaveprijs_av;Ingaveprijs av;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_ingaveprijs_ov;Ingaveprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_jaar_order;Jaar order;9999;integer;;WAAR
+vorh_korting;Korting;>>9.99-;percentage;;WAAR
+vorh_levc_memo;Leveringsconditie memo;x(2500);memo;;WAAR
+vorh_levc_oms;Leveringsconditie omschrijving;x(40);omschrijving;;WAAR
+vorh_num;Verkooporder;x(10);character;;WAAR
+vorh_opdbev_adrs;Adres nummer opdbev;>>9;integer;;WAAR
+vorh_opdbev_cprs;Contactpersoon nummer opdrachtbevestiging;>>9;integer;;WAAR
+vorh_opdbev_extern;Opdrachtbevestiging extern;x(2500);memo;;WAAR
+vorh_opdbev_intern;Opdrachtbevestiging intern;x(2500);memo;;WAAR
+vorh_pakbon_extern;Pakbon extern;x(2500);memo;;WAAR
+vorh_pakbon_intern;Pakbon intern;x(2500);memo;;WAAR
+vorh_parameters;Parameters;;verzameling;;ONWAAR
+vorh_persoon;Contactpersoon;X(40);omschrijving;;WAAR
+vorh_pkbr;Pakbonnen;;verzameling;;ONWAAR
+vorh_pmld;Meldingen;X(8);verzameling;;ONWAAR
+vorh_ref_onze;Onze referentie;x(40);omschrijving;;WAAR
+vorh_ref_uw;Uw referentie;x(40);omschrijving;;WAAR
+vorh_resultaat_nemen;Tussentijds resultaat nemen;ja/nee;logical;;WAAR
+vorh_rgl_tot_av;Totaal regels av;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_rgl_tot_ov;Totaal regels;>>>,>>>,>>9.99-;bedrag;;WAAR
+vorh_tasks;Activiteiten;X(8);verzameling;;ONWAAR
+vorh_totprijs_aanb;Totaalprijs aanbieden;ja/nee;logical;;WAAR
+vorh_transportdagen;Transportdagen;>>9;integer;;WAAR
+vorh_val_dec;Valuta decimalen;ja/nee;logical;;WAAR
+vorh_val_factor;Valuta factor;>>>9;integer;;WAAR
+vorh_val_koers;Valuta koers;>>>,>>>,>>9.99999;decimal;;WAAR
+vorh_valu_av;Administratie valuta;x(4);character;;WAAR
+vorh_valu_datum;Valuta datum;99-99-9999;datum;;WAAR
+vorh_valu_fact_naar;Valuta factor naar;>>>9;integer;;WAAR
+vorh_valu_fact_van;Valuta factor van;>>>9;integer;;WAAR
+vorh_valu_handmatig;Handmatige valuta koers;ja/nee;logical;;WAAR
+vorh_versie;Versie;>>9;integer;;WAAR
+vorh_verwijderen;Verwijderen;ja/nee;logical;;WAAR
+vorh_vorp;Overige kosten;;verzameling;;ONWAAR
+vorh_vorr;Orderregels;;verzameling;;ONWAAR
+vorh_vorr_backflush;Backflush regels;;verzameling;;ONWAAR
+vorh_votm;Termijnen;;verzameling;;ONWAAR
+vorh_wk_gewenst;Week gewenste leverdatum;99;integer;;WAAR
+vorh_wk_levering;Week leverdatum;99;integer;;WAAR
+vorh_wk_order;Week orderdatum;99;integer;;WAAR
+vorh_wk_transport;Week transportdatum;99;integer;;WAAR
+vort_num;Verkooporder type;>>>9;integer;;WAAR
+vrzm_num;Verzendmethode;>9;integer;;WAAR

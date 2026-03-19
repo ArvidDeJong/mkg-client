@@ -1,0 +1,38 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+adrs_actief;Actief;ja/nee;logical;;WAAR
+adrs_eigen_fax;Eigen fax;ja/nee;logical;;WAAR
+adrs_eigen_telefoon;Eigen telefoon;ja/nee;logical;;WAAR
+adrs_fax;Fax;x(30);telefoonnummer;;WAAR
+adrs_ink_factuur;Factuur inkoop;ja/nee;logical;;WAAR
+adrs_ink_offerte;Offerte inkoop;ja/nee;logical;;WAAR
+adrs_ink_order;Order inkoop;ja/nee;logical;;WAAR
+adrs_ink_retour;Retouren inkoop;ja/nee;logical;;WAAR
+adrs_maps;Map;;Kaart;;ONWAAR
+adrs_memo;Memo;x(2500);memo;;WAAR
+adrs_num;Adres;>>9;integer;;WAAR
+adrs_nummer;Huisnummer;>>>>>9;integer;;WAAR
+adrs_nummer_2;Toevoeging;x(6);character;;WAAR
+adrs_plaats;Plaats;x(40);omschrijving;;WAAR
+adrs_plaats_2;Plaats 2;x(40);omschrijving;;WAAR
+adrs_postcode;Postcode;x(10);character;;WAAR
+adrs_primair;Primair;ja/nee;logical;;WAAR
+adrs_straat;Straat;x(40);omschrijving;;WAAR
+adrs_straat_2;Straat 2;x(40);omschrijving;;WAAR
+adrs_telefoon;Telefoon;x(30);telefoonnummer;;WAAR
+adrs_trans_dagen;Transport dagen;>9;integer;;WAAR
+adrs_volgorde;Volgorde;>>>>>9;integer;;WAAR
+adrs_vrk_factuur;Factuur verkoop;ja/nee;logical;;WAAR
+adrs_vrk_offerte;Offerte verkoop;ja/nee;logical;;WAAR
+adrs_vrk_order;Order verkoop;ja/nee;logical;;WAAR
+adrs_vrk_pakbon;Pakbon verkoop;ja/nee;logical;;WAAR
+land_code;Land;x(4);character;;WAAR
+mkg_gbrv_rela_adrs;MKG adres;;character;;ONWAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_formatted_adrs;Adres met opmaak;;memo;;ONWAAR
+t_label_adrs;Label adres;X(40);omschrijving;;ONWAAR

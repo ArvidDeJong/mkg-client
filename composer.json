@@ -1,0 +1,62 @@
+{
+  "name": "darvis/mkg-client",
+  "type": "library",
+  "description": "Framework-agnostic MKG Software REST API client with optional Laravel integration",
+  "homepage": "https://darvis.nl",
+  "keywords": [
+    "darvis",
+    "mkg",
+    "erp",
+    "api-client",
+    "php",
+    "laravel"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arvid de Jong",
+      "email": "info@arvid.nl",
+      "homepage": "https://darvis.nl"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Darvis\\MkgClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Darvis\\MkgClient\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "guzzlehttp/guzzle": "^7.2"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.0|^10.0|^11.0",
+    "pestphp/pest": "^3.8",
+    "pestphp/pest-plugin-laravel": "^3.2"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Darvis\\MkgClient\\Laravel\\Providers\\DarvisMkgClientProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest"
+  },
+  "suggest": {
+    "illuminate/support": "Required when using the Laravel service provider integration."
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

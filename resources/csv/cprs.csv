@@ -1,0 +1,60 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+cpfn_num;Functie;9999;integer;;WAAR
+cprs_aanhef_adres;Aanhef adres;x(40);character;;WAAR
+cprs_aanhef_brief;Aanhef brief;x(40);character;;WAAR
+cprs_actief;Actief;ja/nee;logical;;WAAR
+cprs_afbeelding;Afbeelding;x(256);Afbeelding;;WAAR
+cprs_eigen_email;Eigen E-mail;ja/nee;logical;;WAAR
+cprs_eigen_fax;Eigen fax;ja/nee;logical;;WAAR
+cprs_eigen_telefoon;Eigen telefoon;ja/nee;logical;;WAAR
+cprs_email;E-mail;x(60);e-mail;;WAAR
+cprs_fax;Fax;x(30);telefoonnummer;;WAAR
+cprs_gsm;Mobiele telefoon;x(30);telefoonnummer;;WAAR
+cprs_ink_factuur;Factuur inkoop;ja/nee;logical;;WAAR
+cprs_ink_offerte;Offerte inkoop;ja/nee;logical;;WAAR
+cprs_ink_order;Order inkoop;ja/nee;logical;;WAAR
+cprs_ink_retour;Retouren inkoop;ja/nee;logical;;WAAR
+cprs_memo;Memo;x(2500);memo;;WAAR
+cprs_naam;Naam;x(40);omschrijving;;WAAR
+cprs_naam_2;Naam 2;x(40);omschrijving;;WAAR
+cprs_num;Persoon;>>9;integer;;WAAR
+cprs_pmld;Meldingen;X(8);verzameling;;ONWAAR
+cprs_prive;Prive;x(30);telefoonnummer;;WAAR
+cprs_sekse;Geslacht;9;integer;Man,1,Vrouw,2,Onbekend,0;WAAR
+cprs_telefoon;Telefoon;x(30);telefoonnummer;;WAAR
+cprs_tussenvoegsel;Tussenvoegsel;x(8);character;;WAAR
+cprs_volgorde;Volgorde;>>>>>9;integer;;WAAR
+cprs_voorletters;Voorletters;x(8);character;;WAAR
+cprs_voornaam;Voornaam;x(40);omschrijving;;WAAR
+cprs_vrij_datum_1;Vrij datum 1;99-99-9999;datum;;WAAR
+cprs_vrij_datum_2;Vrij datum 2;99-99-9999;datum;;WAAR
+cprs_vrij_datum_3;Vrij datum 3;99-99-9999;datum;;WAAR
+cprs_vrij_datum_4;Vrij datum 4;99-99-9999;datum;;WAAR
+cprs_vrij_datum_5;Vrij datum 5;99-99-9999;datum;;WAAR
+cprs_vrij_memo_1;Vrij memo 1;x(2500);memo;;WAAR
+cprs_vrij_memo_2;Vrij memo 2;x(2500);memo;;WAAR
+cprs_vrij_memo_3;Vrij memo 3;x(2500);memo;;WAAR
+cprs_vrij_memo_4;Vrij memo 4;x(2500);memo;;WAAR
+cprs_vrij_memo_5;Vrij memo 5;x(2500);memo;;WAAR
+cprs_vrij_veld_1;Vrij veld 1;x(40);character;;WAAR
+cprs_vrij_veld_2;Vrij veld 2;x(40);character;;WAAR
+cprs_vrij_veld_3;Vrij veld 3;x(40);character;;WAAR
+cprs_vrij_veld_4;Vrij veld 4;x(40);character;;WAAR
+cprs_vrij_veld_5;Vrij veld 5;x(40);character;;WAAR
+cprs_vrk_factuur;Factuur verkoop;ja/nee;logical;;WAAR
+cprs_vrk_offerte;Offerte verkoop;ja/nee;logical;;WAAR
+cprs_vrk_order;Order verkoop;ja/nee;logical;;WAAR
+cprs_vrk_pakbon;Pakbon verkoop;ja/nee;logical;;WAAR
+cpti_num;Titulatuur;>9;integer;;WAAR
+mkg_gbrv_rela_cprs;MKG contactpersoon;;character;;ONWAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+s_anonymize;Anonimiseer contactpersoon;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_label_cprs;Label contactpersoon;X(40);omschrijving;;ONWAAR
+t_naam;Naam;x(58);character;;ONWAAR
+taal_code;Taal;x(4);character;;WAAR

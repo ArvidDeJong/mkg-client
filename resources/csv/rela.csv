@@ -1,0 +1,114 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+activiteiten_details;Activiteiten details;;memo;;ONWAAR
+agtn_num;Agent;>>9;integer;;WAAR
+d_dashboard;Dashboard;;Dashboard;;ONWAAR
+g_title_adressen;Titel adressen;;omschrijving;;ONWAAR
+g_title_crediteuren;Titel crediteuren;;omschrijving;;ONWAAR
+g_title_debiteuren;Titel debiteuren;;omschrijving;;ONWAAR
+g_title_inkoop;Titel inkoop;;omschrijving;;ONWAAR
+g_title_inkooporders;Titel inkooporders;;omschrijving;;ONWAAR
+g_title_offertes;Titel offertes;;omschrijving;;ONWAAR
+g_title_orders;Titel orders;;omschrijving;;ONWAAR
+g_title_personen;Titel personen;;omschrijving;;ONWAAR
+g_title_verkoop;Titel verkoop;;omschrijving;;ONWAAR
+mkg_gbrv_rela;MKG Relatie;;omschrijving;;ONWAAR
+rela_actief;Actief;ja/nee;logical;;WAAR
+rela_adrs;Adressen;;verzameling;;ONWAAR
+rela_afbeelding;Afbeelding;x(256);Afbeelding;;WAAR
+rela_cprs;Contactpersonen;;verzameling;;ONWAAR
+rela_cred;Crediteuren;;verzameling;;ONWAAR
+rela_debi;Debiteuren;;verzameling;;ONWAAR
+rela_email;E-mail;x(60);e-mail;;WAAR
+rela_fax;Fax;x(30);telefoonnummer;;WAAR
+rela_fcth;Facturen;;verzameling;;ONWAAR
+rela_files;Document koppelingen;;Documenten;;ONWAAR
+rela_geac;Activiteiten;;verzameling;;ONWAAR
+rela_id;ID;x(40);omschrijving;;WAAR
+rela_ifch;Inkoopfacturen;;verzameling;;ONWAAR
+rela_info;Info;;memo;;ONWAAR
+rela_iorh;Inkooporders;;verzameling;;ONWAAR
+rela_ipbh;Inkooppakbonnen;;verzameling;;ONWAAR
+rela_memo;Memo;x(2500);memo;;WAAR
+rela_moeder;Moederrelatie;>>>>>9;integer;;WAAR
+rela_naam;Bedrijfsnaam;x(40);omschrijving;;WAAR
+rela_naam_2;Bedrijfsnaam 2;x(40);omschrijving;;WAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+rela_pkbh;Pakbonnen;;verzameling;;ONWAAR
+rela_plaats;Plaats;x(40);character;;WAAR
+rela_plaats_2;Plaats 2;x(40);character;;WAAR
+rela_pmld;Meldingen;X(8);verzameling;;ONWAAR
+rela_postcode;Postcode;x(10);character;;WAAR
+rela_prdh;Productieorders;X(8);verzameling;;ONWAAR
+rela_resr;Relatie soorten;x(80);Meervoudige lijst selectie;;ONWAAR
+rela_tasks;Activiteit koppelingen;X(8);verzameling;;ONWAAR
+rela_telefoon;Telefoon;x(30);telefoonnummer;;WAAR
+rela_vofh;Offertes;;verzameling;;ONWAAR
+rela_vorh;Orders;;verzameling;;ONWAAR
+rela_vrij_datum_1;Vrij datum 1;99-99-9999;datum;;WAAR
+rela_vrij_datum_2;Vrij datum 2;99-99-9999;datum;;WAAR
+rela_vrij_datum_3;Vrij datum 3;99-99-9999;datum;;WAAR
+rela_vrij_datum_4;Vrij datum 4;99-99-9999;datum;;WAAR
+rela_vrij_datum_5;Vrij datum 5;99-99-9999;datum;;WAAR
+rela_vrij_memo_1;Vrij memo 1;x(2500);memo;;WAAR
+rela_vrij_memo_2;Vrij memo 2;x(2500);memo;;WAAR
+rela_vrij_memo_3;Vrij memo 3;x(2500);memo;;WAAR
+rela_vrij_memo_4;Vrij memo 4;x(2500);memo;;WAAR
+rela_vrij_memo_5;Vrij memo 5;x(2500);memo;;WAAR
+rela_vrij_veld_1;Vrij veld 1;x(40);omschrijving;;WAAR
+rela_vrij_veld_2;Vrij veld 2;x(40);omschrijving;;WAAR
+rela_vrij_veld_3;Vrij veld 3;x(40);omschrijving;;WAAR
+rela_vrij_veld_4;Vrij veld 4;x(40);omschrijving;;WAAR
+rela_vrij_veld_5;Vrij veld 5;x(40);omschrijving;;WAAR
+rela_www;Website;x(60);website;;WAAR
+rela_zoeknaam;Zoeknaam;x(20);omschrijving;;WAAR
+s_change_rela;Relatienummer aanpassen;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_admi;Administratie;>>9;integer;;ONWAAR
+t_adrs;Aantal adressen;>9;aantal;;ONWAAR
+t_adrs_fcth;Adres factuur;x(150);NAW;;ONWAAR
+t_adrs_ink_factuur;Adres inkoop factuur;;verzameling;;ONWAAR
+t_adrs_ink_offerte;Adres inkoop offerte;;verzameling;;ONWAAR
+t_adrs_ink_order;Adres inkoop order;;verzameling;;ONWAAR
+t_adrs_ink_retour;Adres inkoop retouren;;verzameling;;ONWAAR
+t_adrs_iorh;Adres inkooporder;x(150);NAW;;ONWAAR
+t_adrs_primair;Adres primair;;verzameling;;ONWAAR
+t_adrs_vrk_factuur;Adres verkoop factuur;;verzameling;;ONWAAR
+t_adrs_vrk_offerte;Adres verkoop offerte;;verzameling;;ONWAAR
+t_adrs_vrk_order;Adres verkoop order;;verzameling;;ONWAAR
+t_adrs_vrk_pakbon;Adres verkoop pakbon;;verzameling;;ONWAAR
+t_brief;Geadresseerde brief;x(150);NAW;;ONWAAR
+t_change_rela_bestand;CSV bestand;X(40);bestand;;ONWAAR
+t_change_rela_nieuw;Nieuw relatienummer;>>>>>9;integer;;ONWAAR
+t_change_rela_oud;Oud relatienummer;>>>>>9;integer;;ONWAAR
+t_change_rela_type;Wijzig rela;9;integer;Huidige relatie,1,Relaties uit CSV bestand,2;ONWAAR
+t_concerns;Concerns;;verzameling;;ONWAAR
+t_cprs;Aantal contactpersonen;>9;aantal;;ONWAAR
+t_cprs_ink_factuur;Contactpersoon inkoop factuur;;verzameling;;ONWAAR
+t_cprs_ink_offerte;Contactpersoon inkoop offerte;;verzameling;;ONWAAR
+t_cprs_ink_order;Contactpersoon inkoop order;;verzameling;;ONWAAR
+t_cprs_ink_retour;Contactpersoon inkoop retour;;verzameling;;ONWAAR
+t_cprs_vrk_factuur;Contactpersoon verkoop factuur;;verzameling;;ONWAAR
+t_cprs_vrk_offerte;Contactpersoon verkoopofferte;;verzameling;;ONWAAR
+t_cprs_vrk_order;Contactpersoon verkooporder;;verzameling;;ONWAAR
+t_cprs_vrk_pakbon;Contactpersoon verkoop pakbon;;verzameling;;ONWAAR
+t_cred;is crediteur;;logical;;ONWAAR
+t_crediteur;Crediteurnummer;x(12);character;;ONWAAR
+t_debi;is debiteur;;logical;;ONWAAR
+t_debiteur;Debiteurnummer;x(12);character;;ONWAAR
+t_is_moederrelatie;Is moederrelatie;;omschrijving;;ONWAAR
+t_label_actief;Label actief;x(10);character;;ONWAAR
+t_paper_rela;Briefpapier;;Afbeelding;;ONWAAR
+t_primair_adres;Primair adres;;omschrijving;;ONWAAR
+t_rela_iofa_actueel;Offerteaanvragen actueel;X(8);verzameling;;ONWAAR
+t_rela_iofh;Offerteaanvragen;X(8);verzameling;;ONWAAR
+t_rela_iorh_actueel;Inkooporders actueel;X(8);verzameling;;ONWAAR
+t_rela_vofh_actueel;Verkoopoffertes actueel;X(8);verzameling;;ONWAAR
+t_rela_vorh_actueel;Verkooporder actueel;X(8);verzameling;;ONWAAR
+t_resr;Relatiesoorten bron;;verzameling;;ONWAAR
+t_resr_selectie;Relatiesoorten selectie;X(8);verzameling;;ONWAAR
+t_task_tree;Activiteiten selectieboom;;Selectie boom;;ONWAAR

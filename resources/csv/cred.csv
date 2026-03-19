@@ -1,0 +1,144 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+admi_num;Administratie;999;integer;;WAAR
+agtn_num;Agent;>>9;integer;;WAAR
+bank_num;Banktype;>>9;integer;;WAAR
+betc_num;Betalingsconditie;>>9;integer;;WAAR
+btkr_num;Betalingskorting;>9;integer;;WAAR
+btwc_code;BTW;9;integer;;WAAR
+c_crbe;Grafiek betalingen;;Grafiek;;ONWAAR
+c_ifcr;Grafiek factuurregels;;Grafiek;;ONWAAR
+c_iorr;Grafiek inkooporder regels;;Grafiek;;ONWAAR
+c_ipbr;Grafiek inkoop pakbon regels;;Grafiek;;ONWAAR
+cred_actief;Actief;ja/nee;logical;;WAAR
+cred_adres_btw_verificatie;BTW verificatie adres;x(70);character;;WAAR
+cred_bankcode;Bankcode;x(10);character;;WAAR
+cred_bet_wijze;Betaalwijze;9;integer;Op rekening,1,Automatische incasso,2,Contant,3,Overig,4;WAAR
+cred_bic;BIC;x(11);character;;WAAR
+cred_btch_verz;Verzamelen in TB batch;ja/nee;logical;;WAAR
+cred_btw;BTW keuze;9;integer;Standaard,1,BTW binnenland vrijgesteld,2,BTW binnenland verlegd,3,Fiscale eenheid,4,EU-BTW nummer,5;WAAR
+cred_btw_num;BTW nummer;x(20);character;;WAAR
+cred_cbnk;Crediteur banken;X(8);verzameling;;ONWAAR
+cred_crbe;Betalingen;;verzameling;;ONWAAR
+cred_crbe_fy;Betalingen boekjaar;;verzameling;;ONWAAR
+cred_crbg;Crediteur budgetten;;verzameling;;ONWAAR
+cred_cred_fact;Factuurcrediteur;x(10);character;;WAAR
+cred_dat_btw_verificatie;BTW Verificatiedatum;99-99-9999;datum;;WAAR
+cred_debiteurnummer;Debiteurnummer;x(20);character;;WAAR
+cred_docs;Document koppelingen;;Documenten;;ONWAAR
+cred_email;E-mail;X(40);e-mail;;WAAR
+cred_fact_naam;Factuurcred naam;x(40);omschrijving;;WAAR
+cred_fact_naam_2;Factuurcred naam 2;x(40);omschrijving;;WAAR
+cred_fmut;Financiele mutaties;;verzameling;;ONWAAR
+cred_gebr_accorderen;Accorderen door;x(20);character;;WAAR
+cred_iban;IBAN;x(34);character;;WAAR
+cred_id;ID;x(40);omschrijving;;WAAR
+cred_ifch;Inkoopfacturen;;verzameling;;ONWAAR
+cred_ifch_fy;Inkoopfacturen boekjaar;;verzameling;;ONWAAR
+cred_ifcr;Inkoopfactuur regels;;verzameling;;ONWAAR
+cred_ifcr_fy;Inkoopfactuur regels boekjaar;;verzameling;;ONWAAR
+cred_iofa;Offerte aanvragen;;verzameling;;ONWAAR
+cred_iofh;Offertes;;verzameling;;ONWAAR
+cred_iorh;Orders;;verzameling;;ONWAAR
+cred_iorh_fy;Orders boekjaar;;verzameling;;ONWAAR
+cred_iorr;Inkoop orderregels;;verzameling;;ONWAAR
+cred_iorr_actueel;Lopende inkooporderregels;X(8);verzameling;;ONWAAR
+cred_iorr_fy;Inkoop orderregels boekjaar;;verzameling;;ONWAAR
+cred_ipaa;Inkoop prijsafspraken artikelen;;verzameling;;ONWAAR
+cred_ipau;Inkoop prijsafspraken uitbestedingen;;verzameling;;ONWAAR
+cred_ipav;Inkoop prijsafspraken vrm;;verzameling;;ONWAAR
+cred_ipbh;Inkooppakbonnen;;verzameling;;ONWAAR
+cred_ipbh_fy;Inkooppakbonnen boekjaar;;verzameling;;ONWAAR
+cred_ipbr;Inkoop pakbon regels;;verzameling;;ONWAAR
+cred_ipbr_fy;Inkoop pakbon regels boekjaar;;verzameling;;ONWAAR
+cred_keuren;Keuren;ja/nee;logical;;WAAR
+cred_kvk_num;KvK nummer;x(20);character;;WAAR
+cred_memo_extern;Memo extern;x(2500);memo;;WAAR
+cred_memo_intern;Memo intern;x(2500);memo;;WAAR
+cred_naam;Bedrijfsnaam;x(40);omschrijving;;WAAR
+cred_naam_2;Bedrijfsnaam 2;x(40);omschrijving;;WAAR
+cred_naam_btw_verificatie;BTW verificatie naam;x(70);character;;WAAR
+cred_num;Crediteur;x(10);character;;WAAR
+cred_opcr;Openstaande posten crediteuren;;verzameling;;ONWAAR
+cred_peppol_id;Peppol ID;x(25);character;;WAAR
+cred_plaats_bank;Plaats bank;x(40);omschrijving;;WAAR
+cred_pmld;Meldingen;X(8);verzameling;;ONWAAR
+cred_rekening;Rekening;x(22);character;;WAAR
+cred_scsn_id;SCSN ID;x(25);character;;WAAR
+cred_status_btw_verificatie;BTW verificatie status;9;integer;Niet gecontroleerd,0,correct gecontroleerd,1,fout gecontroleerd,2;WAAR
+cred_vrij_datum_1;Vrij datum 1;99-99-9999;datum;;WAAR
+cred_vrij_datum_2;Vrij datum 2;99-99-9999;datum;;WAAR
+cred_vrij_datum_3;Vrij datum 3;99-99-9999;datum;;WAAR
+cred_vrij_datum_4;Vrij datum 4;99-99-9999;datum;;WAAR
+cred_vrij_datum_5;Vrij datum 5;99-99-9999;datum;;WAAR
+cred_vrij_memo_1;Vrij memo 1;x(2500);memo;;WAAR
+cred_vrij_memo_2;Vrij memo 2;x(2500);memo;;WAAR
+cred_vrij_memo_3;Vrij memo 3;x(2500);memo;;WAAR
+cred_vrij_memo_4;Vrij memo 4;x(2500);memo;;WAAR
+cred_vrij_memo_5;Vrij memo 5;x(2500);memo;;WAAR
+cred_vrij_veld_1;Vrij veld 1;x(40);omschrijving;;WAAR
+cred_vrij_veld_2;Vrij veld 2;x(40);omschrijving;;WAAR
+cred_vrij_veld_3;Vrij veld 3;x(40);omschrijving;;WAAR
+cred_vrij_veld_4;Vrij veld 4;x(40);omschrijving;;WAAR
+cred_vrij_veld_5;SCSN-GLN;x(40);omschrijving;;WAAR
+cred_zoeknaam;Zoeknaam;x(20);character;;WAAR
+crgr_num;Crediteurgroep;>9;integer;;WAAR
+d_dashboard;Dashboard;;Dashboard;;ONWAAR
+grbk_num;Grootboekrekening;X(6);character;;WAAR
+iklg_num;Inkoop layoutgroep;>>>9;integer;;WAAR
+inkr_num;Inkoper;>9;integer;;WAAR
+krdb_num;Kredietbeperking;>9;integer;;WAAR
+levc_num;Leveringsconditie;>9;integer;;WAAR
+rela_num;Relatie;>>>>>9;integer;;WAAR
+s_btw_verificatie;BTW verificatie;;Service;;ONWAAR
+s_copy_cred_to_admi;Kopieer crediteur naar administratie;;Service;;ONWAAR
+s_crediteurnummer_wijzigen;Crediteurnummer wijzigen;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_agreements_purchase;inkoop prijsafspraken totaal;X(8);verzameling;;ONWAAR
+t_begin_saldo;Begin saldo;;bedrag;;ONWAAR
+t_bestel_overzicht;Bestel overzicht;X(8);verzameling;;ONWAAR
+t_boekjaar;Boekjaar;9999;integer;;ONWAAR
+t_brpa;Briefpapier;;character;;ONWAAR
+t_change_cred_bestand;CSV Bestand;X(40);bestand;;ONWAAR
+t_change_cred_new;Nieuw crediteurnummer;x(10);character;;ONWAAR
+t_change_cred_old;Oude crediteurnummer;x(10);character;;ONWAAR
+t_change_cred_type;Wijzig crediteurnummer;9;integer;Huidige crediteurnummer,1,Crediteurnummers uit CSV bestand,2;ONWAAR
+t_cred_brief;Briefpapier afbeelding;X(70);Afbeelding;;ONWAAR
+t_cred_crbe_bedrag;Totaal bedrag betalingen;;bedrag;;ONWAAR
+t_cred_crbe_count;Aantal betalingen;>>>>9;integer;;ONWAAR
+t_cred_crbg_budget;Budget;;bedrag;;ONWAAR
+t_cred_ifch_count;Aantal facturen;>>>>9;integer;;ONWAAR
+t_cred_ifcr_bedrag;Factuurwaarde regels;;bedrag;;ONWAAR
+t_cred_ifcr_count;Aantal factuurregels;>>>>9;integer;;ONWAAR
+t_cred_iorh_actueel;Aantal actuele inkooporders;>>>>>9;integer;;ONWAAR
+t_cred_iorh_count;Aantal inkooporders;>>>>9;integer;;ONWAAR
+t_cred_iorr_bedrag;Inkoopwaarde;;bedrag;;ONWAAR
+t_cred_iorr_count;Aantal inkoop orderregels;>>>>9;integer;;ONWAAR
+t_cred_ipbh_count;Aantal pakbonnen;>>>>9;integer;;ONWAAR
+t_cred_ipbr_count;Aantal pakbon regels;>>>>9;integer;;ONWAAR
+t_cred_ipbr_laat_count;Aantal pakbonregels te laat;>>>>9;integer;;ONWAAR
+t_cred_ipbr_laat_max;Max aantal dagen te laat;>>>>9;integer;;ONWAAR
+t_cred_ipbr_laat_perc;Percentage pakbonregels te laat;;percentage;;ONWAAR
+t_cred_ipbr_tijd_count;Aantal pakbonregels op tijd;>>>>9;integer;;ONWAAR
+t_cred_ipbr_tijd_perc;Percentage pakbonregels op tijd;;percentage;;ONWAAR
+t_cred_ipbr_vroeg_count;Aantal pakbonregels te vroeg;>>>>9;integer;;ONWAAR
+t_cred_ipbr_vroeg_max;Max aantal dagen te vroeg;>>>>9;integer;;ONWAAR
+t_cred_ipbr_vroeg_perc;Percentage pakbonregels te vroeg;;percentage;;ONWAAR
+t_cred_opcr;Totaal openstaande posten;;bedrag;;ONWAAR
+t_cred_opcr_afwijking;Gemiddeld aantal dagen afwijking;;aantal;;ONWAAR
+t_cred_opcr_betalingsdagen;Gemiddeld aantal betalingsdagen;;aantal;;ONWAAR
+t_cred_opcr_count;Aantal open posten;>>>>>9;integer;;ONWAAR
+t_cred_opde_betalingsdagen;Gemiddeld aantal betalingsdagen;;aantal;;ONWAAR
+t_form_crediteuren;Formuliercontainer crediteuren;;Formulier container;;ONWAAR
+t_form_crediteuren_go;Formuliercontainer crediteuren go;;Formulier container;;ONWAAR
+t_mkg_gbrv_payment_cred;MKG betalingen crediteur;;omschrijving;;ONWAAR
+t_overview_datum;Besteloverzicht t/m;99-99-9999;datum;;ONWAAR
+t_target_administrations;Doel administraties;X(40);character;,;ONWAAR
+taal_code;Taal;x(4);character;;WAAR
+valu_code;Valuta;x(4);character;;WAAR
+vrdg_num;Voorraadgroep;>>>>>9;integer;;WAAR
+vrzm_num;Verzendmethode;>9;integer;;WAAR

@@ -1,0 +1,416 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+admi_num;Administratie;999;integer;;WAAR
+arkg_num;Artikel kortingsgroep;>>>9;integer;;WAAR
+artg_num;Artikelgroep;>>>9;integer;;WAAR
+arti_actief;Actief;ja/nee;logical;;WAAR
+arti_afbeelding;Afbeelding;x(256);Afbeelding;;WAAR
+arti_arbv;Artikel bestelcodes verkoop;X(8);verzameling;;ONWAAR
+arti_artv;Artikel vertalingen;;verzameling;;ONWAAR
+arti_backflush;Backflush toegestaan;ja/nee;logical;;WAAR
+arti_backflush_afronden;Afronden bij backflush;ja/nee;logical;;WAAR
+arti_backflush_uitval;Uitval bij backflush;>>9.99;percentage;;WAAR
+arti_bestel_aantal;Bestel aantal;>>>>>9.99-;aantal;;WAAR
+arti_bestel_datum;Bestellen op;99-99-9999;datum;;WAAR
+arti_bestel_freq_aantal;Bestel om de;>>9;integer;;WAAR
+arti_bestel_freq_eenh;Bestel frequentie eenheid;9;integer;Eenmalig,0,Dagen,1,Weken,2,Maanden,3;WAAR
+arti_bestelcode;Bestelcode;x(40);character;;WAAR
+arti_bestelhoeveelheid;Bestelhoeveelheid;>>>>>9.99;aantal;;WAAR
+arti_bestellen;Bestellen;ja/nee;logical;;WAAR
+arti_blok_inkoop;Blokkeren inkoop;ja/nee;logical;;WAAR
+arti_blok_productie;Blokkeren productie;ja/nee;logical;;WAAR
+arti_blok_verkoop;Blokkeren verkoop;ja/nee;logical;;WAAR
+arti_btw_aanpasbaar;BTW code aanpasbaar;ja/nee;logical;;WAAR
+arti_btw_keuze;BTW keuze;9;integer;Standaard,1,BTW binnenland vrijgesteld,2,BTW binnenland verlegd,3;WAAR
+arti_clcm;Calculatie materialen;;verzameling;;ONWAAR
+arti_clcr;Calculatie halffabricaten;;verzameling;;ONWAAR
+arti_clcr_parent;Calculatie eindproducten;;verzameling;;ONWAAR
+arti_code;Artikel;x(40);omschrijving;;WAAR
+arti_cred;Offerteaanvraag crediteur;;Meervoudige lijst selectie;;ONWAAR
+arti_dienst_verkoop;Verlegde dienst;ja/nee;logical;;WAAR
+arti_docs;Document koppelingen;;Documenten;;ONWAAR
+arti_eenh_bestelling;Bestellingseenheid;x(5);character;;WAAR
+arti_eenh_handel;Handelseenheid;x(5);character;;WAAR
+arti_eenh_inkoopfactuur;Inkoopfactuureenheid;x(5);character;;WAAR
+arti_eenh_ontvangst;Ontvangsteenheid;x(5);character;;WAAR
+arti_eenh_prijs_inkoop;Eenheid inkoopprijs;x(5);character;;WAAR
+arti_eenh_prijs_verkoop;Eenheid verkoopprijs;x(5);character;;WAAR
+arti_eenh_productie;Productieeenheid;x(5);character;;WAAR
+arti_eenh_uitgifte;Uitgifteeenheid;x(5);character;;WAAR
+arti_eenh_vrd;Voorraadeenheid;x(5);character;;WAAR
+arti_eenh_vrk;Verkoopeenheid;x(5);character;;WAAR
+arti_fctr;Verkoopfactuur regels;;verzameling;;ONWAAR
+arti_fctr_fy;Factuurregels boekjaar;;verzameling;;ONWAAR
+arti_fmut;Financiele mutaties;;verzameling;;ONWAAR
+arti_gewicht;Gewicht;>>>>>9.9999-;decimal;;WAAR
+arti_gewicht_per_m;Gewicht/meter;>>>>>>>>>>>9.999999-;decimal;;ONWAAR
+arti_handelslengte;Handelslengte;>>>>>9.99;decimal;;WAAR
+arti_ict_fact_inkoop;Intrastat opslag inkoop;>>9.99;percentage;;WAAR
+arti_ict_fact_verkoop;Intrastat opslag verkoop;>>9.99;percentage;;WAAR
+arti_ifcr;Inkoopfactuur regels;;verzameling;;ONWAAR
+arti_inkoop_artikel;Inkoop artikel;ja/nee;logical;;WAAR
+arti_inkoopofferte;Offerte aanvragen;9;integer;Default,0,Ja,1,Nee,2;WAAR
+arti_iorr;Inkooporder regels;;verzameling;;ONWAAR
+arti_iorr_fy;Inkooporderregels boekjaar;;verzameling;;ONWAAR
+arti_iorr_historisch;Inkooporder regels historisch;;verzameling;;ONWAAR
+arti_ipaa;Inkoop prijsafspraken;;verzameling;;ONWAAR
+arti_keuren;Keuren;ja/nee;logical;;WAAR
+arti_kosten_artikel;Kosten artikel;ja/nee;logical;;WAAR
+arti_kostprijssysteem;Kostprijssysteem;9;integer;Vaste verrekenprijs,1,Gemiddelde verrekenprijs,2,Werkelijke verrekenprijs,3;WAAR
+arti_levertijd_inkoop;Levertijd inkoop;>>>9;integer;;WAAR
+arti_levertijd_productie;Levertijd productie;>>>9;integer;;WAAR
+arti_levertijd_verkoop;Interne handlingstijd;>>>9;integer;;WAAR
+arti_lijst_1;Lijst 1;yes/no;logical;;WAAR
+arti_lijst_2;Lijst 2;yes/no;logical;;WAAR
+arti_lijst_3;Lijst 3;yes/no;logical;;WAAR
+arti_lijst_4;Lijst 4;yes/no;logical;;WAAR
+arti_lijst_5;Lijst 5;yes/no;logical;;WAAR
+arti_lijst_6;Lijst 6;yes/no;logical;;WAAR
+arti_lijst_7;Lijst 7;yes/no;logical;;WAAR
+arti_lijst_8;Lijst 8;yes/no;logical;;WAAR
+arti_lijst_9;Lijst 9;yes/no;logical;;WAAR
+arti_locatie;Locatie;x(20);character;;WAAR
+arti_locatie_beheer;Gesloten locatie beheer;ja/nee;logical;;WAAR
+arti_magl_keuren;Magazijnlocatie voor keuren;x(10);character;;WAAR
+arti_mat_lengte;Materiaal lengte;>>>>>9.99;decimal;;WAAR
+arti_matb_num_1;Behandeling 1;>9;integer;;WAAR
+arti_matb_num_2;Behandeling 2;>9;integer;;WAAR
+arti_matb_num_3;Behandeling 3;>9;integer;;WAAR
+arti_matb_oms_1;Omschrijving beh 1;x(40);omschrijving;;WAAR
+arti_matb_oms_2;Omschrijving beh 2;x(40);omschrijving;;WAAR
+arti_matb_oms_3;Omschrijving beh 3;x(40);omschrijving;;WAAR
+arti_matb_prijs_1;Prijs beh 1;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_matb_prijs_2;Prijs beh 2;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_matb_prijs_3;Prijs beh 3;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_matb_prijs_eenh_1;Prijs eenheid beh 1;x(5);character;;WAAR
+arti_matb_prijs_eenh_2;Prijs eenheid beh 2;x(5);character;;WAAR
+arti_matb_prijs_eenh_3;Prijs eenheid beh 3;x(5);character;;WAAR
+arti_memo_inkoop_extern;Inkoop extern;x(2500);memo;;WAAR
+arti_memo_inkoop_intern;Inkoop intern;x(2500);memo;;WAAR
+arti_memo_productie;Productie memo;x(2500);memo;;WAAR
+arti_memo_verkoop_extern;Verkoop extern;x(2500);memo;;WAAR
+arti_memo_verkoop_intern;Verkoop intern;x(2500);memo;;WAAR
+arti_niet_autores;Autoreserveren niet toestaan;ja/nee;logical;;WAAR
+arti_oms_1;Omschrijving;x(40);omschrijving;;WAAR
+arti_oms_2;Omschrijving 2;x(40);omschrijving;;WAAR
+arti_oms_3;Omschrijving 3;x(40);omschrijving;;WAAR
+arti_oppervlakte;Oppervlakte;>>>>>>>>>>>9.999999-;character;;ONWAAR
+arti_pamt;Partij mutaties;X(8);verzameling;;ONWAAR
+arti_pamt_financiele_voorraad;Financiele voorraad;;verzameling;;ONWAAR
+arti_parameter_1;P1;>>>>>9.99;decimal;;WAAR
+arti_parameter_2;P2;>>>>>9.99;decimal;;WAAR
+arti_parameter_3;P3;>>>>>9.99;decimal;;WAAR
+arti_parameter_4;P4;>>>>>9.99;decimal;;WAAR
+arti_parameter_5;P5;>>>>>9.99;decimal;;WAAR
+arti_part;Partijen;;verzameling;;ONWAAR
+arti_partij;Gesloten partij registratie;ja/nee;logical;;WAAR
+arti_partij_per_1;Partijen per 1 vrd eenheid;ja/nee;logical;;WAAR
+arti_pkbr;Verkooporder pakbonregels;;verzameling;;ONWAAR
+arti_pmld;Meldingen;X(8);verzameling;;ONWAAR
+arti_pos;Pos;x(10);character;;WAAR
+arti_prdr;Productie halffabricaten;;verzameling;;ONWAAR
+arti_prdr_fy;Productieorderregels boekjaar;;verzameling;;ONWAAR
+arti_prdr_parent;Productie eindproducten;;verzameling;;ONWAAR
+arti_prijs_calculatie;Calculatieprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_gemiddeld;Gemiddelde verrekenprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_gemiddeld_mach;Gemiddelde verrekenprijs mach;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_gemiddeld_man;Gemiddelde verrekenprijs man;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_gemiddeld_mat;Gemiddelde verrekenprijs mat;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_gemiddeld_uitb;Gemiddelde verrekenprijs uitb;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_inkoop;Inkoopprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_netto;Nettoprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_netto_mach;Nettoprijs machine;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_netto_man;Nettoprijs man;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_netto_mat;Nettoprijs materiaal;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_netto_uitb;Nettoprijs uitbesteding;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_vast;Vaste verrekenprijs;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_vast_mach;Vaste verrekenprijs mach;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_vast_man;Vaste verrekenprijs man;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_vast_mat;Vaste verrekenprijs mat;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_vast_uitb;Vaste verrekenprijs uitb;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_verkoop;Verkoopprijs variabel;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prijs_verkoop_eenm;Verkoopprijs eenmalig;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_prmn;Productie materialen NC;;verzameling;;ONWAAR
+arti_prmv;Productie materialen;;verzameling;;ONWAAR
+arti_rela;Offerteaanvraag relatie;;Meervoudige lijst selectie;;ONWAAR
+arti_revisie;Revisie;x(20);character;;WAAR
+arti_seriegrootte;Seriegrootte;>>>>>9.99;decimal;;WAAR
+arti_stlh;Stuklijsten;;verzameling;;ONWAAR
+arti_stlh_num;Stuklijst;x(40);character;;ONWAAR
+arti_stlm;Stuklijst materialen;;verzameling;;ONWAAR
+arti_stlr;Stuklijst halffabricaten;;verzameling;;ONWAAR
+arti_stlr_parent;Stuklijst eindproducten;;verzameling;;ONWAAR
+arti_stuklijst_beheer;Stuklijst koppelen met artikel;yes/no;logical;;WAAR
+arti_tasks;Activiteiten;X(8);verzameling;;ONWAAR
+arti_tekening;Tekening;x(40);character;;WAAR
+arti_trans_eenh;Transport eenheid;x(5);character;;WAAR
+arti_trans_gewicht;Transport gewicht;>>>>>9.99-;aantal;;WAAR
+arti_unitinfo;Eenheden;;Service interface;;ONWAAR
+arti_verh_aantal_aantal_grp;Aantal groep (a);>>>>>9.99-;aantal;;WAAR
+arti_verh_aantal_aantal_vrd;Aantal voorraad (a);>>>>>9.99-;aantal;;WAAR
+arti_verh_aantal_eenh_grp;Eenheid groep (a);x(5);character;;WAAR
+arti_verh_gewicht_aantal_grp;Aantal groep (g);>>>>>9.99-;aantal;;WAAR
+arti_verh_gewicht_aantal_vrd;Aantal voorraad (g);>>>>>9.99-;aantal;;WAAR
+arti_verh_gewicht_eenh_grp;Eenheid groep (g);x(5);character;;WAAR
+arti_verh_lengte_aantal_grp;Aantal groep (l);>>>>>9.99-;aantal;;WAAR
+arti_verh_lengte_aantal_vrd;Aantal voorraad (l);>>>>>9.99-;aantal;;WAAR
+arti_verh_lengte_eenh_grp;Eenheid groep (l);x(5);character;;WAAR
+arti_verh_oppv_aantal_grp;Aantal groep (o);>>>>>9.99-;aantal;;WAAR
+arti_verh_oppv_aantal_vrd;Aantal voorraad (o);>>>>>9.99-;aantal;;WAAR
+arti_verh_oppv_eenh_grp;Eenheid groep (o);x(5);character;;WAAR
+arti_verh_rest_aantal_grp;Aantal groep (r);>>>>>9.99-;aantal;;WAAR
+arti_verh_rest_aantal_vrd;Aantal voorraad (r);>>>>>9.99-;aantal;;WAAR
+arti_verh_rest_eenh_grp;Eenheid groep (r);x(5);character;;WAAR
+arti_verh_tijd_aantal_grp;Aantal groep (t);>>>>>9.99-;aantal;;WAAR
+arti_verh_tijd_aantal_vrd;Aantal voorraad (t);>>>>>9.99-;aantal;;WAAR
+arti_verh_tijd_eenh_grp;Eenheid groep (t);x(5);character;;WAAR
+arti_verh_volume_aantal_grp;Aantal groep (v);>>>>>9.99-;aantal;;WAAR
+arti_verh_volume_aantal_vrd;Aantal voorraad (v);>>>>>9.99-;aantal;;WAAR
+arti_verh_volume_eenh_grp;Eenheid groep (v);x(5);character;;WAAR
+arti_vofr;Verkoopofferte regels;;verzameling;;ONWAAR
+arti_vofr_fy;Offerteregels boekjaar;;verzameling;;ONWAAR
+arti_vofr_historisch;Verkoopofferte regels historisch;;verzameling;;ONWAAR
+arti_voorraad_aantal;Voorraad aantal;>>>>>9.99-;aantal;;WAAR
+arti_voorraad_artikel;Voorraadgestuurd;ja/nee;logical;;WAAR
+arti_voorraad_waarde;Voorraad waarde;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_voorraad_waarde_mach;Voorraad waarde mach;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_voorraad_waarde_man;Voorraad waarde man;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_voorraad_waarde_mat;Voorraad waarde mat;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_voorraad_waarde_uitb;Voorraad waarde uitb;>>>,>>>,>>9.99-;bedrag;;WAAR
+arti_voorraadsysteem;Voorraadsysteem;9;integer;Volgens administratie instelling,0,FIFO,1,LIFO,2;WAAR
+arti_vorr;Verkooporder regels;;verzameling;;ONWAAR
+arti_vorr_fy;Orderregels boekjaar;;verzameling;;ONWAAR
+arti_vorr_historisch;Verkooporder regels historisch;;verzameling;;ONWAAR
+arti_vpaa;Verkoop prijsafspraken;;verzameling;;ONWAAR
+arti_vrd;Voorraad in de tijd;;verzameling;;ONWAAR
+arti_vrd_aanvullen_tot;Aanvullen tot min;>>>>>9.99-;aantal;;WAAR
+arti_vrd_minimum;Minimum voorraad;>>>>>9.99-;aantal;;WAAR
+arti_vrd_positief;Voorraad positief controle;ja/nee;logical;;WAAR
+arti_vrij_datum_1;Vrij datum 1;99-99-9999;datum;;WAAR
+arti_vrij_datum_2;Vrij datum 2;99-99-9999;datum;;WAAR
+arti_vrij_datum_3;Vrij datum 3;99-99-9999;datum;;WAAR
+arti_vrij_datum_4;Vrij datum 4;99-99-9999;datum;;WAAR
+arti_vrij_datum_5;Vrij datum 5;99-99-9999;datum;;WAAR
+arti_vrij_memo_1;Vrij memo 1;x(2500);memo;;WAAR
+arti_vrij_memo_2;Vrij memo 2;x(2500);memo;;WAAR
+arti_vrij_memo_3;Vrij memo 3;x(2500);memo;;WAAR
+arti_vrij_memo_4;Vrij memo 4;x(2500);memo;;WAAR
+arti_vrij_memo_5;Vrij memo 5;x(2500);memo;;WAAR
+arti_vrij_veld_1;Vrij veld 1;x(40);omschrijving;;WAAR
+arti_vrij_veld_2;Vrij veld 2;x(40);omschrijving;;WAAR
+arti_vrij_veld_3;Vrij veld 3;x(40);omschrijving;;WAAR
+arti_vrij_veld_4;Vrij veld 4;x(40);omschrijving;;WAAR
+arti_vrij_veld_5;Vrij veld 5;x(40);omschrijving;;WAAR
+arti_vrm_beh;Behoefte niet op VRM basis;ja/nee;logical;;WAAR
+arti_wvp_obv_gvp;GVP bij aanspreken voorraad;ja/nee;logical;;WAAR
+arti_zoeknaam;Zoeknaam;x(20);character;;WAAR
+artikel_nieuw;Nieuw artikel;x(40);omschrijving;;ONWAAR
+artikel_oud;Artikel oud;x(40);omschrijving;;ONWAAR
+btwc_code;BTW;9;integer;;WAAR
+c_vrd;Grafiek voorraad in de tijd;;Grafiek;;ONWAAR
+cert_code;Certificaat;x(10);character;;WAAR
+cred_num;Crediteur;x(10);character;;WAAR
+d_dashboard;Dashboard;;Dashboard;;ONWAAR
+debi_num;Debiteur;x(10);character;;WAAR
+g_title_algemeen;Omschrijving algemeen;;omschrijving;;ONWAAR
+g_title_eenheid;Titel eenheid;;omschrijving;;ONWAAR
+g_title_eindproducten_calculatie;Titel eindeproducten calculatie;;omschrijving;;ONWAAR
+g_title_eindproducten_productie;Titel eindproducten productie;;omschrijving;;ONWAAR
+g_title_eindproducten_stuklijst;Titel eindproducten stuklijst;;omschrijving;;ONWAAR
+g_title_halffabrikaten_calculatie;Titel halffabricaten calculatie;;omschrijving;;ONWAAR
+g_title_halffabrikaten_productie;Titel halffabricaten productie;;omschrijving;;ONWAAR
+g_title_halffabrikaten_stuklijst;Titel halffabricaten stuklijst;;omschrijving;;ONWAAR
+g_title_inkooporder_regels;Titel inkooporder regels;;omschrijving;;ONWAAR
+g_title_inkooporderregels_historisch;Titel inkooporderregels historisch;;omschrijving;;ONWAAR
+g_title_inkoopprijsafspraken;Titel inkoopprijsafspraken;;omschrijving;;ONWAAR
+g_title_materialen_calculatie;Titel materialen calculatie;;omschrijving;;ONWAAR
+g_title_materialen_nc_productie;Titel materialen nc productie;;omschrijving;;ONWAAR
+g_title_materialen_stuklijst;Titel materialen stuklijst;;omschrijving;;ONWAAR
+g_title_materialen_vc_productie;Titel materialen vc productie;;omschrijving;;ONWAAR
+g_title_verkoopofferte_regels;Titel verkoopofferte regels;;omschrijving;;ONWAAR
+g_title_verkoopofferte_regels_historisch;Titel verkoopofferte regels historisch;;omschrijving;;ONWAAR
+g_title_verkooporder_regels;Titel verkooporder regels;;omschrijving;;ONWAAR
+g_title_verkooporderregels_historisch;Titel verkooporderregels historisch;;omschrijving;;ONWAAR
+g_title_verkoopprijsafspraken;Titel verkoopprijsafspraken;;omschrijving;;ONWAAR
+inkg_num;Inkoopgroep;>>>9;integer;;WAAR
+intr_code;Intrastatcode;x(20);character;;WAAR
+magl_code;Magazijn Locatie;x(10);character;;WAAR
+magw_code;Code;x(10);character;;WAAR
+matf_num;Formule;>>9;integer;;WAAR
+mats_num;Soort;x(6);character;;WAAR
+mkg_gbrv_arti;MKG Artikel;;omschrijving;;ONWAAR
+prdg_num;Productiegroep;>>>9;integer;;WAAR
+s_change_articode;Artikelcode aanpassen;;Service;;ONWAAR
+s_change_stockgroup;Voorraadgroep aanpassen;;Service;;ONWAAR
+s_create_partlist;Maak stuklijst;;Service;;ONWAAR
+s_delete_reservations;Verwijder reserveringen;;Service;;ONWAAR
+s_gotovoorraadherwaardering;Ga naar Voorraad herwaardering;;Service;;ONWAAR
+s_recalc_arti;Bijwerken waarde en aantal;;Service;;ONWAAR
+s_recalc_revisie;Bijwerken revisie;;Service;;ONWAAR
+s_replace_article;Artikel vervangen in actieve stuklijsten;;Service;;ONWAAR
+s_update_nettoprijs;Nettoprijs aanpassen (incl waarde herwaardering);;Service;;ONWAAR
+s_update_prices;Wijzig prijzen;;Service;;ONWAAR
+si_arti_vrd_info;Formulier voorraad info;;Service interface;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_afbeelding_bestand;Afbeelding bestandsnaam;x(200);character;;ONWAAR
+t_afbeelding_in_db;Afbeelding aanwezig in DB;;logical;;ONWAAR
+t_agreements;Verkoop prijsafspraken totaal;X(8);verzameling;;ONWAAR
+t_agreements_purchase;inkoop prijsafspraken totaal;X(8);verzameling;;ONWAAR
+t_arti_fctr_bedrag;Omzet bedrag regels boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_bedrag_met_kp_av;Omzet met kostprijs boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_count;Aantal factuurregels boekjaar;>>>>>9;integer;;ONWAAR
+t_arti_fctr_dekking_machine_av;Dekking machine boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_dekking_man_av;Dekking man boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_dekking_materiaal_av;Dekking materiaal boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_dekking_totaal_av;Dekking totaal boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_dekking_uitbesteding_av;Dekking uitbesteding boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_ksp_totaal_av;Kostprijs totaal boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_netto_machine_av;Netto machine boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_netto_man_av;Netto man boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_netto_materiaal_av;Netto materiaal boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_netto_totaal_av;Netto totaal boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_netto_uitbesteding_av;Netto uitbesteding boekjaar;;bedrag;;ONWAAR
+t_arti_fctr_resultaat_av;Resultaat totaal;;bedrag;;ONWAAR
+t_arti_fctr_resultaat_percentage;Resultaat percentage;>>9.99;percentage;;ONWAAR
+t_arti_iofr;Offerteaanvraag regels;X(8);verzameling;;ONWAAR
+t_arti_iorr_count;Aantal inkoopregels boekjaar;>>>>>9;integer;;ONWAAR
+t_arti_iorr_gem_prijs;Gemiddelde prijs ingekocht;;bedrag;;ONWAAR
+t_arti_iorr_ingekocht_bedrag;Totaal bedrag ingekocht boekjaar;;bedrag;;ONWAAR
+t_arti_iorr_max_prijs;Maximale prijs ingekocht boekjaar;;bedrag;;ONWAAR
+t_arti_iorr_min_prijs;Minimale prijs ingekocht boekjaar;;bedrag;;ONWAAR
+t_arti_iorr_tot_aantal;Totaal aantal ingekocht boekjaar;;aantal;;ONWAAR
+t_arti_pamt_beh_prod;pamt behoefte productie;;verzameling;;ONWAAR
+t_arti_pamt_beh_prod_forecast;pamt behoefte productie forecast;X(8);verzameling;;ONWAAR
+t_arti_pamt_beh_verk;pamt behoefte verkoop;;verzameling;;ONWAAR
+t_arti_pamt_beh_verk_forecast;pamt behoefte verkoop forecast;X(8);verzameling;;ONWAAR
+t_arti_pamt_financieel;pamt financieel;;verzameling;;ONWAAR
+t_arti_pamt_fysiek;pamt fysiek;;verzameling;;ONWAAR
+t_arti_pamt_res_prod;pamt reservering productie;;verzameling;;ONWAAR
+t_arti_pamt_res_prod_forecast;pamt reservering productie forecast;X(8);verzameling;;ONWAAR
+t_arti_pamt_res_verk;pamt reservering verkoop;;verzameling;;ONWAAR
+t_arti_pamt_res_verk_forecast;pamt reservering verkoop forecast;X(8);verzameling;;ONWAAR
+t_arti_pamt_verw_ink;pamt verwacht inkoop;;verzameling;;ONWAAR
+t_arti_pamt_verw_prod;pamt verwacht productie;;verzameling;;ONWAAR
+t_arti_pamt_verw_prod_forecast;pamt verwacht productie forecast;X(8);verzameling;;ONWAAR
+t_arti_prdr_count;Aantal productieorderregels boekjaar;>>>>>9;integer;;ONWAAR
+t_arti_prdr_tot_aantal;Totaal productie aantal boekjaar;;aantal;;ONWAAR
+t_arti_vofr_aangeboden_bedrag;Totaal bedrag aangeboden boekjaar;;bedrag;;ONWAAR
+t_arti_vofr_count;Aantal offerteregels boekjaar;>>>>>9;integer;;ONWAAR
+t_arti_vofr_gem_prijs;Gemiddelde prijs aangeboden;;bedrag;;ONWAAR
+t_arti_vofr_max_prijs;Maximale prijs aangeboden boekjaar;;bedrag;;ONWAAR
+t_arti_vofr_min_prijs;Minimale prijs aangeboden boekjaar;;bedrag;;ONWAAR
+t_arti_vofr_tot_aantal;Totaal aantal aangeboden boekjaar;;aantal;;ONWAAR
+t_arti_vorr_count;Aantal orderregels boekjaar;>>>>>9;integer;;ONWAAR
+t_arti_vorr_gem_prijs;Gemiddelde prijs verkocht;;bedrag;;ONWAAR
+t_arti_vorr_max_prijs;Maximale prijs verkocht boekjaar;;bedrag;;ONWAAR
+t_arti_vorr_min_prijs;Minimale prijs verkocht boekjaar;;bedrag;;ONWAAR
+t_arti_vorr_tot_aantal;Totaal aantal verkocht boekjaar;;aantal;;ONWAAR
+t_arti_vorr_verkocht_bedrag;Totaal bedrag verkocht boekjaar;;bedrag;;ONWAAR
+t_bron_arti;Bron arti;x(40);character;;ONWAAR
+t_change_articode_bestand;CSV Betand;X(40);bestand;;ONWAAR
+t_change_articode_bron;Bron artikelcode;x(40);character;;ONWAAR
+t_change_articode_new;Nieuw artikelcode;x(40);character;;ONWAAR
+t_change_articode_type;Wijzig artikelcode;9;integer;Huidig artikel,1,Artikelen uit CSV bestand,2;ONWAAR
+t_change_stockgroup_arti;Artikelcode;x(40);character;;ONWAAR
+t_change_stockgroup_bestand;CSV Bestand;X(40);bestand;;ONWAAR
+t_change_stockgroup_new;Nieuwe voorraadgroep;9999;integer;;ONWAAR
+t_change_stockgroup_old;Oude voorraadgroep;>>>>>9;integer;;ONWAAR
+t_change_stockgroup_type;Wijzig voorraadgroep;9;integer;Huidig artikel,1,Artikelen uit CSV bestand,2;ONWAAR
+t_chart_voorraad_terug_in_tijd;Voorraad terug in de tijd;;Grafiek;;ONWAAR
+t_cred;Offerteaanvraag crediteur;X(8);verzameling;;ONWAAR
+t_event;Event;;character;;ONWAAR
+t_fmut;Journaalposten;;verzameling;;ONWAAR
+t_form_arti;Formulieren artikel;;Formulier container;;ONWAAR
+t_form_arti_voorraad_raadplegen;Formulier raadplegen voorraad;;Formulier container;;ONWAAR
+t_form_go_artikelen;Formulier artikelen;;Formulier container;;ONWAAR
+t_form_prices;Detailformulier verrekenprijs;;Formulier container;;ONWAAR
+t_ifcr_avg;Gemiddeld inkoopfactuur bedrag bruto;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_ifcr_count;Aantal inkoopfactuurregels;>>>>>9;aantal;;ONWAAR
+t_ifcr_max;Maximum inkoopfactuur bedrag bruto;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_ifcr_min;Minimum inkoopfactuur bedrag bruto;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_ifcr_rapo;Rapport inkoopfactuurregel;;Rapport;;ONWAAR
+t_laatste_inkfact_crediteur;Laatste inkoopfactuur crediteur;x(10);character;;ONWAAR
+t_laatste_inkfact_datum;Laatste inkoopfactuur datum;99-99-9999;datum;;ONWAAR
+t_laatste_inkfact_eenheid;Laatste inkoopfactuur eenheid;x(40);character;;ONWAAR
+t_laatste_inkfact_factuur;Laatste inkoopfactuur;x(10);character;;ONWAAR
+t_laatste_inkfact_factuurregel;Laatste inkoopfactuur regel;>>9;integer;;ONWAAR
+t_laatste_inkfact_prijs;Laatste inkoopfactuur prijs;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_laatste_verkfact_datum;Laatste verkoopfactuur datum;99-99-9999;datum;;ONWAAR
+t_laatste_verkfact_debiteur;Laatste verkoopfactuur debiteur;x(40);character;;ONWAAR
+t_laatste_verkfact_eenheid;Laatste verkoopfactuur eenheid;x(40);character;;ONWAAR
+t_laatste_verkfact_factuur;Laatste verkoopfactuur;x(12);character;;ONWAAR
+t_laatste_verkfact_factuurregel;Laatste verkoopfactuur regel;>>9;integer;;ONWAAR
+t_laatste_verkfact_prijs;Laatste verkoopfactuur prijs;>>>,>>>,>>9.99-;bedrag;;ONWAAR
+t_parl;Partij locaties;;verzameling;;ONWAAR
+t_recalc_arti;Artikel;X(40);character;;ONWAAR
+t_recalc_arti_bestand;CSV Betand;X(40);bestand;;ONWAAR
+t_recalc_type;Bijwerken;9;integer;Huidig artikel,1,Artikelen uit CSV bestand,2;ONWAAR
+t_rela;Offerteaanvraag relatie;X(8);verzameling;;ONWAAR
+t_replace_arti_cert;Certificaat (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_ep;Eindproduct;;logical;;ONWAAR
+t_replace_arti_hf;Halffabricaat (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_cert;Certificaat hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_memo;Memo hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_oms_1;Omschrijving 1 hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_oms_2;Omschrijving 2 hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_oms_3;Omschrijving 3 hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_seriegrootte;Seriegrootte hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_hf_tek_rev_pos;Tekening / Revisie / Pos hf (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_mat_oms_1;Omschrijving 1 (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_mat_oms_2;Omschrijving 2 (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_mat_oms_3;Omschrijving 3 (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_material;Materiaal (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_matl;Materiaallijsten (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_memo_ext;Memo extern (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_memo_int;Memo intern (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_rev_nieuw;Nieuwe revisie stuklijst maken (artikel vervangen);;logical;;ONWAAR
+t_replace_arti_tek_rev_pos;Tekening / Revisie / Pos (artikel vervangen);;logical;;ONWAAR
+t_reservation_forecast;Alleen reserveringen van forecast orders verwijderen;;logical;;ONWAAR
+t_reservation_material;Verwijder materiaal reserveringen;;logical;;ONWAAR
+t_reservation_picklist;Reserveringen die op een picklist staan behouden;;logical;;ONWAAR
+t_reservation_sale;Verwijder verkoop reserveringen;;logical;;ONWAAR
+t_task_tree;Activiteiten selectieboom;;Selectie boom;;ONWAAR
+t_vrd_datum;Datum voorraad in de tijd;;datum;;ONWAAR
+t_vrd_fys;Fysieke voorraad;;aantal;;ONWAAR
+t_vrd_fys_beh_prod;Fysieke voorraad behoefte productie;;aantal;;ONWAAR
+t_vrd_fys_beh_prod_forecast;Fysieke voorraad behoefte productie forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_beh_prod_mgub;Behoefte productie magazijnbon;;aantal;;ONWAAR
+t_vrd_fys_beh_tot;Fysieke voorraad behoefte totaal;;aantal;;ONWAAR
+t_vrd_fys_beh_tot_forecast;Fysieke voorraad behoefte totaal forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_beh_tot_min;Fysieke voorraad behoefte totaal min;;aantal;;ONWAAR
+t_vrd_fys_beh_verk;Fysieke voorraad behoefte verkoop;;aantal;;ONWAAR
+t_vrd_fys_beh_verk_forecast;Fysieke voorraad behoefte verkoop forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_beh_verk_mgub;Behoefte verkoop magazijnbon;;aantal;;ONWAAR
+t_vrd_fys_dat;Fysieke voorraad peildatum;;datum;;ONWAAR
+t_vrd_fys_eenh;Fysieke voorraad eenheid;x(5);character;;ONWAAR
+t_vrd_fys_incl_fc;Totalen inclusief forecast;ja/nee;logical;;ONWAAR
+t_vrd_fys_ink;Fysieke voorraad inkoop;;aantal;;ONWAAR
+t_vrd_fys_max;Fysieke voorraad laatste datum;;datum;;ONWAAR
+t_vrd_fys_max_aantal;Fysieke voorraad aantal laatste datum;>>>>9;integer;;ONWAAR
+t_vrd_fys_max_type;Fysieke voorraad type laatste datum;99;integer;;ONWAAR
+t_vrd_fys_plus_verw;Fysieke voorraad fysiek en verwacht;;aantal;;ONWAAR
+t_vrd_fys_prod;Fysieke voorraad productie;;aantal;;ONWAAR
+t_vrd_fys_prod_forecast;Fysieke voorraad productie forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_res_prod;Fysieke voorraad reservering productie;;aantal;;ONWAAR
+t_vrd_fys_res_prod_forecast;Fysieke voorraad reservering productie forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_res_prod_mgub;Reservering productie magazijnbon;;aantal;;ONWAAR
+t_vrd_fys_res_tot;Fysieke voorraad reservering totaal;;aantal;;ONWAAR
+t_vrd_fys_res_tot_forecast;Fysieke voorraad reservering totaal forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_res_tot_min;Fysieke voorraad reservering totaal min;;aantal;;ONWAAR
+t_vrd_fys_res_verk;Fysieke voorraad reservering verkoop;;aantal;;ONWAAR
+t_vrd_fys_res_verk_forecast;Fysieke voorraad reservering verkoop forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_res_verk_mgub;Reservering verkoop magazijnbon;;aantal;;ONWAAR
+t_vrd_fys_verw_res;Fysieke voorraad na reservering;;aantal;;ONWAAR
+t_vrd_fys_verwacht;Fysieke voorraad verwacht;;aantal;;ONWAAR
+t_vrd_fys_verwacht_forecast;Fysieke voorraad verwacht totaal forecast;>>>>>9.99-;aantal;;ONWAAR
+t_vrd_fys_verwacht_tot;Fysieke voorraad verwacht totaal;;aantal;;ONWAAR
+t_vrd_fys_vrij;Fysieke voorraad vrije voorraad;;aantal;;ONWAAR
+t_vrm;VRM;;VRM;;ONWAAR
+t_vrm_waarschuwing;Vrm waarschuwing;;omschrijving;;ONWAAR
+t_warning_0_price;Waarschuwing 0 prijs wvp;x(200);character;;ONWAAR
+vrdg_num;Voorraadgroep;>>>>>9;integer;;WAAR
+vrkg_num;Verkoopgroep;>>>>>9;integer;;WAAR

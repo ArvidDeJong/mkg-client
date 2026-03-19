@@ -1,0 +1,79 @@
+﻿Veld;Label;Formaat;Type;Lijst met mogelijke waarden;Is database veld
+gebr_aanm_menu;Aanmaken menu's;ja/nee;logical;;WAAR
+gebr_actief;Actief;ja/nee;logical;;WAAR
+gebr_actief_in_activiteiten;Actief binnen activiteiten;ja/nee;logical;;WAAR
+gebr_actief_in_meldingen;Actief binnen meldingen;ja/nee;logical;;WAAR
+gebr_alle_uren_beheren;Mag alle uren beheren;ja/nee;logical;;WAAR
+gebr_auab;Autorisatie administratie en boekjaar;x(80);verzameling;;ONWAAR
+gebr_backup_meld;Toon backup waarschuwing;ja/nee;logical;;WAAR
+gebr_backup_optie;Mag backup maken;ja/nee;logical;;WAAR
+gebr_beheerder;Beheerder;ja/nee;logical;;WAAR
+gebr_blok_live;Geblokkeerd voor de live omgeving;ja/nee;logical;;WAAR
+gebr_code;Aanmeldnaam;x(20);character;;WAAR
+gebr_debi_info;Debiteur infoscherm actief;ja/nee;logical;;WAAR
+gebr_doc_beheer;Mag documenten koppelen;ja/nee;logical;;WAAR
+gebr_grpn;Groepen;x(80);Meervoudige lijst selectie;;ONWAAR
+gebr_licentie_meld;Toon licentie waarschuwing;ja/nee;logical;;WAAR
+gebr_licentie_meld_dagen;Melding binnen hoeveel dagen?;>9;integer;;WAAR
+gebr_limiet_overschrijden;Mag kredietbewaking overschrijden;ja/nee;logical;;WAAR
+gebr_logb;Logboek van de gebruiker;;verzameling;;ONWAAR
+gebr_login_optie;Toon het login optie scherm;ja/nee;logical;;WAAR
+gebr_login_wijzig_wachtwoord;Wijzig wachtwoord bij inloggen;ja/nee;logical;;WAAR
+gebr_medw;Gekoppelde medewerkers;X(8);verzameling;;ONWAAR
+gebr_memo;Memo;x(2500);memo;;WAAR
+gebr_naam;Naam;x(40);omschrijving;;WAAR
+gebr_onderschrift_1;Onderschrift;x(40);omschrijving;;WAAR
+gebr_onderschrift_2;Onderschrift 2;x(40);omschrijving;;WAAR
+gebr_outlook;Entra gebruiker;x(256);omschrijving;;WAAR
+gebr_password_date;Datum wijziging wachtwoord;99-99-9999;datum;;WAAR
+gebr_portal_active;Eigen portal inlog;ja/nee;logical;;WAAR
+gebr_portal_pass;Portal password;x(50);character;;WAAR
+gebr_portal_user;Portal user;x(40);character;;WAAR
+gebr_referentie;Referentie;x(10);character;;WAAR
+gebr_reportbroker_meld;Toon melding reportbroker;ja/nee;logical;;WAAR
+gebr_sessie_aantal;Aantal sessies;>9;integer;;WAAR
+gebr_sessie_aantal_db;Max aantal aanmeldingen;>9;integer;;WAAR
+gebr_sessie_controle;Sessie controle;ja/nee;logical;;WAAR
+gebr_shopfloor;Is Shop Floor Control;ja/nee;logical;;WAAR
+gebr_shopfloor_badge;Shop Floor badge inklokken;ja/nee;logical;;WAAR
+gebr_shopfloor_user;Shop Floor Control;x(20);character;;WAAR
+gebr_sluit_meld;Toon melding bij afsluiten MKG;ja/nee;logical;;WAAR
+gebr_sp_gebruiker;Azure AD beveiligingsgroep;x(70);character;,;WAAR
+gebr_sp_local_sync;Lokale SharePoint synchronisatie;x(80);map;;WAAR
+gebr_sub_onh;F9 actief bij zoekvelden;ja/nee;logical;;WAAR
+gebr_totp_actief;Multifactor authenticatie is actief;ja/nee;logical;;WAAR
+gebr_totp_key;Multifactor authenticatie sleutel;x(40);character;;WAAR
+gebr_versie_meld;Toon versie melding;ja/nee;logical;;WAAR
+gebr_wachtwoord_verval_dagen;Wachtwoord vervaldagen;>>9;integer;;WAAR
+gebr_wijzig_alle_activiteiten;Mag alle activiteiten beheren;ja/nee;logical;;WAAR
+gebr_wijzig_alle_meldingen;Mag alle meldingen beheren;ja/nee;logical;;WAAR
+gebr_wijzig_boom;Mag boomstructuur aanpassen;ja/nee;logical;;WAAR
+gebr_wijzig_browse;Mag browselijsten aanpassen;ja/nee;logical;;WAAR
+gebr_wijzig_snelzoeken;Mag snelzoeken aanpassen;ja/nee;logical;;WAAR
+gebr_wijzig_taakbalk;Mag thema kiezen;ja/nee;logical;;WAAR
+gebr_wijzig_werkbalk;Mag werkbalk aanpassen;ja/nee;logical;;WAAR
+gebr_ww_complex;Complexiteitsvereisten actief;ja/nee;logical;;WAAR
+password_1;Wachtwoord;X(20);character;;ONWAAR
+password_2;Bevestig;x(20);character;;ONWAAR
+s_changepassword;Wachtwoord wijzigen;;Service;;ONWAAR
+s_copy_userprofile;Kopieer gebruikersprofiel;;Service;;ONWAAR
+s_translate;Vertaal tekst;;Service;;ONWAAR
+s_user_unlocked;Ontgrendelen;;Service;;ONWAAR
+sys_dat_aanm;Aangemaakt op;99-99-9999;datum;;WAAR
+sys_dat_wijzig;Gewijzigd op;99-99-9999;datum;;WAAR
+sys_gebr_aanm;Aangemaakt door;X(20);character;;WAAR
+sys_gebr_wijzig;Gewijzigd door;X(20);character;;WAAR
+sys_tijd_aanm;Aangemaakt op tijd;>>>>>9;integer;;WAAR
+sys_tijd_wijzig;Gewijzigd op tijd;>>>>>9;integer;;WAAR
+t_canuse_smart_assistant;Mag slimme assistent gebruiken;ja/nee;logical;;ONWAAR
+t_canuse_smart_search;Mag zoeken met natuurlijke taal gebruiken;ja/nee;logical;;ONWAAR
+t_canuse_smart_textfunctions;Mag AI tekst functies gebruiken;ja/nee;logical;;ONWAAR
+t_gebr_naar;Gebruiker naar;x(20);character;chr(5);ONWAAR
+t_gebr_taal;Taal;9999;integer;,;ONWAAR
+t_gebr_van;Gebruiker van;X(20);character;;ONWAAR
+t_grpn;Groepen;X(8);verzameling;;ONWAAR
+t_instellingen;Instellingen;X(8);verzameling;;ONWAAR
+t_label_wiki;Label wiki-item;x(100);character;;ONWAAR
+t_licentie_bijwerken;Mag licentie bijwerken;ja/nee;logical;;ONWAAR
+t_user_locked;Gebruiker vergrendeld;ja/nee;logical;;ONWAAR
+t_website_wiki;Website wiki-item;X(40);website;;ONWAAR
