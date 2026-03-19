@@ -20,25 +20,7 @@ class RelationsService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
-            $fieldList = $this->getDefaultRelationFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        return $this->get('/rela', $query);
+        return $this->listDocument('rela', $fieldList, $this->getDefaultRelationFieldList(), $filter, $numRows);
     }
 
     /**
@@ -60,17 +42,14 @@ class RelationsService extends BaseMkgService
      */
     public function findByDebtorNumber(string|int $debtorNumber, array $fieldList = []): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
+        if ($fieldList === []) {
             $fieldList = $this->getDefaultRelationFieldList();
         }
 
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        return $this->get('/rela/rela_debi/'.ltrim((string) $debtorNumber, '/'), $query);
+        return $this->get(
+            '/rela/rela_debi/'.ltrim((string) $debtorNumber, '/'),
+            $this->buildListQuery($fieldList)
+        );
     }
 
     /**
@@ -110,9 +89,7 @@ class RelationsService extends BaseMkgService
      */
     public function extractRelationRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'rela');
-
-        return $this->normalizeRows($rows, $this->getRelationFieldMeta());
+        return $this->extractNormalizedRows($response, 'rela', $this->getRelationFieldMeta());
     }
 
     /**
@@ -136,12 +113,6 @@ class RelationsService extends BaseMkgService
      */
     public function getRelationFieldMeta(): array
     {
-        if (self::$relationFieldMeta !== null) {
-            return self::$relationFieldMeta;
-        }
-
-        self::$relationFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('rela'));
-
-        return self::$relationFieldMeta;
+        return $this->getCachedFieldMeta(self::$relationFieldMeta, 'rela');
     }
 }

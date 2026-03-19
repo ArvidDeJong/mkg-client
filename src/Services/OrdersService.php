@@ -28,25 +28,7 @@ class OrdersService extends BaseMkgService
      */
     public function listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
-            $fieldList = $this->getDefaultOrderFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        return $this->get('/vorh', $query);
+        return $this->listDocument('vorh', $fieldList, $this->getDefaultOrderFieldList(), $filter, $numRows);
     }
 
     /**
@@ -88,25 +70,7 @@ class OrdersService extends BaseMkgService
      */
     public function listRows(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
-            $fieldList = $this->getDefaultOrderRowFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        return $this->get('/vorr', $query);
+        return $this->listDocument('vorr', $fieldList, $this->getDefaultOrderRowFieldList(), $filter, $numRows);
     }
 
     /**
@@ -147,25 +111,7 @@ class OrdersService extends BaseMkgService
      */
     public function listRowParameters(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
-            $fieldList = $this->getDefaultOrderRowParameterFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        return $this->get('/vopa', $query);
+        return $this->listDocument('vopa', $fieldList, $this->getDefaultOrderRowParameterFieldList(), $filter, $numRows);
     }
 
     /**
@@ -196,9 +142,7 @@ class OrdersService extends BaseMkgService
      */
     public function extractHeaderRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'vorh');
-
-        return $this->normalizeRows($rows, $this->getOrderFieldMeta());
+        return $this->extractNormalizedRows($response, 'vorh', $this->getOrderFieldMeta());
     }
 
     /**
@@ -206,9 +150,7 @@ class OrdersService extends BaseMkgService
      */
     public function extractOrderLineRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'vorr');
-
-        return $this->normalizeRows($rows, $this->getOrderRowFieldMeta());
+        return $this->extractNormalizedRows($response, 'vorr', $this->getOrderRowFieldMeta());
     }
 
     /**
@@ -216,9 +158,7 @@ class OrdersService extends BaseMkgService
      */
     public function extractOrderRowParameterRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'vopa');
-
-        return $this->normalizeRows($rows, $this->getOrderRowParameterFieldMeta());
+        return $this->extractNormalizedRows($response, 'vopa', $this->getOrderRowParameterFieldMeta());
     }
 
     /**
@@ -274,13 +214,7 @@ class OrdersService extends BaseMkgService
      */
     public function getOrderFieldMeta(): array
     {
-        if (self::$orderFieldMeta !== null) {
-            return self::$orderFieldMeta;
-        }
-
-        self::$orderFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('vorh'));
-
-        return self::$orderFieldMeta;
+        return $this->getCachedFieldMeta(self::$orderFieldMeta, 'vorh');
     }
 
     /**
@@ -288,13 +222,7 @@ class OrdersService extends BaseMkgService
      */
     public function getOrderRowFieldMeta(): array
     {
-        if (self::$orderRowFieldMeta !== null) {
-            return self::$orderRowFieldMeta;
-        }
-
-        self::$orderRowFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('vorr'));
-
-        return self::$orderRowFieldMeta;
+        return $this->getCachedFieldMeta(self::$orderRowFieldMeta, 'vorr');
     }
 
     /**
@@ -302,12 +230,6 @@ class OrdersService extends BaseMkgService
      */
     public function getOrderRowParameterFieldMeta(): array
     {
-        if (self::$orderRowParameterFieldMeta !== null) {
-            return self::$orderRowParameterFieldMeta;
-        }
-
-        self::$orderRowParameterFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('vopa'));
-
-        return self::$orderRowParameterFieldMeta;
+        return $this->getCachedFieldMeta(self::$orderRowParameterFieldMeta, 'vopa');
     }
 }

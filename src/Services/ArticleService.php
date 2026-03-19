@@ -54,29 +54,7 @@ class ArticleService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null): array
     {
-        $query = [];
-
-        if ($fieldList === []) {
-            $fieldList = $this->getDefaultArticleSearchFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        if ($sort) {
-            $query['Sort'] = $sort;
-        }
-
-        return $this->get('/arti', $query);
+        return $this->listDocument('arti', $fieldList, $this->getDefaultArticleSearchFieldList(), $filter, $numRows, $sort);
     }
 
     /**
@@ -123,7 +101,7 @@ class ArticleService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('arti_oms_1', $name),
+            $this->buildContainsTextFilter('arti_oms_1', $name),
             $numRows,
             'arti_oms_1'
         );
@@ -159,34 +137,7 @@ class ArticleService extends BaseMkgService
         $rowsByCode = $this->findArticleRowsByArticleCode($query, $fieldList);
         $rowsByName = $this->findArticleRowsByArticleName($query, $fieldList, $numRows);
 
-        return $this->mergeRowsByArticleCode($rowsByCode, $rowsByName);
-    }
-
-    /**
-     * @param  array<int, array<string, mixed>>  $first
-     * @param  array<int, array<string, mixed>>  $second
-     * @return array<int, array<string, mixed>>
-     */
-    private function mergeRowsByArticleCode(array $first, array $second): array
-    {
-        $merged = [];
-        $seen = [];
-
-        foreach ([$first, $second] as $collection) {
-            foreach ($collection as $row) {
-                $articleCode = is_scalar($row['arti_code'] ?? null) ? (string) $row['arti_code'] : null;
-                $uniqueKey = $articleCode ?: md5(json_encode($row));
-
-                if (isset($seen[$uniqueKey])) {
-                    continue;
-                }
-
-                $seen[$uniqueKey] = true;
-                $merged[] = $row;
-            }
-        }
-
-        return $merged;
+        return $this->mergeUniqueRows($rowsByCode, $rowsByName, 'arti_code');
     }
 
     /**
@@ -194,7 +145,7 @@ class ArticleService extends BaseMkgService
      */
     public function getDefaultArticleSearchFieldList(): array
     {
-        return self::DEFAULT_ARTICLE_SEARCH_FIELD_LIST;
+        return $this->filterAvailableFieldList(self::DEFAULT_ARTICLE_SEARCH_FIELD_LIST, $this->getArticleFieldMeta());
     }
 
     /**
@@ -216,13 +167,7 @@ class ArticleService extends BaseMkgService
      */
     public function getArticleFieldMeta(): array
     {
-        if (self::$articleFieldMeta !== null) {
-            return self::$articleFieldMeta;
-        }
-
-        self::$articleFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('arti'));
-
-        return self::$articleFieldMeta;
+        return $this->getCachedFieldMeta(self::$articleFieldMeta, 'arti');
     }
 
     /**
@@ -232,22 +177,6 @@ class ArticleService extends BaseMkgService
      */
     public function extractArticleRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'arti');
-
-        return $this->normalizeRows($rows, $this->getArticleFieldMeta());
-    }
-
-    private function buildContainsFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s contains "%s"', $field, $escaped);
-    }
-
-    private function buildEqualsTextFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s = "%s"', $field, $escaped);
+        return $this->extractNormalizedRows($response, 'arti', $this->getArticleFieldMeta());
     }
 }

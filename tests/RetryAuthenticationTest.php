@@ -38,3 +38,13 @@ test('it invalidates cookie, re-authenticates and retries request on 401', funct
     expect($result['response']['ResultData'][0]['debi'][0]['debi_num'] ?? null)->toBe('10001');
     expect(Storage::get('mkg/test-cookie.txt'))->toBe('JSESSIONID=fresh-cookie');
 });
+
+test('it does not authenticate during construction', function (): void {
+    $client = new Client([
+        'handler' => HandlerStack::create(new MockHandler([])),
+        'http_errors' => true,
+    ]);
+
+    expect(fn () => new TestableMkgService($client, null))
+        ->not->toThrow(RuntimeException::class);
+});

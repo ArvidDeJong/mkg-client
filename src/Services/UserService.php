@@ -33,29 +33,7 @@ class UserService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null): array
     {
-        $query = [];
-
-        if ($fieldList === []) {
-            $fieldList = $this->getDefaultUserSearchFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        if ($sort) {
-            $query['Sort'] = $sort;
-        }
-
-        return $this->get('/gebr', $query);
+        return $this->listDocument('gebr', $fieldList, $this->getDefaultUserSearchFieldList(), $filter, $numRows, $sort);
     }
 
     /**
@@ -102,7 +80,7 @@ class UserService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('gebr_naam', $name),
+            $this->buildContainsTextFilter('gebr_naam', $name),
             $numRows,
             'gebr_naam'
         );
@@ -138,34 +116,7 @@ class UserService extends BaseMkgService
         $rowsByCode = $this->findUserRowsByUserCode($query, $fieldList);
         $rowsByName = $this->findUserRowsByUserName($query, $fieldList, $numRows);
 
-        return $this->mergeRowsByRowKey($rowsByCode, $rowsByName);
-    }
-
-    /**
-     * @param  array<int, array<string, mixed>>  $first
-     * @param  array<int, array<string, mixed>>  $second
-     * @return array<int, array<string, mixed>>
-     */
-    private function mergeRowsByRowKey(array $first, array $second): array
-    {
-        $merged = [];
-        $seen = [];
-
-        foreach ([$first, $second] as $collection) {
-            foreach ($collection as $row) {
-                $rowKey = is_string($row['RowKey'] ?? null) ? $row['RowKey'] : null;
-                $uniqueKey = $rowKey ?? md5(json_encode($row));
-
-                if (isset($seen[$uniqueKey])) {
-                    continue;
-                }
-
-                $seen[$uniqueKey] = true;
-                $merged[] = $row;
-            }
-        }
-
-        return $merged;
+        return $this->mergeUniqueRows($rowsByCode, $rowsByName, 'RowKey');
     }
 
     /**
@@ -173,16 +124,7 @@ class UserService extends BaseMkgService
      */
     public function getDefaultUserSearchFieldList(): array
     {
-        $meta = $this->getUserFieldMeta();
-
-        if ($meta === []) {
-            return self::DEFAULT_USER_SEARCH_FIELD_LIST;
-        }
-
-        return array_values(array_filter(
-            self::DEFAULT_USER_SEARCH_FIELD_LIST,
-            static fn (string $fieldName): bool => isset($meta[$fieldName])
-        ));
+        return $this->filterAvailableFieldList(self::DEFAULT_USER_SEARCH_FIELD_LIST, $this->getUserFieldMeta());
     }
 
     /**
@@ -204,13 +146,7 @@ class UserService extends BaseMkgService
      */
     public function getUserFieldMeta(): array
     {
-        if (self::$userFieldMeta !== null) {
-            return self::$userFieldMeta;
-        }
-
-        self::$userFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('gebr'));
-
-        return self::$userFieldMeta;
+        return $this->getCachedFieldMeta(self::$userFieldMeta, 'gebr');
     }
 
     /**
@@ -220,20 +156,6 @@ class UserService extends BaseMkgService
      */
     public function extractUserRows(array $response): array
     {
-        return $this->extractRowsFromResultData($response, 'gebr');
-    }
-
-    private function buildContainsFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s contains "%s"', $field, $escaped);
-    }
-
-    private function buildEqualsTextFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s = "%s"', $field, $escaped);
+        return $this->extractNormalizedRows($response, 'gebr', $this->getUserFieldMeta());
     }
 }

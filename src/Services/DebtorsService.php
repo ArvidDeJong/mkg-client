@@ -34,29 +34,7 @@ class DebtorsService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null): array
     {
-        $query = [];
-
-        if ($fieldList === []) {
-            $fieldList = $this->getDefaultDebtorSearchFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        if ($sort) {
-            $query['Sort'] = $sort;
-        }
-
-        return $this->get('/debi', $query);
+        return $this->listDocument('debi', $fieldList, $this->getDefaultDebtorSearchFieldList(), $filter, $numRows, $sort);
     }
 
     /**
@@ -122,7 +100,7 @@ class DebtorsService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('debi_naam', $name),
+            $this->buildContainsTextFilter('debi_naam', $name),
             $numRows,
             'debi_naam'
         );
@@ -153,7 +131,7 @@ class DebtorsService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('debi_email', $email),
+            $this->buildContainsTextFilter('debi_email', $email),
             $numRows,
             'debi_email'
         );
@@ -190,7 +168,7 @@ class DebtorsService extends BaseMkgService
             $rowsByDebtorNumber = $this->findDebtorRowsByDebtorNumber($query, $fieldList);
             $rowsByRelationNumber = $this->findDebtorRowsByRelationNumber($query, $fieldList, $numRows);
 
-            return $this->mergeRowsByRowKey($rowsByDebtorNumber, $rowsByRelationNumber);
+            return $this->mergeUniqueRows($rowsByDebtorNumber, $rowsByRelationNumber, 'RowKey');
         }
 
         if (str_contains($query, '@')) {
@@ -213,47 +191,11 @@ class DebtorsService extends BaseMkgService
     }
 
     /**
-     * @param  array<int, array<string, mixed>>  $first
-     * @param  array<int, array<string, mixed>>  $second
-     * @return array<int, array<string, mixed>>
-     */
-    private function mergeRowsByRowKey(array $first, array $second): array
-    {
-        $merged = [];
-        $seen = [];
-
-        foreach ([$first, $second] as $collection) {
-            foreach ($collection as $row) {
-                $rowKey = is_string($row['RowKey'] ?? null) ? $row['RowKey'] : null;
-                $uniqueKey = $rowKey ?? md5(json_encode($row));
-
-                if (isset($seen[$uniqueKey])) {
-                    continue;
-                }
-
-                $seen[$uniqueKey] = true;
-                $merged[] = $row;
-            }
-        }
-
-        return $merged;
-    }
-
-    /**
      * @return string[]
      */
     public function getDefaultDebtorSearchFieldList(): array
     {
-        $meta = $this->getDebtorFieldMeta();
-
-        if ($meta === []) {
-            return self::DEFAULT_DEBTOR_SEARCH_FIELD_LIST;
-        }
-
-        return array_values(array_filter(
-            self::DEFAULT_DEBTOR_SEARCH_FIELD_LIST,
-            static fn (string $fieldName): bool => isset($meta[$fieldName])
-        ));
+        return $this->filterAvailableFieldList(self::DEFAULT_DEBTOR_SEARCH_FIELD_LIST, $this->getDebtorFieldMeta());
     }
 
     /**
@@ -275,13 +217,7 @@ class DebtorsService extends BaseMkgService
      */
     public function getDebtorFieldMeta(): array
     {
-        if (self::$debtorFieldMeta !== null) {
-            return self::$debtorFieldMeta;
-        }
-
-        self::$debtorFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('debi'));
-
-        return self::$debtorFieldMeta;
+        return $this->getCachedFieldMeta(self::$debtorFieldMeta, 'debi');
     }
 
     /**
@@ -291,15 +227,6 @@ class DebtorsService extends BaseMkgService
      */
     public function extractDebtorRows(array $response): array
     {
-        $rows = $this->extractRowsFromResultData($response, 'debi');
-
-        return $this->normalizeRows($rows, $this->getDebtorFieldMeta());
-    }
-
-    private function buildContainsFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s contains "%s"', $field, $escaped);
+        return $this->extractNormalizedRows($response, 'debi', $this->getDebtorFieldMeta());
     }
 }

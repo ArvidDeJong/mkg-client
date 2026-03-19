@@ -22,25 +22,7 @@ class AddressesService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, string $document = 'adrs'): array
     {
-        $query = [];
-
-        if (empty($fieldList)) {
-            $fieldList = $this->getDefaultAddressFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        return $this->get('/'.$document, $query);
+        return $this->listDocument($document, $fieldList, $this->getDefaultAddressFieldList(), $filter, $numRows);
     }
 
     /**
@@ -82,9 +64,7 @@ class AddressesService extends BaseMkgService
      */
     public function extractAddressRows(array $response, string $document = 'adrs'): array
     {
-        $rows = $this->extractRowsFromResultData($response, $document);
-
-        return $this->normalizeRows($rows, $this->getAddressFieldMeta());
+        return $this->extractNormalizedRows($response, $document, $this->getAddressFieldMeta());
     }
 
     /**
@@ -108,12 +88,6 @@ class AddressesService extends BaseMkgService
      */
     public function getAddressFieldMeta(): array
     {
-        if (self::$addressFieldMeta !== null) {
-            return self::$addressFieldMeta;
-        }
-
-        self::$addressFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('adrs'));
-
-        return self::$addressFieldMeta;
+        return $this->getCachedFieldMeta(self::$addressFieldMeta, 'adrs');
     }
 }

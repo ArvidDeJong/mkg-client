@@ -32,29 +32,7 @@ class ContactpersonService extends BaseMkgService
      */
     public function list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null): array
     {
-        $query = [];
-
-        if ($fieldList === []) {
-            $fieldList = $this->getDefaultContactpersonSearchFieldList();
-        }
-
-        if (! empty($fieldList)) {
-            $query['FieldList'] = implode(',', $fieldList);
-        }
-
-        if ($filter) {
-            $query['Filter'] = $filter;
-        }
-
-        if ($numRows) {
-            $query['NumRows'] = $numRows;
-        }
-
-        if ($sort) {
-            $query['Sort'] = $sort;
-        }
-
-        return $this->get('/cprs', $query);
+        return $this->listDocument('cprs', $fieldList, $this->getDefaultContactpersonSearchFieldList(), $filter, $numRows, $sort);
     }
 
     /**
@@ -120,7 +98,7 @@ class ContactpersonService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('cprs_naam', $name),
+            $this->buildContainsTextFilter('cprs_naam', $name),
             $numRows,
             'cprs_naam'
         );
@@ -151,7 +129,7 @@ class ContactpersonService extends BaseMkgService
 
         return $this->list(
             $fieldList,
-            $this->buildContainsFilter('cprs_email', $email),
+            $this->buildContainsTextFilter('cprs_email', $email),
             $numRows,
             'cprs_email'
         );
@@ -188,7 +166,7 @@ class ContactpersonService extends BaseMkgService
             $rowsByContactpersonNumber = $this->findContactpersonRowsByContactpersonNumber($query, $fieldList);
             $rowsByRelationNumber = $this->findContactpersonRowsByRelationNumber($query, $fieldList, $numRows);
 
-            return $this->mergeRowsByIdentity($rowsByContactpersonNumber, $rowsByRelationNumber);
+            return $this->mergeUniqueRows($rowsByContactpersonNumber, $rowsByRelationNumber, 'cprs_num');
         }
 
         if (str_contains($query, '@')) {
@@ -211,47 +189,11 @@ class ContactpersonService extends BaseMkgService
     }
 
     /**
-     * @param  array<int, array<string, mixed>>  $first
-     * @param  array<int, array<string, mixed>>  $second
-     * @return array<int, array<string, mixed>>
-     */
-    private function mergeRowsByIdentity(array $first, array $second): array
-    {
-        $merged = [];
-        $seen = [];
-
-        foreach ([$first, $second] as $collection) {
-            foreach ($collection as $row) {
-                $contactpersonNumber = isset($row['cprs_num']) ? (string) $row['cprs_num'] : null;
-                $uniqueKey = $contactpersonNumber ?: md5(json_encode($row));
-
-                if (isset($seen[$uniqueKey])) {
-                    continue;
-                }
-
-                $seen[$uniqueKey] = true;
-                $merged[] = $row;
-            }
-        }
-
-        return $merged;
-    }
-
-    /**
      * @return string[]
      */
     public function getDefaultContactpersonSearchFieldList(): array
     {
-        $meta = $this->getContactpersonFieldMeta();
-
-        if ($meta === []) {
-            return self::DEFAULT_CONTACTPERSON_SEARCH_FIELD_LIST;
-        }
-
-        return array_values(array_filter(
-            self::DEFAULT_CONTACTPERSON_SEARCH_FIELD_LIST,
-            static fn (string $fieldName): bool => isset($meta[$fieldName])
-        ));
+        return $this->filterAvailableFieldList(self::DEFAULT_CONTACTPERSON_SEARCH_FIELD_LIST, $this->getContactpersonFieldMeta());
     }
 
     /**
@@ -273,13 +215,7 @@ class ContactpersonService extends BaseMkgService
      */
     public function getContactpersonFieldMeta(): array
     {
-        if (self::$contactpersonFieldMeta !== null) {
-            return self::$contactpersonFieldMeta;
-        }
-
-        self::$contactpersonFieldMeta = $this->loadFieldMetaFromCsv($this->packageCsvPath('cprs'));
-
-        return self::$contactpersonFieldMeta;
+        return $this->getCachedFieldMeta(self::$contactpersonFieldMeta, 'cprs');
     }
 
     /**
@@ -289,13 +225,6 @@ class ContactpersonService extends BaseMkgService
      */
     public function extractContactpersonRows(array $response): array
     {
-        return $this->extractRowsFromResultData($response, 'cprs');
-    }
-
-    private function buildContainsFilter(string $field, string $value): string
-    {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s contains "%s"', $field, $escaped);
+        return $this->extractNormalizedRows($response, 'cprs', $this->getContactpersonFieldMeta());
     }
 }
