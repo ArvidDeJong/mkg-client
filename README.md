@@ -142,6 +142,10 @@ composer test
 - [Official MKG API call guide](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/10924/hoe-werken-mkg-api-aanroepen)
 - [MKG Postman collection](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/6032/api-postman-collectie)
 
+## Maintainer
+
+This package is maintained by Arvid de Jong (<info@arvid.nl>).
+
 ## License
 
 MIT
