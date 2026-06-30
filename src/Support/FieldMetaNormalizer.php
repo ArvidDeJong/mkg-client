@@ -41,9 +41,9 @@ class FieldMetaNormalizer
         $meta = [];
 
         try {
-            fgetcsv($handle, 0, ';');
+            fgetcsv($handle, 0, ';', '"', '');
 
-            while (($row = fgetcsv($handle, 0, ';')) !== false) {
+            while (($row = fgetcsv($handle, 0, ';', '"', '')) !== false) {
                 $fieldName = isset($row[0]) ? trim((string) $row[0]) : '';
 
                 if ($fieldName === '') {
