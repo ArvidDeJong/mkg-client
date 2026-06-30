@@ -29,6 +29,20 @@ class TestableMkgService extends BaseMkgService
         return $this->requestJson($method, $path, $options);
     }
 
+    /**
+     * @param  string[]  $fieldList
+     * @return array<string, mixed>
+     */
+    public function callBuildListQuery(
+        array $fieldList = [],
+        ?string $filter = null,
+        ?int $numRows = null,
+        ?string $sort = null,
+        ?int $skipRows = null,
+    ): array {
+        return $this->buildListQuery($fieldList, $filter, $numRows, $sort, $skipRows);
+    }
+
     public function resolvePackageCsvPath(string $variant): string
     {
         return $this->packageCsvPath($variant);

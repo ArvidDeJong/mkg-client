@@ -26,9 +26,9 @@ class OrdersService extends BaseMkgService
      *
      * @throws GuzzleException
      */
-    public function listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
+    public function listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
     {
-        return $this->listDocument('vorh', $fieldList, $this->getDefaultOrderFieldList(), $filter, $numRows);
+        return $this->listDocument('vorh', $fieldList, $this->getDefaultOrderFieldList(), $filter, $numRows, $sort, $skipRows);
     }
 
     /**
@@ -68,9 +68,9 @@ class OrdersService extends BaseMkgService
      *
      * @throws GuzzleException
      */
-    public function listRows(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
+    public function listRows(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
     {
-        return $this->listDocument('vorr', $fieldList, $this->getDefaultOrderRowFieldList(), $filter, $numRows);
+        return $this->listDocument('vorr', $fieldList, $this->getDefaultOrderRowFieldList(), $filter, $numRows, $sort, $skipRows);
     }
 
     /**
@@ -109,9 +109,9 @@ class OrdersService extends BaseMkgService
      *
      * @throws GuzzleException
      */
-    public function listRowParameters(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
+    public function listRowParameters(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
     {
-        return $this->listDocument('vopa', $fieldList, $this->getDefaultOrderRowParameterFieldList(), $filter, $numRows);
+        return $this->listDocument('vopa', $fieldList, $this->getDefaultOrderRowParameterFieldList(), $filter, $numRows, $sort, $skipRows);
     }
 
     /**

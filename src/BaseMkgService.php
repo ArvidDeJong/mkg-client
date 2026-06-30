@@ -167,13 +167,14 @@ abstract class BaseMkgService
         ?string $filter = null,
         ?int $numRows = null,
         ?string $sort = null,
+        ?int $skipRows = null,
     ): array
     {
         if ($fieldList === []) {
             $fieldList = $defaultFieldList;
         }
 
-        return $this->get('/'.$document, $this->buildListQuery($fieldList, $filter, $numRows, $sort));
+        return $this->get('/'.$document, $this->buildListQuery($fieldList, $filter, $numRows, $sort, $skipRows));
     }
 
     /**
@@ -185,6 +186,7 @@ abstract class BaseMkgService
         ?string $filter = null,
         ?int $numRows = null,
         ?string $sort = null,
+        ?int $skipRows = null,
     ): array
     {
         $query = [];
@@ -203,6 +205,11 @@ abstract class BaseMkgService
 
         if ($sort) {
             $query['Sort'] = $sort;
+        }
+
+        // SkipRows=0 is a valid first-page offset, so check for null explicitly.
+        if ($skipRows !== null) {
+            $query['SkipRows'] = $skipRows;
         }
 
         return $query;
