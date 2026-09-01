@@ -58,8 +58,7 @@ php artisan vendor:publish --tag=mkg-csv
 Add to `.env`:
 
 ```dotenv
-MKG_URL_AUTH=https://your-mkg-host/restapi/auth
-MKG_URL_PROD=https://your-mkg-host/restapi
+MKG_HOST=your-mkg-host
 MKG_CUSTOMER=your-customer-code
 MKG_USERNAME=your-api-username
 MKG_PASSWORD=your-api-password
@@ -92,8 +91,7 @@ use Darvis\MkgClient\Config\ArrayConfigProvider;
 use Darvis\MkgClient\Services\DebtorsService;
 
 $config = new ArrayConfigProvider([
-  'mkg.url_auth' => 'https://your-mkg-host/restapi/auth',
-  'mkg.url_prod' => 'https://your-mkg-host/restapi',
+  'mkg.host' => 'your-mkg-host',
   'mkg.customer' => 'your-customer-code',
   'mkg.username' => 'your-api-username',
   'mkg.password' => 'your-api-password',

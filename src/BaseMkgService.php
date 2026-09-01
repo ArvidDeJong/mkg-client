@@ -9,11 +9,16 @@ use Darvis\MkgClient\Contracts\ConfigProviderInterface;
 use Darvis\MkgClient\Contracts\CookieStoreInterface;
 use Darvis\MkgClient\Cookies\FileCookieStore;
 use Darvis\MkgClient\Cookies\LaravelCookieStore;
+use Darvis\MkgClient\Exceptions\MkgHttpException;
 use Darvis\MkgClient\Support\FieldMetaNormalizer;
+use Darvis\MkgClient\Support\MkgEndpoints;
+use Darvis\MkgClient\Support\RequestLogger;
 use Darvis\MkgClient\Support\SessionCookieManager;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 abstract class BaseMkgService
@@ -50,13 +55,19 @@ abstract class BaseMkgService
 
     private ?SessionCookieManager $sessionManager = null;
 
+    private ?MkgEndpoints $endpoints = null;
+
+    protected ?LoggerInterface $logger = null;
+
     public function __construct(
         ?Client $client = null,
         ?ConfigProviderInterface $config = null,
         ?CookieStoreInterface $cookieStore = null,
+        ?LoggerInterface $logger = null,
     )
     {
         $this->config = $config ?? $this->createDefaultConfigProvider();
+        $this->logger = $logger;
         $this->cookieStore = $cookieStore ?? $this->resolveDefaultCookieStore();
         $this->cookieStoragePath = $this->resolveCookieStoragePath();
         $this->client = $client ?? $this->createDefaultClient();
@@ -116,8 +127,11 @@ abstract class BaseMkgService
                 'headers' => $headers,
             ]));
         } catch (ClientException $e) {
-            if ($e->getCode() !== 401) {
-                throw $e;
+            // Only 401 means "session expired"; MKG answers that with JSON. A 403
+            // comes from Tomcat and means the URL is wrong, so re-authenticating
+            // would just double the traffic and fail again.
+            if ($e->getResponse()->getStatusCode() !== 401) {
+                throw MkgHttpException::from($e, $this->endpoints()->rest());
             }
 
             // Expired session cookie: clear cached cookie, login again, retry once.
@@ -125,9 +139,13 @@ abstract class BaseMkgService
             $headers = $this->sessionManager()->buildHeaders(isset($options['json']));
             $this->syncSessionCookie();
 
-            $response = $this->client->request($method, $this->buildUrl($path), array_merge($options, [
-                'headers' => $headers,
-            ]));
+            try {
+                $response = $this->client->request($method, $this->buildUrl($path), array_merge($options, [
+                    'headers' => $headers,
+                ]));
+            } catch (ClientException $retry) {
+                throw MkgHttpException::from($retry, $this->endpoints()->rest());
+            }
         }
 
         $contents = (string) $response->getBody();
@@ -399,12 +417,9 @@ abstract class BaseMkgService
 
     private function buildUrl(string $path): string
     {
-        $this->assertRequiredConfig(['mkg.url_prod']);
-
-        $baseUrl = rtrim((string) $this->config->get('mkg.url_prod'), '/');
         $uri = ltrim($path, '/');
 
-        return $baseUrl.'/'.$uri;
+        return $this->endpoints()->rest().'/'.$uri;
     }
 
     /**
@@ -488,13 +503,26 @@ abstract class BaseMkgService
 
     private function createDefaultClient(): Client
     {
+        $stack = HandlerStack::create();
+        $stack->push((new RequestLogger(
+            $this->logger,
+            $this->toBool($this->config->get('mkg.log_requests', false), false),
+            $this->toFloat($this->config->get('mkg.slow_request_seconds', 10), 10.0),
+        ))->middleware());
+
         return new Client([
+            'handler' => $stack,
             'allow_redirects' => false,
             'verify' => $this->toBool($this->config->get('mkg.verify_ssl', true), true),
             'timeout' => $this->toFloat($this->config->get('mkg.timeout', 30), 30.0),
             'connect_timeout' => $this->toFloat($this->config->get('mkg.connect_timeout', 10), 10.0),
             'http_errors' => true,
         ]);
+    }
+
+    protected function endpoints(): MkgEndpoints
+    {
+        return $this->endpoints ??= new MkgEndpoints($this->config);
     }
 
     private function syncSessionCookie(): void

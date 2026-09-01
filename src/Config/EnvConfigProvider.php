@@ -10,6 +10,8 @@ class EnvConfigProvider implements ConfigProviderInterface
      * @var array<string, string>
      */
     private const ENV_KEYS = [
+        'mkg.host' => 'MKG_HOST',
+        'mkg.client_path' => 'MKG_CLIENT_PATH',
         'mkg.url_auth' => 'MKG_URL_AUTH',
         'mkg.url_prod' => 'MKG_URL_PROD',
         'mkg.customer' => 'MKG_CUSTOMER',
@@ -19,6 +21,8 @@ class EnvConfigProvider implements ConfigProviderInterface
         'mkg.timeout' => 'MKG_TIMEOUT',
         'mkg.connect_timeout' => 'MKG_CONNECT_TIMEOUT',
         'mkg.cookie_storage_path' => 'MKG_COOKIE_STORAGE_PATH',
+        'mkg.log_requests' => 'MKG_LOG_REQUESTS',
+        'mkg.slow_request_seconds' => 'MKG_SLOW_REQUEST_SECONDS',
     ];
 
     public function get(string $key, mixed $default = null): mixed

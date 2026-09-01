@@ -16,8 +16,7 @@ use Darvis\MkgClient\Config\ArrayConfigProvider;
 use Darvis\MkgClient\Services\DebtorsService;
 
 $config = new ArrayConfigProvider([
-  'mkg.url_auth' => 'https://your-mkg-host/restapi/auth',
-  'mkg.url_prod' => 'https://your-mkg-host/restapi',
+  'mkg.host' => 'your-mkg-host',
   'mkg.customer' => 'your-customer-code',
   'mkg.username' => 'your-api-username',
   'mkg.password' => 'your-api-password',

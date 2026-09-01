@@ -12,6 +12,8 @@ class SessionCookieManager
 {
     private bool $bootstrapped = false;
 
+    private ?MkgEndpoints $endpoints = null;
+
     public function __construct(
         private readonly Client $client,
         private readonly ConfigProviderInterface $config,
@@ -53,11 +55,13 @@ class SessionCookieManager
     public function validateConfiguration(): void
     {
         $this->assertRequiredConfig([
-            'mkg.url_auth',
             'mkg.customer',
             'mkg.username',
             'mkg.password',
         ]);
+
+        // Resolves mkg.url_auth, or builds it from mkg.host; throws when neither is set.
+        $this->endpoints()->auth();
     }
 
     /**
@@ -67,7 +71,7 @@ class SessionCookieManager
     {
         $this->validateConfiguration();
 
-        $response = $this->client->post((string) $this->config->get('mkg.url_auth'), [
+        $response = $this->client->post($this->endpoints()->auth(), [
             'headers' => [
                 'X-CustomerID' => $this->config->get('mkg.customer'),
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -117,6 +121,11 @@ class SessionCookieManager
         $this->bootstrapped = false;
         $this->login();
         $this->bootstrapped = true;
+    }
+
+    private function endpoints(): MkgEndpoints
+    {
+        return $this->endpoints ??= new MkgEndpoints($this->config);
     }
 
     public function getSessionCookie(): ?string
