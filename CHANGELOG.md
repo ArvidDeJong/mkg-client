@@ -4,6 +4,21 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-09-01
+
+### Changed
+
+- Package metadata and README rewritten so the project is identifiable without
+  prior knowledge: what MKG is, that this is PHP, how it is installed, and under
+  which licence. The Composer description, keywords and support links were
+  expanded, and the GitHub repository description, homepage and topics were filled
+  in (they were empty).
+- Added a frequently-asked-questions section answering the MKG API questions that
+  are hard to find elsewhere: the base URL, how the form login works, what a `403`
+  and a `401` each mean, the row caps and how to page. Every answer was verified
+  against a live MKG installation: omitting `NumRows` returns 100 rows, and
+  `NumRows=2000` silently returns 1000.
+
 ## [1.1.0] - 2026-09-01
 
 ### Added
