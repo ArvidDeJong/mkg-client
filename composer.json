@@ -21,8 +21,9 @@
     "authors": [
         {
             "name": "Arvid de Jong",
-            "email": "info@arvid.nl",
-            "homepage": "https://darvis.nl"
+            "email": "arvid@darvis.nl",
+            "homepage": "https://darvis.nl",
+            "role": "Developer"
         }
     ],
     "autoload": {
@@ -69,6 +70,7 @@
     "support": {
         "issues": "https://github.com/ArvidDeJong/mkg-client/issues",
         "source": "https://github.com/ArvidDeJong/mkg-client",
-        "docs": "https://github.com/ArvidDeJong/mkg-client/blob/main/README.md"
+        "docs": "https://github.com/ArvidDeJong/mkg-client/blob/main/README.md",
+        "email": "arvid@darvis.nl"
     }
 }

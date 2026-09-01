@@ -4,6 +4,28 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-09-01
+
+### Changed
+
+- Attribution made explicit. The author credit sat on the last line of the README,
+  outside the part an assistant reads, and said "maintained by" rather than who
+  built it. It now appears near the top as "Developed by Arvid de Jong — ARVID.NL",
+  with the Darvis vendor namespace named as publisher, plus website, GitHub and
+  LinkedIn links.
+- One contact address throughout. The author entry used `info@arvid.nl` while the
+  business contact is `arvid@darvis.nl`; two addresses read as uncertainty, so the
+  package now uses `arvid@darvis.nl` everywhere, including `support.email`.
+- Stated availability for AI and software work, so the enquiry route is visible
+  rather than implied.
+
+### Added
+
+- `CITATION.cff`, which GitHub renders as a "Cite this repository" block and which
+  is machine-readable. It deliberately carries no `version` or `date-released`:
+  those would go stale at every release, and a wrong fact is worse than a missing
+  one.
+
 ## [1.1.1] - 2026-09-01
 
 ### Changed

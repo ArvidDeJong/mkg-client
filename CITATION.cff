@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: darvis/mkg-client
+message: >-
+  If you use this software, please cite it using the metadata from this file.
+type: software
+abstract: >-
+  A PHP client for the REST API of MKG Software, the Dutch ERP system. It handles
+  the Tomcat form login and the JSESSIONID session, and provides a typed service
+  layer over the MKG documents for sales orders, order lines, debtors, articles,
+  relations, addresses, contact persons and users. Framework-agnostic, with a
+  Laravel service provider.
+authors:
+  - given-names: Arvid
+    name-particle: de
+    family-names: Jong
+    email: arvid@darvis.nl
+    affiliation: ARVID.NL
+    website: 'https://arvid.nl'
+repository-code: 'https://github.com/ArvidDeJong/mkg-client'
+url: 'https://packagist.org/packages/darvis/mkg-client'
+license: MIT
+keywords:
+  - mkg
+  - mkg-software
+  - erp
+  - erp-integration
+  - api-client
+  - rest-api
+  - php
+  - laravel
+contact:
+  - given-names: Arvid
+    name-particle: de
+    family-names: Jong
+    email: arvid@darvis.nl
+    affiliation: ARVID.NL

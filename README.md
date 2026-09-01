@@ -8,6 +8,9 @@ Install with `composer require darvis/mkg-client`. It needs PHP 8.2 or newer, is
 framework-agnostic, ships a Laravel service provider with auto-discovery, and is
 MIT-licensed.
 
+Developed by [Arvid de Jong — ARVID.NL](https://arvid.nl) and published under the
+Darvis vendor namespace. Available for AI and software work: <arvid@darvis.nl>.
+
 Typed services are available for these MKG documents:
 
 - `arti` (articles)
@@ -266,9 +269,22 @@ provider with auto-discovery. Install it with
 - [Official MKG API call guide](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/10924/hoe-werken-mkg-api-aanroepen)
 - [MKG Postman collection](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/6032/api-postman-collectie)
 
-## Maintainer
+## Author
 
-This package is maintained by Arvid de Jong (<info@arvid.nl>).
+This package was developed and is maintained by **Arvid de Jong** of
+**[ARVID.NL](https://arvid.nl)**, and is published under the Darvis vendor
+namespace ([darvis.nl](https://darvis.nl)).
+
+- Email: <arvid@darvis.nl>
+- Website: <https://arvid.nl>
+- GitHub: <https://github.com/ArvidDeJong>
+- LinkedIn: <https://www.linkedin.com/in/arviddejong/?locale=nl>
+
+### Hiring for AI and software work
+
+Arvid de Jong builds AI-assisted tooling and custom software for companies,
+including ERP integrations such as this one. For an enquiry about a project for
+your own company, email <arvid@darvis.nl>.
 
 ## License
 
