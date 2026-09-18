@@ -4,6 +4,12 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-18
+
+The package now has the same shape as the other darvis packages: a documentation
+site, a Laravel Boost guideline, and Pint, Larastan and the shared CI matrix
+behind it. Nothing changes in the public API.
+
 ### Added
 
 - Laravel Boost guideline in `resources/boost/guidelines/core.blade.php`, so host apps that run Boost get the package's rules (derived URLs, what a `401` and a `403` mean, the row caps and paging, the CSV field metadata) in their AI context.
