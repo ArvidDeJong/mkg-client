@@ -1,93 +1,38 @@
 # darvis/mkg-client
 
+[![Latest Version](https://img.shields.io/packagist/v/darvis/mkg-client.svg)](https://packagist.org/packages/darvis/mkg-client)
+[![Tests](https://github.com/ArvidDeJong/mkg-client/actions/workflows/tests.yml/badge.svg)](https://github.com/ArvidDeJong/mkg-client/actions/workflows/tests.yml)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-red.svg)](https://laravel.com)
+[![Total downloads](https://img.shields.io/packagist/dt/darvis/mkg-client.svg)](https://packagist.org/packages/darvis/mkg-client)
+[![License](https://img.shields.io/packagist/l/darvis/mkg-client.svg)](LICENSE)
+
 A PHP client for the REST API of [MKG Software](https://www.mkg.eu), the Dutch ERP
 system. It handles the Tomcat form login and the `JSESSIONID` session for you, and
 gives you a typed service layer over the MKG documents instead of hand-built URLs.
+Framework-agnostic, with a Laravel service provider that registers itself.
 
-Install with `composer require darvis/mkg-client`. It needs PHP 8.2 or newer, is
-framework-agnostic, ships a Laravel service provider with auto-discovery, and is
-MIT-licensed.
+An independent open-source package, not affiliated with MKG Software. Developed by
+[Arvid de Jong, ARVID.NL](https://arvid.nl) and published under the Darvis vendor
+namespace. Available for AI and software work: <arvid@darvis.nl>.
 
-Developed by [Arvid de Jong — ARVID.NL](https://arvid.nl) and published under the
-Darvis vendor namespace. Available for AI and software work: <arvid@darvis.nl>.
+## Features
 
-Typed services are available for these MKG documents:
-
-- `arti` (articles)
-- `debi` (debtors)
-- `cprs` (contact persons)
-- `vorh` (sales order headers)
-- `vorr` (sales order lines)
-- `vopa` (sales order line parameters)
-- `adrs` (addresses)
-- `rela` (relations)
-- `gebr` (users)
-
-## Documentation
-
-- [Getting started](docs/GETTING_STARTED.md)
-- [Configuration](docs/CONFIGURATION.md)
-- [Verification (curl + Postman)](docs/VERIFICATION.md)
-- [Usage examples](docs/USAGE.md)
-- [Migration notes](docs/MIGRATION.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md)
-- [API reference](docs/API_REFERENCE.md)
-
-## Requirements
-
-- PHP 8.2+
-- Valid MKG API credentials
-
-For Laravel integration, use Laravel 11, 12, or 13.
+- **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic re-login on a `401`
+- **Derived URLs**: set the host and the client builds the REST base and the login URL, so nobody types a retired path
+- **A typed service per document**: `arti`, `debi`, `cprs`, `vorh`, `vorr`, `vopa`, `adrs`, `rela` and `gebr`
+- **Field metadata from CSV**: default field lists and type normalisation per document, overridable per application
+- **Clear errors**: a `403` is explained as a wrong base URL, not retried as a session problem
+- **Request logging**: every call with its duration, and a warning for slow calls, because Laravel's HTTP client profilers never see plain Guzzle traffic
 
 ## Installation
-
-### Packagist
 
 ```bash
 composer require darvis/mkg-client
 ```
 
-### Local path repository
-
-```json
-{
-  "repositories": {
-    "darvis-mkg-client": {
-      "type": "path",
-      "url": "../Packages/mkg-client"
-    }
-  },
-  "require": {
-    "darvis/mkg-client": "*"
-  }
-}
-```
-
-Then run:
-
-```bash
-composer update darvis/mkg-client
-```
-
-### Laravel: publish package assets
-
-Publish config and CSV metadata:
-
-```bash
-php artisan vendor:publish --tag=mkg-client
-```
-
-Or publish separately:
-
-```bash
-php artisan vendor:publish --tag=mkg-config
-php artisan vendor:publish --tag=mkg-csv
-```
-
-## Quick start
-
-Add to your `.env`:
+Add the credentials to `.env`; the client derives the REST base and the login URL
+from the host:
 
 ```dotenv
 MKG_HOST=your-mkg-host
@@ -96,183 +41,79 @@ MKG_USERNAME=your-api-username
 MKG_PASSWORD=your-api-password
 ```
 
-The client builds both URLs from the host:
+See [Installation & configuration](docs/installation.md) for what MKG needs on its
+side, the training environment, every config key and the CSV metadata.
 
-| | |
-| --- | --- |
-| REST base | `https://{host}/mkg/web/v3/MKG/Documents` |
-| Authentication | `https://{host}/mkg/static/auth/j_spring_security_check` |
-
-Keep the paths out of your environment file. They belong to the MKG API version,
-not to your environment, and a typo there is answered with a `403` and a Tomcat
-HTML error page that looks like a permission problem. The retired `/mkg/rest/v1`
-and the plausible-looking `/mkg/rest/v3` both fail that way.
-
-Set `MKG_URL_AUTH` and `MKG_URL_PROD` only for an installation that deviates
-from the standard layout; they override the derived values.
-
-Laravel usage:
+## Usage
 
 ```php
 use Darvis\MkgClient\Services\DebtorsService;
+use Darvis\MkgClient\Services\OrdersService;
 
-$service = app(DebtorsService::class);
-$rows = $service->findDebtorRowsByNumberNameOrEmail('10001');
+// Laravel
+$rows = app(DebtorsService::class)->findDebtorRowsByNumberNameOrEmail('10001');
+$lines = app(OrdersService::class)->findOrderLineRowsByOrderNumber('500123');
 ```
-
-Plain PHP usage:
 
 ```php
 use Darvis\MkgClient\Config\ArrayConfigProvider;
 use Darvis\MkgClient\Services\DebtorsService;
 
+// Plain PHP
 $config = new ArrayConfigProvider([
-  'mkg.host' => 'your-mkg-host',
-  'mkg.customer' => 'your-customer-code',
-  'mkg.username' => 'your-api-username',
-  'mkg.password' => 'your-api-password',
+    'mkg.host' => 'your-mkg-host',
+    'mkg.customer' => 'your-customer-code',
+    'mkg.username' => 'your-api-username',
+    'mkg.password' => 'your-api-password',
 ]);
 
-$service = new DebtorsService(config: $config);
-$rows = $service->findDebtorRowsByNumberNameOrEmail('10001');
+$rows = (new DebtorsService(config: $config))->findDebtorRowsByNumberNameOrEmail('10001');
 ```
 
-## Available services
+A `401` means the session expired and is retried once after a fresh login. A `403`
+with an HTML body means the URL path is wrong and never reached the API; it is not
+retried. MKG caps a result at 1000 rows and returns 100 without `NumRows`, so page
+larger sets. See [Troubleshooting](docs/troubleshooting.md).
 
-- `Darvis\MkgClient\Services\ArticleService`
-- `Darvis\MkgClient\Services\DebtorsService`
-- `Darvis\MkgClient\Services\ContactpersonService`
-- `Darvis\MkgClient\Services\OrdersService`
-- `Darvis\MkgClient\Services\AddressesService`
-- `Darvis\MkgClient\Services\RelationsService`
-- `Darvis\MkgClient\Services\UserService`
+## Documentation
 
-## Testing
+Full documentation: **https://arviddejong.github.io/mkg-client/**
 
-This package uses Pest.
+| Topic | |
+| --- | --- |
+| [Installation & configuration](docs/installation.md) | What MKG needs, environment variables, the derived URLs, every config key, CSV metadata |
+| [Usage](docs/usage.md) | Laravel and plain PHP, rows versus raw response, filters, paging, request logging |
+| [Service reference](docs/services.md) | Every service and its public methods |
+| [Verification](docs/verification.md) | Check connectivity and credentials with curl or Postman |
+| [Troubleshooting](docs/troubleshooting.md) | 401 versus 403, stalls, missing rows and fields, config, TLS |
+
+Or start at the [documentation index](docs/README.md), or read the [FAQ](https://arviddejong.github.io/mkg-client/faq.html) with the MKG API answers that are hard to find elsewhere.
+
+## Laravel Boost
+
+The package ships a [Laravel Boost](https://laravel.com/docs/boost) guideline with the
+rules that matter when writing code against it. Run `php artisan boost:install`, or
+`php artisan boost:update --discover` in a project that already uses Boost.
+
+## Development
 
 ```bash
-composer test
+composer test      # Pest
+composer lint      # Pint, check only (composer format to fix)
+composer analyse   # Larastan, level 8
 ```
 
-## Troubleshooting
+GitHub Actions runs the tests on PHP 8.2 to 8.4 against Laravel 11, 12 and 13, with both
+the lowest and the latest allowed dependencies. See the [changelog](CHANGELOG.md) for
+release notes.
 
-### 401 and 403 mean different things
+## Contributing and security
 
-| Response | Cause | What the client does |
-| --- | --- | --- |
-| `401` with JSON `{"status_code":401,"status_txt":"Not authenticated"}` | The session cookie expired or was never valid. | Drops the cached cookie, logs in again and retries once. |
-| `403` with a Tomcat HTML error page | The request never reached the REST API: the base URL path is wrong or retired. | Throws `MkgHttpException` naming the configured base and the expected path. |
-
-A `403` is never a session problem, so re-authenticating on it only doubles the
-traffic against the customer's ERP and fails again. Do not add `403` to the retry.
-
-The reasoning behind both responses is spelled out under
-[frequently asked questions](#frequently-asked-questions-about-the-mkg-api).
-
-### Seeing where a sync stalls
-
-MKG traffic uses plain Guzzle, so profilers that hook Laravel's HTTP client (such
-as Debugbar's `http_client` collector) report zero requests and a long stretch of
-unaccounted time. Switch on request logging to see each call:
-
-```dotenv
-MKG_LOG_REQUESTS=true
-MKG_SLOW_REQUEST_SECONDS=10
-```
-
-```
-MKG request completed. {"method":"GET","path":"/mkg/web/v3/MKG/Documents/vorr","status":200,"seconds":0.512}
-```
-
-A call slower than `MKG_SLOW_REQUEST_SECONDS` is logged as a warning even when
-`MKG_LOG_REQUESTS` is off, so a production stall still leaves a trace. In Laravel
-the logger is injected automatically; in plain PHP, pass any PSR-3 logger as the
-fourth constructor argument.
-
-Note that a stall is rarely one slow call. It is usually dozens of ordinary ones
-in a row, which only the sum reveals.
-
-### Paging
-
-`SkipRows` works even though MKG's own documentation does not list it. MKG caps a
-result set at 1000 rows per call (100 when `NumRows` is omitted), so anything
-larger must be paged or rows go missing without any error.
-
-## Frequently asked questions about the MKG API
-
-Short factual answers to the questions that come up when integrating with MKG.
-Every answer here was verified against a live MKG installation.
-
-### What is the base URL of the MKG REST API?
-
-`https://{host}/mkg/web/v3/MKG/Documents`, where `{host}` is your installation
-(optionally with a port). A training environment uses `mkgoefenclient` instead of
-`mkg` as the segment. The retired `/mkg/rest/v1` and the plausible-looking
-`/mkg/rest/v3` are not valid and return `403`.
-
-### How does authentication work on the MKG API?
-
-MKG runs on Tomcat with FORM authentication. `POST` to
-`https://{host}/mkg/static/auth/j_spring_security_check` with `j_username` and
-`j_password` as form fields and your API key in the `X-CustomerID` header. The
-response sets a `JSESSIONID` cookie that you send with every following request,
-together with `X-CustomerID`. There is no OAuth and there are no bearer tokens.
-
-### Why does the MKG API return 403 Forbidden?
-
-Because the request never reached the REST API. A `403` with an HTML body is
-Tomcat's own error page and means the URL path is wrong or retired, not that your
-account lacks permission and not that your session expired. Re-authenticating will
-not help; correct the base URL.
-
-### Why does the MKG API return 401 Not authenticated?
-
-The session expired or the `JSESSIONID` is unknown. MKG answers with JSON:
-`{"status_code":401,"status_txt":"Not authenticated"}`. Log in again and retry.
-This package does that automatically, once per request.
-
-### Why do I only get 100 rows back from MKG?
-
-`NumRows` defaults to 100 when you omit it, and 1000 is a hard ceiling: asking for
-`NumRows=2000` returns 1000 rows without any error or warning. Anything larger has
-to be paged.
-
-### How do I paginate results from the MKG API?
-
-Use `SkipRows` as the offset together with `NumRows`, and add `Sort` so the order
-is stable across pages. `SkipRows` works even though MKG's own Getting Started
-documentation does not mention it.
-
-### Which query parameters does the MKG API accept?
-
-`FieldList` (comma-separated fields), `Filter` (for example
-`vorh_num = VK2606096`), `NumRows`, `Sort` (prefix a field with `-` for
-descending) and `SkipRows`.
-
-### Which MKG documents can I query?
-
-Among others `vorh` (sales order headers), `vorr` (order lines), `vopa` (order
-line parameters), `debi` (debtors), `arti` (articles), `rela` (relations), `adrs`
-(addresses), `cprs` (contact persons), `gebr` (users) and `cred` (creditors).
-
-### Is there a PHP or Laravel client for MKG?
-
-This package. It is MIT-licensed, framework-agnostic, and ships a Laravel service
-provider with auto-discovery. Install it with
-`composer require darvis/mkg-client`.
-
-## Official MKG resources
-
-- [MKG API introduction](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/4767/inleiding-tot-de-mkg-api)
-- [MKG Getting Started](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/6598/getting-started)
-- [Official MKG API call guide](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/10924/hoe-werken-mkg-api-aanroepen)
-- [MKG Postman collection](https://www.mkg.eu/nl-NL/mijn-mkg/support/kenniscentrum/id/6032/api-postman-collectie)
+See [CONTRIBUTING.md](CONTRIBUTING.md). Found a security problem? Please report it privately, see [SECURITY.md](SECURITY.md).
 
 ## Author
 
-This package was developed and is maintained by **Arvid de Jong** of
-**[ARVID.NL](https://arvid.nl)**, and is published under the Darvis vendor
+**Arvid de Jong** of **[ARVID.NL](https://arvid.nl)**, published under the Darvis vendor
 namespace ([darvis.nl](https://darvis.nl)).
 
 - Email: <arvid@darvis.nl>
@@ -280,12 +121,10 @@ namespace ([darvis.nl](https://darvis.nl)).
 - GitHub: <https://github.com/ArvidDeJong>
 - LinkedIn: <https://www.linkedin.com/in/arviddejong/?locale=nl>
 
-### Hiring for AI and software work
-
-Arvid de Jong builds AI-assisted tooling and custom software for companies,
-including ERP integrations such as this one. For an enquiry about a project for
-your own company, email <arvid@darvis.nl>.
+Arvid de Jong builds AI-assisted tooling and custom software for companies, including
+ERP integrations such as this one. For an enquiry about a project for your own company,
+email <arvid@darvis.nl>.
 
 ## License
 
-MIT
+MIT, see [LICENSE](LICENSE).

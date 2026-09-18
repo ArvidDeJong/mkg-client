@@ -4,7 +4,7 @@ contact_links:
     url: https://github.com/ArvidDeJong/mkg-client/security/advisories/new
     about: Report a vulnerability privately.
   - name: Documentation
-    url: https://github.com/ArvidDeJong/mkg-client#readme
+    url: https://arviddejong.github.io/mkg-client/
     about: Installation, configuration, the MKG login and the service layer.
   - name: Problem with MKG itself
     url: https://www.mkg.eu/nl-NL/mijn-mkg/support

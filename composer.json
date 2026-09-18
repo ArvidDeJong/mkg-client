@@ -2,7 +2,7 @@
     "name": "darvis/mkg-client",
     "type": "library",
     "description": "PHP client for the MKG Software ERP REST API (v3). Handles the Tomcat form login and JSESSIONID session, and reads sales orders, order lines, debtors, articles, relations, addresses, contact persons and users. Framework-agnostic, with Laravel integration.",
-    "homepage": "https://darvis.nl",
+    "homepage": "https://arviddejong.github.io/mkg-client/",
     "keywords": [
         "mkg",
         "mkg-software",
@@ -77,7 +77,7 @@
     "support": {
         "issues": "https://github.com/ArvidDeJong/mkg-client/issues",
         "source": "https://github.com/ArvidDeJong/mkg-client",
-        "docs": "https://github.com/ArvidDeJong/mkg-client/blob/main/README.md",
+        "docs": "https://arviddejong.github.io/mkg-client/",
         "email": "arvid@darvis.nl"
     }
 }

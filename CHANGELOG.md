@@ -12,6 +12,7 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ### Changed
 
+- The documentation moved to a GitHub Pages site at https://arviddejong.github.io/mkg-client/, built from `docs/`: installation, usage, a service reference generated from the source, verification, troubleshooting and the FAQ. The README now holds the quick start and links there; the MKG API answers live in the FAQ page and in `llms.txt`.
 - The keys in `config/mkg.php` are in alphabetical order. Values and environment variables are unchanged; republish the config only if you want the new order.
 - Pest 4 and PHPUnit 12 are allowed for the test suite. Nothing changes for host apps.
 
