@@ -15,7 +15,8 @@
         "darvis",
         "vorh",
         "debi",
-        "j-spring-security-check"
+        "j-spring-security-check",
+        "laravel-boost"
     ],
     "license": "MIT",
     "authors": [
@@ -42,9 +43,12 @@
         "psr/log": "^1.1|^2.0|^3.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
         "orchestra/testbench": "^9.0|^10.0|^11.0",
-        "pestphp/pest": "^3.8",
-        "pestphp/pest-plugin-laravel": "^3.2"
+        "pestphp/pest": "^3.8|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.2|^4.0",
+        "phpunit/phpunit": "^11.0|^12.0|^13.0"
     },
     "extra": {
         "laravel": {
@@ -54,7 +58,10 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "pest",
+        "lint": "pint --test",
+        "format": "pint",
+        "analyse": "phpstan analyse --memory-limit=1G"
     },
     "suggest": {
         "illuminate/support": "Required when using the Laravel service provider integration."

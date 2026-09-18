@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue
+    url: https://github.com/ArvidDeJong/mkg-client/security/advisories/new
+    about: Report a vulnerability privately.
+  - name: Documentation
+    url: https://github.com/ArvidDeJong/mkg-client#readme
+    about: Installation, configuration, the MKG login and the service layer.
+  - name: Problem with MKG itself
+    url: https://www.mkg.eu/nl-NL/mijn-mkg/support
+    about: This is an independent package; API credentials, permissions and outages belong with MKG Software.

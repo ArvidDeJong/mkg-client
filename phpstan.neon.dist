@@ -1,0 +1,13 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 8
+    ignoreErrors:
+        # The service methods take and return plain MKG arrays without array shapes
+        # yet. Adding the shapes is a separate job; until then this identifier is
+        # ignored so the other level 8 checks stay in force.
+        -
+            identifier: missingType.iterableValue
+    paths:
+        - src

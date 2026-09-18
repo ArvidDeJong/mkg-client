@@ -20,8 +20,7 @@ class SessionCookieManager
         private readonly CookieStoreInterface $cookieStore,
         private readonly string $cookieStoragePath,
         private ?string $sessionCookie = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws GuzzleException
@@ -82,7 +81,7 @@ class SessionCookieManager
             ],
         ]);
 
-        $cookie = explode(';', $response->getHeaderLine('Set-Cookie'))[0] ?? null;
+        $cookie = explode(';', $response->getHeaderLine('Set-Cookie'))[0];
         $this->sessionCookie = $cookie !== '' ? $cookie : null;
 
         if ($this->sessionCookie) {

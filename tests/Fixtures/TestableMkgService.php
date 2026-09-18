@@ -15,11 +15,11 @@ class TestableMkgService extends BaseMkgService
     {
         $this->client = $client;
         $this->config = new ChainConfigProvider([
-            new LaravelConfigProvider(),
+            new LaravelConfigProvider,
         ]);
         $this->cookieStore = class_exists('Illuminate\\Support\\Facades\\Storage')
-            ? new LaravelCookieStore()
-            : new FileCookieStore();
+            ? new LaravelCookieStore
+            : new FileCookieStore;
         $this->sessionCookie = $sessionCookie;
         $this->cookieStoragePath = (string) $this->config->get('mkg.cookie_storage_path', 'mkg/cookie.txt');
     }

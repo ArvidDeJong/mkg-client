@@ -15,11 +15,10 @@ use Darvis\MkgClient\Support\MkgEndpoints;
 use Darvis\MkgClient\Support\RequestLogger;
 use Darvis\MkgClient\Support\SessionCookieManager;
 use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\HandlerStack;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 
 abstract class BaseMkgService
 {
@@ -64,8 +63,7 @@ abstract class BaseMkgService
         ?ConfigProviderInterface $config = null,
         ?CookieStoreInterface $cookieStore = null,
         ?LoggerInterface $logger = null,
-    )
-    {
+    ) {
         $this->config = $config ?? $this->createDefaultConfigProvider();
         $this->logger = $logger;
         $this->cookieStore = $cookieStore ?? $this->resolveDefaultCookieStore();
@@ -176,6 +174,7 @@ abstract class BaseMkgService
     /**
      * @param  string[]  $fieldList
      * @param  string[]  $defaultFieldList
+     *
      * @throws GuzzleException
      */
     protected function listDocument(
@@ -186,8 +185,7 @@ abstract class BaseMkgService
         ?int $numRows = null,
         ?string $sort = null,
         ?int $skipRows = null,
-    ): array
-    {
+    ): array {
         if ($fieldList === []) {
             $fieldList = $defaultFieldList;
         }
@@ -205,8 +203,7 @@ abstract class BaseMkgService
         ?int $numRows = null,
         ?string $sort = null,
         ?int $skipRows = null,
-    ): array
-    {
+    ): array {
         $query = [];
 
         if ($fieldList !== []) {
@@ -350,7 +347,7 @@ abstract class BaseMkgService
                 $uniqueValue = $uniqueField !== null && is_scalar($row[$uniqueField] ?? null)
                     ? (string) $row[$uniqueField]
                     : null;
-                $uniqueKey = $uniqueValue ?: md5(json_encode($row));
+                $uniqueKey = $uniqueValue ?: md5((string) json_encode($row));
 
                 if (isset($seen[$uniqueKey])) {
                     continue;
@@ -410,7 +407,7 @@ abstract class BaseMkgService
             return $this->fieldMetaNormalizer;
         }
 
-        $this->fieldMetaNormalizer = new FieldMetaNormalizer();
+        $this->fieldMetaNormalizer = new FieldMetaNormalizer;
 
         return $this->fieldMetaNormalizer;
     }
@@ -422,37 +419,11 @@ abstract class BaseMkgService
         return $this->endpoints()->rest().'/'.$uri;
     }
 
-    /**
-     * @param  string[]  $keys
-     */
-    private function assertRequiredConfig(array $keys): void
-    {
-        $missing = [];
-
-        foreach ($keys as $key) {
-            $value = $this->config->get($key);
-
-            if (! is_scalar($value)) {
-                $missing[] = $key;
-
-                continue;
-            }
-
-            if (trim((string) $value) === '') {
-                $missing[] = $key;
-            }
-        }
-
-        if ($missing !== []) {
-            throw new RuntimeException('Missing MKG configuration values: '.implode(', ', $missing));
-        }
-    }
-
     private function createDefaultConfigProvider(): ConfigProviderInterface
     {
         return new ChainConfigProvider([
-            new LaravelConfigProvider(),
-            new EnvConfigProvider(),
+            new LaravelConfigProvider,
+            new EnvConfigProvider,
         ]);
     }
 
@@ -538,9 +509,9 @@ abstract class BaseMkgService
     private function resolveDefaultCookieStore(): CookieStoreInterface
     {
         if (class_exists('Illuminate\\Support\\Facades\\Storage')) {
-            return new LaravelCookieStore();
+            return new LaravelCookieStore;
         }
 
-        return new FileCookieStore();
+        return new FileCookieStore;
     }
 }

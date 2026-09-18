@@ -28,13 +28,9 @@ function makeAuthenticatedCookieStore(): CookieStoreInterface
             return 'JSESSIONID=existing';
         }
 
-        public function write(string $path, string $value): void
-        {
-        }
+        public function write(string $path, string $value): void {}
 
-        public function delete(string $path): void
-        {
-        }
+        public function delete(string $path): void {}
     };
 }
 
