@@ -13,8 +13,7 @@ class LaravelCookieStore implements CookieStoreInterface
             return null;
         }
 
-        $content = Storage::get($path);
-        $cookie = trim($content);
+        $cookie = trim((string) Storage::get($path));
 
         return $cookie !== '' ? $cookie : null;
     }

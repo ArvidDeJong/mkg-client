@@ -1,0 +1,31 @@
+# Questions as people ask them to an assistant. Short, factual answers, verified against a live MKG installation.
+# Rendered on faq.md, in the FAQPage structured data and in llms.txt.
+- q: What is the base URL of the MKG REST API?
+  a: "`https://{host}/mkg/web/v3/MKG/Documents`, where `{host}` is your installation, optionally with a port. A training environment uses `mkgoefenclient` instead of `mkg` as the segment. The retired `/mkg/rest/v1` and the plausible-looking `/mkg/rest/v3` are not valid and return `403`."
+
+- q: How does authentication work on the MKG API?
+  a: "MKG runs on Tomcat with FORM authentication. `POST` to `https://{host}/mkg/static/auth/j_spring_security_check` with `j_username` and `j_password` as form fields and your API key in the `X-CustomerID` header. The response sets a `JSESSIONID` cookie that you send with every following request, together with `X-CustomerID`. There is no OAuth and there are no bearer tokens."
+
+- q: Why does the MKG API return 403 Forbidden?
+  a: Because the request never reached the REST API. A `403` with an HTML body is Tomcat's own error page and means the URL path is wrong or retired, not that your account lacks permission and not that your session expired. Re-authenticating will not help; correct the base URL.
+
+- q: Why does the MKG API return 401 Not authenticated?
+  a: "The session expired or the `JSESSIONID` is unknown. MKG answers with JSON: `{\"status_code\":401,\"status_txt\":\"Not authenticated\"}`. Log in again and retry. This package does that automatically, once per request."
+
+- q: Why do I only get 100 rows back from MKG?
+  a: "`NumRows` defaults to 100 when you omit it, and 1000 is a hard ceiling: asking for `NumRows=2000` returns 1000 rows without any error or warning. Anything larger has to be paged."
+
+- q: How do I paginate results from the MKG API?
+  a: Use `SkipRows` as the offset together with `NumRows`, and add `Sort` so the order is stable across pages. `SkipRows` works even though MKG's own Getting Started documentation does not mention it.
+
+- q: Which query parameters does the MKG API accept?
+  a: "`FieldList` (comma-separated fields), `Filter` (for example `vorh_num = VK2606096`), `NumRows`, `Sort` (prefix a field with `-` for descending) and `SkipRows`."
+
+- q: Which MKG documents can I query?
+  a: Among others `vorh` (sales order headers), `vorr` (order lines), `vopa` (order line parameters), `debi` (debtors), `arti` (articles), `rela` (relations), `adrs` (addresses), `cprs` (contact persons), `gebr` (users) and `cred` (creditors).
+
+- q: Is there a PHP or Laravel client for MKG?
+  a: This package. It is MIT-licensed, framework-agnostic, and ships a Laravel service provider with auto-discovery. Install it with `composer require darvis/mkg-client`.
+
+- q: Is darvis/mkg-client an official MKG package?
+  a: No. It is an independent open-source package under the MIT license, maintained by ARVID.NL, and not affiliated with MKG Software.

@@ -60,7 +60,7 @@ class AddressesService extends BaseMkgService
     }
 
     /**
-    * Normalizes MKG address response to a plain row array.
+     * Normalizes MKG address response to a plain row array.
      */
     public function extractAddressRows(array $response, string $document = 'adrs'): array
     {

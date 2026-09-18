@@ -2,6 +2,8 @@
 
 namespace Darvis\MkgClient\Support;
 
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -46,13 +48,13 @@ final class RequestLogger
                         return $response;
                     },
                     function ($reason) use ($request, $startedAt) {
-                        $status = $reason instanceof \GuzzleHttp\Exception\RequestException && $reason->hasResponse()
+                        $status = $reason instanceof RequestException && $reason->hasResponse()
                             ? $reason->getResponse()?->getStatusCode()
                             : null;
 
                         $this->report($request, $status, $startedAt, failed: true);
 
-                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
+                        return Create::rejectionFor($reason);
                     }
                 );
             };

@@ -9,9 +9,7 @@ class ChainConfigProvider implements ConfigProviderInterface
     /**
      * @param  ConfigProviderInterface[]  $providers
      */
-    public function __construct(private readonly array $providers)
-    {
-    }
+    public function __construct(private readonly array $providers) {}
 
     public function get(string $key, mixed $default = null): mixed
     {
