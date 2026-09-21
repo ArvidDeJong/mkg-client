@@ -73,7 +73,7 @@ $orders->listHeaders(
 );
 ```
 
-The number lookups (`findHeaderByOrderNumber()`, `findByDebtorNumber()`, `findByRelationNumber()` and the like) build their own filter. A plain number goes in as it is (`debi_num = 10001`). Any other value, such as the order number `VK2606096`, is compared as a quoted text with the backslash and the quote escaped (`vorh_num = "VK2606096"`), so the value can never become part of the filter expression; an empty value throws an `InvalidArgumentException` before a request is sent. The text lookups escape the same way and refuse control characters. The `get…ByPrimaryKey()` methods URL-encode every part of the key and refuse an empty part, `.` and `..`.
+The number lookups (`findHeaderByOrderNumber()`, `findByDebtorNumber()`, `findByRelationNumber()` and the like) build their own filter. A plain number (`debi_num = 10001`) and a plain key of letters and digits (`vorh_num = VK2606096`) go in as they are. Any other value is compared as a quoted text with the backslash and the quote escaped (`vorh_num = "VK-2606096"`), so the value can never become part of the filter expression; an empty value throws an `InvalidArgumentException` before a request is sent. The text lookups escape the same way and refuse control characters. The `get…ByPrimaryKey()` methods URL-encode every part of the key and refuse an empty part, `.` and `..`.
 
 A filter you write yourself in the `filter` argument is sent as you wrote it. Never build one from the input of a visitor without validating it first.
 

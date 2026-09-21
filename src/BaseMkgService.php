@@ -217,10 +217,13 @@ abstract class BaseMkgService
     /**
      * Builds `field operator value` for a key lookup.
      *
-     * An unquoted value is part of the filter expression, so only a plain
-     * number may go in unquoted. MKG keys such as `vorh_num` and `debi_num` are
-     * character fields (`VK2606096`), so any other value is compared as a
-     * quoted, escaped text instead of being refused.
+     * An unquoted value is part of the filter expression, so only a value that
+     * cannot extend it goes in unquoted: a plain number, or a plain key of
+     * letters and digits with at least one digit (`VK2606096`). Those are sent
+     * exactly as before, so an existing integration puts the same bytes on the
+     * wire. A bare word without a digit could name a field (`vorh_num = debi_num`
+     * compares two fields), so that, and every value with another character,
+     * is compared as a quoted, escaped text instead.
      *
      * @throws InvalidArgumentException
      */
@@ -237,6 +240,10 @@ abstract class BaseMkgService
         }
 
         if (preg_match('/\A-?\d+(\.\d+)?\z/', $text) === 1) {
+            return sprintf('%s %s %s', $field, $operator, $text);
+        }
+
+        if (! is_float($value) && preg_match('/\A(?=[A-Za-z0-9]*\d)[A-Za-z0-9]+\z/', $text) === 1) {
             return sprintf('%s %s %s', $field, $operator, $text);
         }
 

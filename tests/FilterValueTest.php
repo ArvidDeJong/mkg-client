@@ -34,14 +34,28 @@ it('sends a numeric key unquoted, exactly as before', function (string|int $valu
     'decimal' => ['12.50', 'debi_num = 12.50'],
 ]);
 
-it('quotes a key that is not numeric instead of placing it in the filter as it is', function (): void {
+it('sends a plain key of letters and digits unquoted, exactly as before', function (): void {
     $history = [];
     $service = new OrdersService(mkgRecordingClient([mkgEmptyEnvelope()], $history), mkgTestConfig(), mkgTestCookieStore());
 
     $service->findHeaderByOrderNumber('VK2606096');
 
-    expect(sentFilter($history))->toBe('vorh_num = "VK2606096"');
+    expect(sentFilter($history))->toBe('vorh_num = VK2606096');
 });
+
+it('quotes a value that could be read as something else than a key', function (string $value, string $expected): void {
+    $history = [];
+    $service = new OrdersService(mkgRecordingClient([mkgEmptyEnvelope()], $history), mkgTestConfig(), mkgTestCookieStore());
+
+    $service->findHeaderByOrderNumber($value);
+
+    expect(sentFilter($history))->toBe($expected);
+})->with([
+    'a bare word could name a field' => ['true', 'vorh_num = "true"'],
+    'a field name' => ['debi_num', 'vorh_num = "debi_num"'],
+    'a key with a hyphen' => ['VK-2606096', 'vorh_num = "VK-2606096"'],
+    'a key with a space' => ['VK 2606096', 'vorh_num = "VK 2606096"'],
+]);
 
 it('keeps a value with filter syntax inside the quoted value', function (string $method, string $service, string $field): void {
     $history = [];
