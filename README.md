@@ -91,8 +91,8 @@ Or start at the [documentation index](docs/README.md), or read the [FAQ](https:/
 
 ## Laravel Boost
 
-The package ships a [Laravel Boost](https://laravel.com/docs/boost) guideline with the
-rules that matter when writing code against it. Run `php artisan boost:install`, or
+The package ships [Laravel Boost](https://laravel.com/docs/boost) resources: a guideline
+and a `mkg-client-development` skill. Run `php artisan boost:install`, or
 `php artisan boost:update --discover` in a project that already uses Boost.
 
 ## Development

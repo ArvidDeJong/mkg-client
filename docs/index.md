@@ -25,7 +25,7 @@ Requires PHP 8.2+ and valid MKG API credentials. The Laravel integration works o
 - **Field metadata from CSV**: default field lists and type normalisation (dates, numbers, booleans) per document, overridable per application
 - **Clear errors**: a `403` is explained as a wrong base URL, not retried as a session problem
 - **Request logging**: every call with method, path, status and duration, and a warning for slow calls, because Laravel's HTTP client profilers never see plain Guzzle traffic
-- **Plain PHP or Laravel**: config providers and cookie stores for both, and a Laravel Boost guideline for AI tooling in your app
+- **Plain PHP or Laravel**: config providers and cookie stores for both, and a Laravel Boost guideline and skill for AI tooling in your app
 
 ## Quick example
 
