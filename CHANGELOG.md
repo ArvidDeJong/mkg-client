@@ -4,6 +4,8 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-21
+
 ### Security
 
 - **A value passed to a number lookup could change the MKG filter.** `findHeaderByOrderNumber()`, `findRowsByOrderNumber()`, `findRowParametersByOrderNumber()`, `findByDebtorNumber()`, `findByRelationNumber()`, `findByAddressNumber()`, `findByContactpersonNumber()` and their `…Rows…` variants placed their argument in the `Filter` as it was, so a value with spaces and an operator became part of the filter expression and could return other rows than the one asked for. A plain number (`10001`, `-5`, `12.50`) and a plain key of letters and digits (`VK2606096`) still go in unquoted, exactly as before, so an existing integration sends the same filter. Every other value (a space, a hyphen, a quote, an operator, a bare word without a digit) is now compared as a quoted and escaped text (`vorh_num = "VK-2606096"`), and an empty value throws an `InvalidArgumentException` before a request is sent. What to do: nothing for keys of letters and digits. If your keys hold other characters, check one lookup against your MKG installation after upgrading. If your application passes visitor input to these methods, catch the `InvalidArgumentException` or validate the input first.
