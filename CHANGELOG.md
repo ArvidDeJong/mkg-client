@@ -4,6 +4,11 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Laravel Boost skill `mkg-client-development` in `resources/boost/skills/`. It covers how a call runs (config check, login, the `JSESSIONID` cookie, the single retry on a `401`), what every failure gives you, reading documents with your own filter, fields and sort, paging past MKG's row caps, the pitfalls in a host app (field lists, normalisation, published CSV files, the cookie on the default disk, a custom Guzzle client), finding a stalling sync in the request log, the settings, and testing with a Guzzle `MockHandler` instead of an MKG installation.
+- Social preview image for the documentation site (`docs/assets/images/social-preview.png`), set as the default Open Graph and Twitter card image in `docs/_config.yml`.
+
 ## [1.2.0] - 2026-09-18
 
 The package now has the same shape as the other darvis packages: a documentation

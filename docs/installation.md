@@ -38,6 +38,10 @@ php artisan vendor:publish --tag=mkg-config     # config only
 php artisan vendor:publish --tag=mkg-csv        # CSV files only, into storage/mkg/
 ```
 
+## Laravel Boost
+
+The package ships a [Laravel Boost](https://laravel.com/docs/boost) guideline and a `mkg-client-development` skill in `resources/boost/`. Run `php artisan boost:install`, or `php artisan boost:update --discover` in a project that already uses Boost, and your AI assistant knows the services, what a `401` and a `403` mean, the row caps and the pitfalls.
+
 ## Environment variables
 
 ```dotenv
