@@ -47,7 +47,7 @@ class RelationsService extends BaseMkgService
         }
 
         return $this->get(
-            '/rela/rela_debi/'.ltrim((string) $debtorNumber, '/'),
+            '/rela/rela_debi/'.$this->encodePathSegment(ltrim((string) $debtorNumber, '/')),
             $this->buildListQuery($fieldList)
         );
     }
@@ -57,7 +57,7 @@ class RelationsService extends BaseMkgService
      */
     public function getByPrimaryKey(string|int $primaryKey): array
     {
-        return $this->get('/rela/'.ltrim((string) $primaryKey, '/'));
+        return $this->get('/rela/'.$this->encodePathSegment(ltrim((string) $primaryKey, '/'), allowCompositeKey: true));
     }
 
     /**

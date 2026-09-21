@@ -30,11 +30,47 @@ class FileCookieStore implements CookieStoreInterface
         $absolutePath = $this->resolvePath($path);
         $directory = dirname($absolutePath);
 
+        // The cookie is a live ERP session: only the owner may enter the
+        // directory or read the file. An existing directory is left as it is,
+        // it may be a shared one such as the system temp directory.
         if (! is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            @mkdir($directory, 0700, true);
         }
 
-        file_put_contents($absolutePath, $value);
+        // Written next to the target and renamed over it, so a reader never
+        // sees a half written cookie and the file is never briefly world readable.
+        $temporaryPath = @tempnam($directory, '.mkg-cookie-');
+
+        // tempnam() falls back to the system temp directory when it cannot write here.
+        if ($temporaryPath !== false && realpath(dirname($temporaryPath)) === realpath($directory)) {
+            $this->restrictToOwner($temporaryPath);
+
+            if (file_put_contents($temporaryPath, $value, LOCK_EX) !== false && @rename($temporaryPath, $absolutePath)) {
+                $this->restrictToOwner($absolutePath);
+
+                return;
+            }
+        }
+
+        if ($temporaryPath !== false && is_file($temporaryPath)) {
+            @unlink($temporaryPath);
+        }
+
+        // No temporary file could be made here: write in place, owner only.
+        if (is_file($absolutePath)) {
+            $this->restrictToOwner($absolutePath);
+        }
+
+        file_put_contents($absolutePath, $value, LOCK_EX);
+        $this->restrictToOwner($absolutePath);
+    }
+
+    /**
+     * Windows has no POSIX modes; chmod does nothing useful there, so a failure is not an error.
+     */
+    private function restrictToOwner(string $path): void
+    {
+        @chmod($path, 0600);
     }
 
     public function delete(string $path): void

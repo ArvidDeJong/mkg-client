@@ -61,6 +61,21 @@ final class RequestLogger
         };
     }
 
+    /**
+     * A response that arrived but cannot be used: a redirect, or a 2xx whose
+     * body is not JSON. Always a warning, also when `log_requests` is off,
+     * because the caller gets an exception instead of rows.
+     */
+    public function unusableResponse(string $method, string $path, int $status, string $reason): void
+    {
+        $this->logger?->warning('MKG response was not usable.', [
+            'method' => $method,
+            'path' => $path,
+            'status' => $status,
+            'reason' => $reason,
+        ]);
+    }
+
     private function report(RequestInterface $request, ?int $status, float $startedAt, bool $failed = false): void
     {
         $seconds = microtime(true) - $startedAt;

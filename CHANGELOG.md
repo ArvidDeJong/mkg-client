@@ -4,6 +4,24 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+### Security
+
+- **A value passed to a number lookup could change the MKG filter.** `findHeaderByOrderNumber()`, `findRowsByOrderNumber()`, `findRowParametersByOrderNumber()`, `findByDebtorNumber()`, `findByRelationNumber()`, `findByAddressNumber()`, `findByContactpersonNumber()` and their `…Rows…` variants placed their argument in the `Filter` as it was, so a value with spaces and an operator became part of the filter expression and could return other rows than the one asked for. A plain number (`10001`, `-5`, `12.50`) still goes in unquoted, exactly as before. Every other value, such as the order number `VK2606096`, is now compared as a quoted and escaped text (`vorh_num = "VK2606096"`), and an empty value throws an `InvalidArgumentException` before a request is sent. What to do: nothing for numeric keys. If you look up keys with letters, check one lookup against your MKG installation after upgrading. If your application passes visitor input to these methods, catch the `InvalidArgumentException` or validate the input first.
+- **A backslash could break out of a quoted filter value.** The text lookups (`findByArticleCode()`, `findByArticleName()`, `findByDebtorName()`, `findByDebtorEmail()`, `findByUserCode()` and the like) escaped the quote but not the backslash, so a value ending in a backslash took the closing quote with it. The backslash is now escaped first, then the quote, and a value with a control character (a line break, a tab, a NUL byte) throws an `InvalidArgumentException`. An ordinary value is sent exactly as before. What to do: nothing, unless you search with values that contain a backslash; those now match the literal backslash.
+- **A primary key could change the URL of the request.** `OrdersService::getHeaderByPrimaryKey()` and `getRowByPrimaryKey()`, `AddressesService::getByPrimaryKey()` (key and `$document`), `AddressesService::list()` and its finders (`$document`), and `RelationsService::getByPrimaryKey()` and `findByDebtorNumber()` put their arguments into the URL path unencoded, so a `/`, `..`, `?` or `#` in a key reached another document or added query parameters. Every part is now URL-encoded, and an empty part, `.` and `..` throw an `InvalidArgumentException`. Ordinary keys give the same URL as before, including a whole composite key such as `1+10001`, which keeps its `+`. What to do: nothing.
+- **A redirect or a login page looked like an empty result.** A `3xx` answer (the client never follows redirects) and a `2xx` answer whose body is not JSON came back as an empty array, without an exception and without a log line. A sync could not tell that from "no rows" and could conclude that every order or debtor was gone. Both now throw `MkgHttpException` with the status code, and are logged as the warning `MKG response was not usable.`. The message does not contain the body or the `Location` header. A genuine empty result (`[]`, `{}`, or an envelope without rows) is still an empty array, and the single retry after a `401` works as before. What to do: make sure a sync catches `MkgHttpException` (or Guzzle's `ClientException`, which it extends) and stops instead of continuing; code that relied on `[]` for an unreachable MKG now gets the exception.
+- **The session cookie file in plain PHP was readable by other users of the server.** `FileCookieStore` created its directory with mode `0777` and the file with the default umask, by default in the shared system temp directory. A new directory is now created with `0700` and the file with `0600`, written to a temporary file and renamed into place, so it is never half written or briefly readable. An existing file is tightened on the next login. What to do: delete a directory that an older version created in the temp directory (`rm -r /tmp/mkg`) so it is created again with the new mode, and preferably set `mkg.cookie_storage_path` to a directory that only your application user can write to. Laravel applications use `LaravelCookieStore` and are not affected.
+
+### Changed
+
+- A `3xx` answer and a `2xx` answer that is not JSON throw `MkgHttpException` where they used to return an empty array. See Security above.
+- A number lookup with a value that is not a plain number sends a quoted filter (`vorh_num = "VK2606096"`) where it used to send the value unquoted (`vorh_num = VK2606096`), and throws an `InvalidArgumentException` on an empty value.
+- `RequestLogger::unusableResponse()` logs the new warning `MKG response was not usable.` with `method`, `path`, `status` and `reason`.
+
+### Fixed
+
+- The documentation, the Boost guideline and `CLAUDE.md` said that the Laravel cookie store writes to `storage/mkg/cookie.txt`. It writes through the `Storage` facade to the default filesystem disk (`mkg/cookie.txt` under the root of that disk); that disk must not be public. The behaviour did not change.
+
 ## [1.2.1] - 2026-09-21
 
 ### Added

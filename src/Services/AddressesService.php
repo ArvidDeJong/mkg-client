@@ -56,7 +56,10 @@ class AddressesService extends BaseMkgService
      */
     public function getByPrimaryKey(string|int $primaryKey, string $document = 'adrs'): array
     {
-        return $this->get('/'.$document.'/'.ltrim((string) $primaryKey, '/'));
+        return $this->get(
+            '/'.$this->encodePathSegment($document)
+            .'/'.$this->encodePathSegment(ltrim((string) $primaryKey, '/'), allowCompositeKey: true)
+        );
     }
 
     /**

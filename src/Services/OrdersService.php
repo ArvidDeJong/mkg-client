@@ -60,7 +60,7 @@ class OrdersService extends BaseMkgService
      */
     public function getHeaderByPrimaryKey(string|int $administrationNumber, string|int $orderNumber): array
     {
-        return $this->get('/vorh/'.$administrationNumber.'+'.$orderNumber);
+        return $this->get('/vorh/'.$this->encodePathSegment($administrationNumber).'+'.$this->encodePathSegment($orderNumber));
     }
 
     /**
@@ -101,7 +101,11 @@ class OrdersService extends BaseMkgService
      */
     public function getRowByPrimaryKey(string|int $administrationNumber, string|int $orderNumber, string|int $rowNumber): array
     {
-        return $this->get('/vorr/'.$administrationNumber.'+'.$orderNumber.'+'.$rowNumber);
+        return $this->get(
+            '/vorr/'.$this->encodePathSegment($administrationNumber)
+            .'+'.$this->encodePathSegment($orderNumber)
+            .'+'.$this->encodePathSegment($rowNumber)
+        );
     }
 
     /**
