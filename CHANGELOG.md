@@ -4,6 +4,8 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-09-21
+
 ### Fixed
 - **On Laravel 11 the timeout, TLS, redirect and logging settings did not apply to a service from
   the container.** The constructor of a service takes an optional Guzzle client, and the Laravel 11
