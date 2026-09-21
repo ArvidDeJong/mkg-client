@@ -4,6 +4,17 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+- **On Laravel 11 the timeout, TLS, redirect and logging settings did not apply to a service from
+  the container.** The constructor of a service takes an optional Guzzle client, and the Laravel 11
+  container builds an object for an optional class argument instead of leaving it null. So
+  `app(DebtorsService::class)`, and every type-hinted service, got a Guzzle client with Guzzle's
+  own defaults: no timeout at all, redirects followed, no request log, and `MKG_VERIFY_SSL` ignored.
+  The package now binds its seven services, so each one builds the client from the package config
+  on every Laravel version. Laravel 12 and 13 were not affected. Nothing to do after upgrading,
+  unless you wrote a service class of your own that extends one of the package's: bind it the same
+  way, see the troubleshooting page.
+
 ## [1.3.1] - 2026-09-21
 
 Documentation only; nothing in the package changes.

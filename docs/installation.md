@@ -57,8 +57,6 @@ MKG's own checklist: [MKG Getting Started](https://www.mkg.eu/nl-NL/mijn-mkg/sup
 
 5. [Check that it works](#check-that-it-works).
 
-On **Laravel 11**, also read [Laravel 11 ignores the timeout and TLS settings](troubleshooting.md#laravel-11-ignores-the-timeout-and-tls-settings) before you go to production.
-
 For plain PHP, without Laravel, see [Usage](usage.md#plain-php).
 
 ## Check that it works

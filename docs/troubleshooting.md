@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting"
-description: "Every exception message and log line of darvis/mkg-client with cause and fix: 401, 403, redirects, missing config, missing rows, TLS errors and Laravel 11."
+description: "Every exception message and log line of darvis/mkg-client with cause and fix: 401, 403, redirects, missing config, missing rows, TLS errors and your own service classes."
 nav_order: 7
 ---
 
@@ -111,30 +111,27 @@ An MKG path segment must not be empty, "." or "..", got "..".
 
 **Fix.** Set `MKG_LOG_REQUESTS=true` and read the log; see [See every call in the log](usage.md#see-every-call-in-the-log). Pass a short `fieldList`; see [Ask only for the fields you need](usage.md#ask-only-for-the-fields-you-need). A call that takes `MKG_SLOW_REQUEST_SECONDS` or longer is logged as the warning `MKG request was slow.` even when request logging is off.
 
-## Laravel 11 ignores the timeout and TLS settings
+## The timeout, TLS and logging settings have no effect on a service of your own
 
-**Symptom.** On Laravel 11, `MKG_TIMEOUT`, `MKG_CONNECT_TIMEOUT`, `MKG_VERIFY_SSL=false` and `MKG_LOG_REQUESTS` have no effect on a service you resolve with `app()` or type-hint, and redirects are followed.
+**Symptom.** `MKG_TIMEOUT`, `MKG_CONNECT_TIMEOUT`, `MKG_VERIFY_SSL=false` and `MKG_LOG_REQUESTS` do nothing, and redirects are followed, for a service class you wrote yourself by extending a package service or `BaseMkgService`. On Laravel 11 only.
 
-**Cause.** The first constructor argument of a service is an optional Guzzle client. The Laravel 11 container fills an optional class argument with a new object, here a Guzzle client with Guzzle's own defaults, so the package never builds its configured client. Laravel 12 and 13 leave the argument empty, and the settings apply.
+**Cause.** The first constructor argument of a service is an optional Guzzle client. The Laravel 11 container fills an optional class argument with a new object, here a Guzzle client with Guzzle's own defaults, so the package never builds its configured client. The package binds its own seven services to prevent this, so they are not affected. Up to 1.3.1 they were: upgrade. Laravel 12 and 13 leave the argument empty.
 
-**Fix.** On Laravel 11, bind the services you use so that the container does not pass a client.
+**Fix.** Bind your own service the same way, so the container does not pass a client.
 
 File: `app/Providers/AppServiceProvider.php`
 
 ```php
-use Darvis\MkgClient\Services\DebtorsService;
-use Darvis\MkgClient\Services\OrdersService;
+use App\Services\Mkg\InvoicesService;
 use Psr\Log\LoggerInterface;
 
 public function register(): void
 {
-    foreach ([DebtorsService::class, OrdersService::class] as $service) {
-        $this->app->bind($service, fn ($app) => new $service(logger: $app->make(LoggerInterface::class)));
-    }
+    $this->app->bind(InvoicesService::class, fn ($app) => new InvoicesService(logger: $app->make(LoggerInterface::class)));
 }
 ```
 
-`new DebtorsService(logger: $logger)` anywhere else has the same effect.
+`new InvoicesService(logger: $logger)` anywhere else has the same effect.
 
 ## Nothing is logged in plain PHP
 
