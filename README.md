@@ -42,9 +42,7 @@ MKG_PASSWORD=your-api-password
 
 The client builds the REST base and the login URL from the host. See
 [Installation & configuration](https://arviddejong.github.io/mkg-client/installation.html)
-for what to ask MKG for, every setting, and a command that checks the connection. On
-Laravel 11, read the
-[note about the timeout and TLS settings](https://arviddejong.github.io/mkg-client/troubleshooting.html#laravel-11-ignores-the-timeout-and-tls-settings).
+for what to ask MKG for, every setting, and a command that checks the connection.
 
 ## Quick start
 
