@@ -18,6 +18,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Request;
+use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class BaseMkgService
@@ -55,6 +58,8 @@ abstract class BaseMkgService
     private ?SessionCookieManager $sessionManager = null;
 
     private ?MkgEndpoints $endpoints = null;
+
+    private ?RequestLogger $requestLogger = null;
 
     protected ?LoggerInterface $logger = null;
 
@@ -146,29 +151,174 @@ abstract class BaseMkgService
             }
         }
 
+        return $this->decodeResponse($method, $path, $response);
+    }
+
+    /**
+     * Turns a response into the decoded JSON array, or fails loudly.
+     *
+     * Redirects are off, so a 3xx arrives here as a normal response, and a 200
+     * can carry an HTML page (a login form, a proxy error). Both used to come
+     * back as `[]`, which a caller cannot tell from "no rows": a sync would
+     * conclude that every order is gone. Only a body that really is JSON counts.
+     *
+     * @throws MkgHttpException
+     */
+    private function decodeResponse(string $method, string $path, ResponseInterface $response): array
+    {
+        $status = $response->getStatusCode();
         $contents = (string) $response->getBody();
 
-        return json_decode($contents, true) ?? [];
+        if ($status >= 300 && $status < 400) {
+            throw $this->unusableResponse($method, $path, $response, sprintf(
+                'MKG answered %d, a redirect, where a JSON document was expected. The client does not follow redirects: '
+                .'check the configured base URL (%s) and whether a proxy or login page sits in front of MKG.',
+                $status,
+                $this->endpoints()->rest(),
+            ));
+        }
+
+        // A write may be answered without a body; a read never is.
+        if (trim($contents) === '' && ($status === 204 || strtoupper($method) !== 'GET')) {
+            return [];
+        }
+
+        $decoded = json_decode($contents, true);
+
+        if (! is_array($decoded)) {
+            throw $this->unusableResponse($method, $path, $response, sprintf(
+                'MKG answered %d with a body that is not valid JSON (Content-Type: %s, %d bytes), so it is not an empty result. '
+                .'Check the configured base URL (%s) and whether a proxy or login page sits in front of MKG.',
+                $status,
+                $response->getHeaderLine('Content-Type') ?: 'none',
+                strlen($contents),
+                $this->endpoints()->rest(),
+            ));
+        }
+
+        return $decoded;
     }
 
+    /**
+     * The message never holds the body or the Location header: both can carry a session id.
+     */
+    private function unusableResponse(string $method, string $path, ResponseInterface $response, string $message): MkgHttpException
+    {
+        $this->requestLogger()->unusableResponse(
+            $method,
+            (string) parse_url($this->buildUrl($path), PHP_URL_PATH),
+            $response->getStatusCode(),
+            $message,
+        );
+
+        return new MkgHttpException($message, new Request($method, $this->buildUrl($path)), $response);
+    }
+
+    /**
+     * Builds `field operator value` for a key lookup.
+     *
+     * An unquoted value is part of the filter expression, so only a value that
+     * cannot extend it goes in unquoted: a plain number, or a plain key of
+     * letters and digits with at least one digit (`VK2606096`). Those are sent
+     * exactly as before, so an existing integration puts the same bytes on the
+     * wire. A bare word without a digit could name a field (`vorh_num = debi_num`
+     * compares two fields), so that, and every value with another character,
+     * is compared as a quoted, escaped text instead.
+     *
+     * @throws InvalidArgumentException
+     */
     protected function buildFilter(string $field, string $operator, string|int|float $value): string
     {
-        // MKG existing integrations typically send unquoted string values in Filter.
-        return sprintf('%s %s %s', $field, $operator, $value);
+        if (is_int($value)) {
+            return sprintf('%s %s %d', $field, $operator, $value);
+        }
+
+        $text = trim((string) $value);
+
+        if ($text === '') {
+            throw new InvalidArgumentException(sprintf('The MKG filter value for "%s" is empty.', $field));
+        }
+
+        if (preg_match('/\A-?\d+(\.\d+)?\z/', $text) === 1) {
+            return sprintf('%s %s %s', $field, $operator, $text);
+        }
+
+        if (! is_float($value) && preg_match('/\A(?=[A-Za-z0-9]*\d)[A-Za-z0-9]+\z/', $text) === 1) {
+            return sprintf('%s %s %s', $field, $operator, $text);
+        }
+
+        if (is_float($value) || ! in_array(trim($operator), ['=', '<>'], true)) {
+            throw new InvalidArgumentException(sprintf(
+                'The MKG filter value for "%s" must be a plain number to be compared with "%s".',
+                $field,
+                $operator,
+            ));
+        }
+
+        return sprintf('%s %s %s', $field, trim($operator), $this->quoteFilterText($field, $text));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function buildContainsTextFilter(string $field, string $value): string
     {
-        $escaped = str_replace('"', '\\"', trim($value));
-
-        return sprintf('%s contains "%s"', $field, $escaped);
+        return sprintf('%s contains %s', $field, $this->quoteFilterText($field, $value));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function buildEqualsTextFilter(string $field, string $value): string
     {
-        $escaped = str_replace('"', '\\"', trim($value));
+        return sprintf('%s = %s', $field, $this->quoteFilterText($field, $value));
+    }
 
-        return sprintf('%s = "%s"', $field, $escaped);
+    /**
+     * Quotes a text for the MKG filter. The backslash is escaped before the
+     * quote: the other way round a value ending in a backslash would escape
+     * the closing quote and the rest of the filter would become part of it.
+     *
+     * @throws InvalidArgumentException
+     */
+    private function quoteFilterText(string $field, string $value): string
+    {
+        $text = trim($value);
+
+        if (preg_match('/[\x00-\x1F\x7F]/', $text) === 1) {
+            throw new InvalidArgumentException(sprintf(
+                'The MKG filter value for "%s" contains a control character (a line break, a tab or a NUL byte).',
+                $field,
+            ));
+        }
+
+        return '"'.str_replace(['\\', '"'], ['\\\\', '\\"'], $text).'"';
+    }
+
+    /**
+     * Encodes one caller supplied part of the URL path.
+     *
+     * A key is data, not a path: without encoding a `/`, `..`, `?` or `#` in it
+     * changes which MKG document the request reaches. `$allowCompositeKey` keeps
+     * the `+` that MKG uses between the parts of a composite primary key
+     * (`1+VK2606096`), for the methods that take the whole key as one argument.
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function encodePathSegment(string|int $segment, bool $allowCompositeKey = false): string
+    {
+        $segment = (string) $segment;
+
+        if ($segment === '' || $segment === '.' || $segment === '..') {
+            throw new InvalidArgumentException(sprintf(
+                'An MKG path segment must not be empty, "." or "..", got "%s".',
+                $segment,
+            ));
+        }
+
+        $encoded = rawurlencode($segment);
+
+        return $allowCompositeKey ? str_replace('%2B', '+', $encoded) : $encoded;
     }
 
     /**
@@ -190,7 +340,7 @@ abstract class BaseMkgService
             $fieldList = $defaultFieldList;
         }
 
-        return $this->get('/'.$document, $this->buildListQuery($fieldList, $filter, $numRows, $sort, $skipRows));
+        return $this->get('/'.$this->encodePathSegment($document), $this->buildListQuery($fieldList, $filter, $numRows, $sort, $skipRows));
     }
 
     /**
@@ -472,14 +622,19 @@ abstract class BaseMkgService
         return is_numeric($value) ? (float) $value : $default;
     }
 
-    private function createDefaultClient(): Client
+    private function requestLogger(): RequestLogger
     {
-        $stack = HandlerStack::create();
-        $stack->push((new RequestLogger(
+        return $this->requestLogger ??= new RequestLogger(
             $this->logger,
             $this->toBool($this->config->get('mkg.log_requests', false), false),
             $this->toFloat($this->config->get('mkg.slow_request_seconds', 10), 10.0),
-        ))->middleware());
+        );
+    }
+
+    private function createDefaultClient(): Client
+    {
+        $stack = HandlerStack::create();
+        $stack->push($this->requestLogger()->middleware());
 
         return new Client([
             'handler' => $stack,

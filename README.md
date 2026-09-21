@@ -72,8 +72,15 @@ $rows = (new DebtorsService(config: $config))->findDebtorRowsByNumberNameOrEmail
 
 A `401` means the session expired and is retried once after a fresh login. A `403`
 with an HTML body means the URL path is wrong and never reached the API; it is not
-retried. MKG caps a result at 1000 rows and returns 100 without `NumRows`, so page
-larger sets. See [Troubleshooting](docs/troubleshooting.md).
+retried. A redirect, or a `2xx` whose body is not JSON (a login page, a proxy error),
+throws `MkgHttpException` too, so an empty array always means that MKG answered and
+found nothing. MKG caps a result at 1000 rows and returns 100 without `NumRows`, so
+page larger sets. See [Troubleshooting](docs/troubleshooting.md).
+
+The lookups quote and escape their value and URL-encode primary keys. A `filter`
+string you write yourself is sent as it is: never build one from visitor input. In
+Laravel the session cookie is written to the default filesystem disk, which must not
+be public; in plain PHP the cookie file is created for the owner only.
 
 ## Documentation
 

@@ -33,12 +33,14 @@ $config = new ArrayConfigProvider([
     'mkg.verify_ssl' => true,
     'mkg.timeout' => 30,
     'mkg.connect_timeout' => 10,
-    'mkg.cookie_storage_path' => '/tmp/mkg-cookie.txt',
+    'mkg.cookie_storage_path' => __DIR__.'/var/mkg-cookie.txt',
 ]);
 
 $service = new DebtorsService(config: $config, logger: $logger);
 $response = $service->list(numRows: 5);
 ```
+
+The cookie is a live ERP session. The file is created for the owner only (`0600`, a new directory with `0700`) and replaced in one step; give it a directory that only your application user can write to, not a shared one such as `/tmp`.
 
 The constructor also accepts your own Guzzle `Client` and a `CookieStoreInterface` implementation, in that order: `new DebtorsService($client, $config, $cookieStore, $logger)`.
 
@@ -70,6 +72,14 @@ $orders->listHeaders(
     numRows: 50,
 );
 ```
+
+The number lookups (`findHeaderByOrderNumber()`, `findByDebtorNumber()`, `findByRelationNumber()` and the like) build their own filter. A plain number (`debi_num = 10001`) and a plain key of letters and digits (`vorh_num = VK2606096`) go in as they are. Any other value is compared as a quoted text with the backslash and the quote escaped (`vorh_num = "VK-2606096"`), so the value can never become part of the filter expression; an empty value throws an `InvalidArgumentException` before a request is sent. The text lookups escape the same way and refuse control characters. The `get…ByPrimaryKey()` methods URL-encode every part of the key and refuse an empty part, `.` and `..`.
+
+A filter you write yourself in the `filter` argument is sent as you wrote it. Never build one from the input of a visitor without validating it first.
+
+## Errors
+
+A `4xx` from MKG, a redirect and a `2xx` that is not JSON all throw `Darvis\MkgClient\Exceptions\MkgHttpException`, which extends Guzzle's `ClientException`. An empty array therefore always means that MKG answered and found nothing. See [Troubleshooting](troubleshooting.md).
 
 ## Paging
 

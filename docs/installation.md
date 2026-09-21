@@ -76,7 +76,7 @@ All keys live in `config/mkg.php`, in alphabetical order.
 | --- | --- | --- | --- |
 | `client_path` | `MKG_CLIENT_PATH` | `mkg` | Client segment in the URL; `mkgoefenclient` for a training environment |
 | `connect_timeout` | `MKG_CONNECT_TIMEOUT` | `10` | Connection timeout in seconds |
-| `cookie_storage_path` | `MKG_COOKIE_STORAGE_PATH` | `mkg/cookie.txt` | Where the `JSESSIONID` is cached, relative to the Laravel storage disk or, in plain PHP, a file path |
+| `cookie_storage_path` | `MKG_COOKIE_STORAGE_PATH` | `mkg/cookie.txt` | Where the `JSESSIONID` is cached: in Laravel relative to the root of the default filesystem disk, which must not be public; in plain PHP a file path, created for the owner only |
 | `customer` | `MKG_CUSTOMER` | | Customer code, sent as `X-CustomerID` |
 | `host` | `MKG_HOST` | | Hostname of the installation, optionally with a port, without scheme |
 | `log_requests` | `MKG_LOG_REQUESTS` | `false` | Log every call at debug level; see [Usage](usage.md#request-logging) |
@@ -93,6 +93,8 @@ All keys live in `config/mkg.php`, in alphabetical order.
 - Service paths such as `/debi`, `/arti` and `/vorh` are appended to the REST base.
 - Every request carries `X-CustomerID` and `Accept: application/json`.
 - The `JSESSIONID` cookie is cached and reused until MKG returns `401`; the client then drops it, logs in again and retries the request once.
+- In Laravel the cookie is written through the `Storage` facade to the default filesystem disk (`FILESYSTEM_DISK`). It is a live ERP session: the default disk must not be `public` or a public bucket. When it has to be, construct the services with your own `CookieStoreInterface` that writes somewhere private.
+- A redirect, or a `2xx` whose body is not JSON, throws `MkgHttpException` instead of coming back as an empty result.
 - A `403` is never retried; see [Troubleshooting](troubleshooting.md#401-and-403-mean-different-things).
 
 ## CSV field metadata
