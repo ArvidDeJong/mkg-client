@@ -4,6 +4,28 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+Documentation only; nothing in the package changes.
+
+### Added
+
+- A Testing page in the documentation: how to test code that uses the package with a Guzzle `MockHandler`, a complete Pest example, and the responses to queue for rows, no rows, a login, an expired session, a wrong URL path, a redirect and a `5xx`.
+- A "Check that it works" step on the Installation page: one `php artisan tinker` command, the output to expect, and what every other outcome means.
+- A complete example on the Usage page (an Artisan command that shows a debtor and its latest orders), with its file path, imports and exception handling.
+- A Troubleshooting entry for Laravel 11. The Laravel 11 container passes its own default Guzzle client into a service that is resolved with `app()` or type-hinted, so `MKG_TIMEOUT`, `MKG_CONNECT_TIMEOUT`, `MKG_VERIFY_SSL` and `MKG_LOG_REQUESTS` have no effect there and redirects are followed. The page has the binding that avoids it. Laravel 12 and 13 are not affected.
+
+### Fixed
+
+- The documentation said the CSV metadata gives "type normalisation (dates, numbers, booleans)". Only `integer`, `decimal`, `percentage`, `bedrag`, `logical`, `datum` and the text types are converted. Quantities (`aantal`) and types such as `tijdstip`, `week` and `telefoonnummer` come back as MKG sent them, and `debi_num` and `vorh_num` are `character` fields, so strings. The Usage page now has the table.
+- The documentation said "a field missing from the CSV is dropped silently". That is only true for the built-in default field lists of `ArticleService`, `DebtorsService`, `ContactpersonService` and `UserService`. A `fieldList` you pass is sent as written, and a field in it that the CSV does not know comes back unconverted.
+- The Troubleshooting page said a missing `host` without the two URL overrides throws when the service is created. The constructor only checks the login URL: with `MKG_URL_AUTH` set and no `MKG_HOST` or `MKG_URL_PROD`, the service is created and the first request throws the `RuntimeException`.
+- The Usage page named only `MkgHttpException` and did not say what else a call throws. A `5xx`, a timeout, a connection error and a `4xx` or `5xx` on the login call are Guzzle's own exceptions; catch `GuzzleHttp\Exception\GuzzleException` after `MkgHttpException`.
+- The documentation did not say that the default field list of `OrdersService`, `AddressesService` and `RelationsService` is every field in the CSV (158 for `vorh`, 355 for `vorr`). It now says how to pass a `fieldList`.
+- The documentation did not say that a Guzzle client you pass yourself bypasses `verify_ssl`, `timeout`, `connect_timeout`, `log_requests`, `slow_request_seconds` and the redirect setting, that services are not singletons, or that a plain PHP project with `illuminate/support` installed needs `cookieStore: new FileCookieStore`.
+- The documentation did not say which lookups refuse an empty value. The lookups by number throw an `InvalidArgumentException`; the searches on name, email, article code and user code and the combined searches return `[]` without a request.
+- The Verification page logged in without the `X-CustomerID` header, which the package does send, and used `$MKG_URL_AUTH` and `$MKG_URL_PROD` without saying how to set them. The steps that the package itself never performs (the `/User` call and the write test with a `PUT`) are removed: the package only reads.
+- The Boost skill said the combined debtor search merges "on RowKey". `RowKey` is not in the CSV, so it is not requested by default; the rows are merged without duplicates.
+- `docs/README.md`, a second index next to the site's home page, is removed. The README now has the standard sections, with `Requirements` and without a personal author section.
+
 ## [1.3.0] - 2026-09-21
 
 ### Security

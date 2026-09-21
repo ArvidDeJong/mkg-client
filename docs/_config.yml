@@ -1,5 +1,5 @@
 title: darvis/mkg-client
-description: PHP client for the REST API of MKG Software, the Dutch ERP system. Handles the Tomcat form login and the JSESSIONID session, and offers a typed service per MKG document. Framework-agnostic, with Laravel integration.
+description: PHP and Laravel client that reads debtors, articles and sales orders from the REST API of MKG Software, the Dutch ERP system. Handles the form login and the JSESSIONID session, and returns typed rows per MKG document.
 url: https://arviddejong.github.io
 baseurl: /mkg-client
 
@@ -10,7 +10,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# docs/README.md is the index for browsing on GitHub; the site has its own index.md.
+# Keeps a README in docs/, if one is ever added for browsing on GitHub, out of the site.
 exclude:
   - README.md
 
@@ -20,9 +20,9 @@ package:
   repository: https://github.com/ArvidDeJong/mkg-client
   packagist: https://packagist.org/packages/darvis/mkg-client
   license_url: https://github.com/ArvidDeJong/mkg-client/blob/main/LICENSE
-  requires: PHP 8.2+ and valid MKG API credentials; Laravel 11, 12 or 13 only for the Laravel integration
+  requires: PHP 8.2+ and MKG API credentials; Laravel 11, 12 or 13 only for the Laravel integration
   platforms: [PHP, Laravel]
-  keywords: [mkg, mkg software, erp, erp integration, api client, rest api, php, laravel, jsessionid]
+  keywords: [mkg, mkg software, mkg api, mkg erp, erp integration, php api client, laravel, rest api, sales orders, debtors, jsessionid]
 
 # Developer credit in the footer and the structured data.
 developer:

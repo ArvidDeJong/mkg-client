@@ -33,7 +33,7 @@ function docsFrontMatter(string $file): array
 }
 
 /**
- * Site pages; docs/README.md is only for browsing on GitHub and has no front matter.
+ * Site pages. A docs/README.md, should one be added for browsing on GitHub, is not a site page.
  *
  * @return array<int, string>
  */
@@ -81,6 +81,48 @@ test('pages link only to pages that exist', function () {
             expect(docsSitePath($target))->toBeFile(basename($page).' links to '.$target);
         }
     }
+});
+
+test('every page is linked from the home page', function () {
+    $home = (string) file_get_contents(docsSitePath('index.md'));
+
+    foreach (docsSitePages() as $page) {
+        if (basename($page) === 'index.md') {
+            continue;
+        }
+
+        expect(str_contains($home, ']('.basename($page)))->toBeTrue(basename($page).' is not linked from index.md');
+    }
+});
+
+test('links to a section point at a heading that exists', function () {
+    $anchors = [];
+
+    foreach (docsSitePages() as $page) {
+        preg_match_all('/^#{1,6} (.+)$/m', (string) file_get_contents($page), $headings);
+
+        // The id kramdown gives a heading: lower case, punctuation dropped, spaces to hyphens.
+        $anchors[basename($page)] = array_map(
+            fn (string $heading): string => str_replace(' ', '-', (string) preg_replace('/[^a-z0-9 _-]/', '', strtolower($heading))),
+            $headings[1],
+        );
+    }
+
+    foreach (docsSitePages() as $page) {
+        preg_match_all('/\]\(([a-z-]+\.md)?#([^)]+)\)/', (string) file_get_contents($page), $links, PREG_SET_ORDER);
+
+        foreach ($links as $link) {
+            $target = $link[1] !== '' ? $link[1] : basename($page);
+
+            expect(in_array($link[2], $anchors[$target] ?? [], true))->toBeTrue(basename($page).' links to '.$target.'#'.$link[2]);
+        }
+    }
+});
+
+test('the FAQ stays between six and ten questions', function () {
+    $faq = (string) file_get_contents(docsSitePath('_data/faq.yml'));
+
+    expect(substr_count($faq, '- q: '))->toBeGreaterThanOrEqual(6)->toBeLessThanOrEqual(10);
 });
 
 test('the FAQ, structured data and llms.txt read from the shared data', function () {

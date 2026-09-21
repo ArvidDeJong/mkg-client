@@ -1,15 +1,35 @@
 ---
-title: Service reference
-description: "Every service of darvis/mkg-client with its public methods: articles, debtors, contact persons, sales orders, addresses, relations and users, plus what all services share."
+title: "Service reference"
+description: "Every service of darvis/mkg-client with the exact signature of each public method: articles, debtors, contact persons, orders, addresses, relations, users."
 nav_order: 4
 ---
 
 # Service reference
 
-All services live under `Darvis\MkgClient\Services` and extend `Darvis\MkgClient\BaseMkgService`. They share the login and session handling, the CSV field metadata, the extraction of rows from `response.ResultData` and the type normalisation; see [Usage](usage.md) for how the pieces fit together.
+All services live in the namespace `Darvis\MkgClient\Services` and extend `Darvis\MkgClient\BaseMkgService`. Resolve one with `app(DebtorsService::class)` in Laravel, or construct it as shown in [Plain PHP](usage.md#plain-php). Every public method reads; none writes to MKG. The signatures below are generated from the source.
 
-Three kinds of methods recur in every service. `list…()` and `find…()` return MKG's raw response. `find…Rows…()` and `extract…Rows()` return the flat, normalised rows. `getDefault…FieldList()` and `get…FieldMeta()` expose the CSV metadata the service works with. The method signatures below are generated from the source.
+## How to read the method names
 
+| Name | What it returns |
+| --- | --- |
+| `list…()` | MKG's raw response for the document, with your `fieldList`, `filter`, `numRows` and `sort` |
+| `find…()` without `Rows` | MKG's raw response for one lookup |
+| `get…ByPrimaryKey()` | MKG's raw response for one record, addressed in the URL. A composite key is written with `+`, for example `1+10001` |
+| `find…Rows…()` | The flat rows of a lookup, with values converted to PHP types |
+| `extract…Rows()` | The flat, converted rows out of a raw response |
+| `getDefault…FieldList()` | The fields the service requests when you pass no `fieldList`; with `databaseOnly: true` only the fields stored in the MKG database |
+| `get…FieldMeta()` | The CSV metadata per field: `label`, `type` and `isDatabaseField` |
+
+An empty `fieldList` means the default list, which is very long for orders, addresses and relations; see [Ask only for the fields you need](usage.md#ask-only-for-the-fields-you-need). What a call can throw is listed in [Usage](usage.md#what-a-call-can-throw).
+
+## On every service
+
+```php
+getMkgVariantTitle(string $variant): ?string
+getMkgVariantTitles(): array
+```
+
+`getMkgVariantTitle('vorh')` returns MKG's own Dutch label of a document (`verkooporders`), or `null` for a document the package does not know. `getMkgVariantTitles()` returns all ten labels, keyed by document.
 
 ## Articles: `ArticleService`
 
@@ -74,7 +94,7 @@ extractContactpersonRows(array $response): array
 
 ## Sales orders: `OrdersService`
 
-MKG documents: `vorh, vorr, vopa`.
+MKG documents: `vorh` (order headers), `vorr` (order lines) and `vopa` (order line parameters).
 
 ```php
 listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
@@ -101,7 +121,7 @@ getOrderRowParameterFieldMeta(): array
 
 ## Addresses: `AddressesService`
 
-MKG document: `adrs`.
+MKG document: `adrs`. The address document can differ per MKG setup; the `$document` argument names another one. The `adrs` field list and metadata are used either way.
 
 ```php
 list(array $fieldList = [], ?string $filter = null, ?int $numRows = null, string $document = 'adrs'): array
@@ -115,7 +135,7 @@ getAddressFieldMeta(): array
 
 ## Relations: `RelationsService`
 
-MKG document: `rela`.
+MKG document: `rela`. `findByDebtorNumber()` reads `/rela/rela_debi/{debtorNumber}` instead of sending a filter; the source notes that only some MKG setups offer that path.
 
 ```php
 list(array $fieldList = [], ?string $filter = null, ?int $numRows = null): array
