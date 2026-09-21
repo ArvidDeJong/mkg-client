@@ -4,6 +4,8 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-09-21
+
 Documentation only; nothing in the package changes.
 
 ### Added
