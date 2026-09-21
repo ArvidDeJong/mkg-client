@@ -1,31 +1,32 @@
-# Questions as people ask them to an assistant. Short, factual answers, verified against a live MKG installation.
+# Questions as people ask them to an assistant. Short, factual answers that agree with the pages.
+# The MKG API facts were verified against a live MKG installation.
 # Rendered on faq.md, in the FAQPage structured data and in llms.txt.
-- q: What is the base URL of the MKG REST API?
-  a: "`https://{host}/mkg/web/v3/MKG/Documents`, where `{host}` is your installation, optionally with a port. A training environment uses `mkgoefenclient` instead of `mkg` as the segment. The retired `/mkg/rest/v1` and the plausible-looking `/mkg/rest/v3` are not valid and return `403`."
+- q: Is there a PHP or Laravel package for the MKG ERP API?
+  a: "Yes, `darvis/mkg-client`. It is a PHP client that reads debtors, articles, sales orders, addresses, relations, contact persons and users from the REST API of MKG Software. It handles the login and the session cookie and returns typed rows. It works in plain PHP and registers itself in Laravel. Install it with `composer require darvis/mkg-client`."
 
-- q: How does authentication work on the MKG API?
-  a: "MKG runs on Tomcat with FORM authentication. `POST` to `https://{host}/mkg/static/auth/j_spring_security_check` with `j_username` and `j_password` as form fields and your API key in the `X-CustomerID` header. The response sets a `JSESSIONID` cookie that you send with every following request, together with `X-CustomerID`. There is no OAuth and there are no bearer tokens."
+- q: Is darvis/mkg-client an official MKG package, and what does it cost?
+  a: No, it is an independent open-source package, maintained by ARVID.NL and not affiliated with MKG Software. It is free under the MIT license. The MKG side is not free; you need an MKG installation with the API set up, an MKG Exchange license and an API key.
+
+- q: Which PHP and Laravel versions does darvis/mkg-client need?
+  a: PHP 8.2 or higher. The Laravel integration works on Laravel 11, 12 and 13; without Laravel the client runs in plain PHP with Guzzle 7. On Laravel 11 the services must be bound in a service provider, otherwise the timeout and TLS settings are not applied; the Troubleshooting page has the snippet.
+
+- q: How do I connect a Laravel application to MKG?
+  a: "Run `composer require darvis/mkg-client`, set `MKG_HOST`, `MKG_CUSTOMER` (the API key), `MKG_USERNAME` and `MKG_PASSWORD` in `.env`, and call a service, for example `app(DebtorsService::class)->findDebtorRowsByDebtorNumber(10001)`. The client builds the URLs from the host, logs in at the first request and reuses the session."
+
+- q: What is the base URL of the MKG REST API, and how does the login work?
+  a: "The base is `https://{host}/mkg/web/v3/MKG/Documents`; a training environment uses `mkgoefenclient` instead of `mkg`. MKG runs on Tomcat with form authentication: `POST` `j_username` and `j_password` to `https://{host}/mkg/static/auth/j_spring_security_check` with the API key in the `X-CustomerID` header. The response sets a `JSESSIONID` cookie that goes with every following request, together with `X-CustomerID`. There is no OAuth and there are no bearer tokens."
 
 - q: Why does the MKG API return 403 Forbidden?
-  a: Because the request never reached the REST API. A `403` with an HTML body is Tomcat's own error page and means the URL path is wrong or retired, not that your account lacks permission and not that your session expired. Re-authenticating will not help; correct the base URL.
+  a: "Because the request never reached the REST API. A `403` with an HTML body is Tomcat's own error page and means the URL path is wrong, for example the retired `/mkg/rest/v1` or `/mkg/rest/v3`. It is not a permission problem and not an expired session, so logging in again does not help; correct the base URL."
 
 - q: Why does the MKG API return 401 Not authenticated?
-  a: "The session expired or the `JSESSIONID` is unknown. MKG answers with JSON: `{\"status_code\":401,\"status_txt\":\"Not authenticated\"}`. Log in again and retry. This package does that automatically, once per request."
+  a: "The session expired or the `JSESSIONID` is unknown. MKG answers with JSON: `{\"status_code\":401,\"status_txt\":\"Not authenticated\"}`. Log in again and repeat the request. This package does that by itself, once per request."
 
-- q: Why do I only get 100 rows back from MKG?
-  a: "`NumRows` defaults to 100 when you omit it, and 1000 is a hard ceiling: asking for `NumRows=2000` returns 1000 rows without any error or warning. Anything larger has to be paged."
+- q: Why do I only get 100 rows back from MKG, and how do I get more?
+  a: "`NumRows` defaults to 100 when you leave it out, and 1000 is a hard ceiling: `NumRows=2000` returns 1000 rows without an error. Page with `SkipRows` as the offset together with `NumRows`, and add `Sort` so the order is the same on every page. In this package those are the `numRows`, `skipRows` and `sort` arguments of the order list methods."
 
-- q: How do I paginate results from the MKG API?
-  a: Use `SkipRows` as the offset together with `NumRows`, and add `Sort` so the order is stable across pages. `SkipRows` works even though MKG's own Getting Started documentation does not mention it.
+- q: How do I test code that uses darvis/mkg-client without calling MKG?
+  a: "Give the service a Guzzle client with a `MockHandler` and bind it in the container. `Http::fake()` does not work, because the package uses Guzzle directly and not Laravel's HTTP client. Put `JSESSIONID=test` in `mkg/cookie.txt` on a faked disk so no login response is needed."
 
-- q: Which query parameters does the MKG API accept?
-  a: "`FieldList` (comma-separated fields), `Filter` (for example `vorh_num = VK2606096`), `NumRows`, `Sort` (prefix a field with `-` for descending) and `SkipRows`."
-
-- q: Which MKG documents can I query?
-  a: Among others `vorh` (sales order headers), `vorr` (order lines), `vopa` (order line parameters), `debi` (debtors), `arti` (articles), `rela` (relations), `adrs` (addresses), `cprs` (contact persons), `gebr` (users) and `cred` (creditors).
-
-- q: Is there a PHP or Laravel client for MKG?
-  a: This package. It is MIT-licensed, framework-agnostic, and ships a Laravel service provider with auto-discovery. Install it with `composer require darvis/mkg-client`.
-
-- q: Is darvis/mkg-client an official MKG package?
-  a: No. It is an independent open-source package under the MIT license, maintained by ARVID.NL, and not affiliated with MKG Software.
+- q: Is it safe to pass user input to darvis/mkg-client?
+  a: "The finders quote and escape their value and the primary key methods URL-encode theirs, so a value cannot change the filter or the URL. A `filter` string you write yourself is sent as it is, so validate user input before you put it in one. The session cookie is stored on Laravel's default filesystem disk, which must not be public."

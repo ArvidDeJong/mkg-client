@@ -1,49 +1,57 @@
 ---
-title: Home
+title: "Home"
 nav_order: 1
-description: "darvis/mkg-client: a PHP client for the MKG Software REST API that handles the Tomcat form login and the JSESSIONID session and offers a typed service per MKG document, with Laravel integration."
+description: "darvis/mkg-client reads debtors, articles and sales orders from the MKG Software ERP REST API in PHP or Laravel, with login, session and typed rows handled."
 permalink: /
 ---
 
 # darvis/mkg-client
 
-A PHP client for the REST API of [MKG Software](https://www.mkg.eu), the Dutch ERP system. It handles the Tomcat form login and the `JSESSIONID` session for you, and gives you a typed service layer over the MKG documents instead of hand-built URLs. Framework-agnostic, with a Laravel service provider that registers itself.
+A PHP client that reads data from the REST API of [MKG Software](https://www.mkg.eu), a Dutch ERP system (the software a manufacturer runs its orders, stock and customers in). It logs in, keeps the session, and gives you one service class per MKG document, so you call `findDebtorRowsByDebtorNumber(10001)` instead of building URLs and query strings.
 
 This is an independent open-source package, not affiliated with MKG Software.
+
+## Who it is for
+
+Developers who connect a PHP or Laravel application to an MKG installation: a customer portal that shows orders, a sync of debtors or articles, a lookup in a back office.
+
+## What it does not do
+
+- It does not write to MKG. Every public method reads.
+- It does not page for you. MKG returns at most 1000 rows per call; [Usage](usage.md#read-more-than-1000-rows) shows the loop.
+- It does not cache results or map rows to models. You get arrays.
+- It does not use Laravel's HTTP client, so `Http::fake()` and Debugbar's HTTP collector do not see its traffic. See [Testing](testing.md).
+
+## Requirements
+
+- PHP 8.2 or higher
+- An MKG installation with the API switched on, and API credentials for it (see [Installation](installation.md#what-you-need-from-mkg))
+- Laravel 11, 12 or 13, only when you use the Laravel integration; the client also works in plain PHP
+
+## Install
 
 ```bash
 composer require darvis/mkg-client
 ```
 
-Requires PHP 8.2+ and valid MKG API credentials. The Laravel integration works on Laravel 11, 12 and 13.
+Then set `MKG_HOST`, `MKG_CUSTOMER`, `MKG_USERNAME` and `MKG_PASSWORD` in `.env`, and [check that it works](installation.md#check-that-it-works).
 
-## Features
+## What you get
 
-- **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic re-login when MKG answers `401`
-- **Derived URLs**: set the host and the client builds the REST base and the login URL, so nobody types a retired path
-- **A typed service per document**: articles, debtors, contact persons, sales orders (headers, lines, parameters), addresses, relations and users
-- **Field metadata from CSV**: default field lists and type normalisation (dates, numbers, booleans) per document, overridable per application
-- **Clear errors**: a `403` is explained as a wrong base URL, not retried as a session problem
-- **Request logging**: every call with method, path, status and duration, and a warning for slow calls, because Laravel's HTTP client profilers never see plain Guzzle traffic
-- **Plain PHP or Laravel**: config providers and cookie stores for both, and a Laravel Boost guideline and skill for AI tooling in your app
+- **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic new login when MKG answers `401`.
+- **Derived URLs**: set the host and the client builds the REST base and the login URL.
+- **A service per document**: articles (`arti`), debtors (`debi`), contact persons (`cprs`), sales orders (`vorh`, `vorr`, `vopa`), addresses (`adrs`), relations (`rela`) and users (`gebr`).
+- **Typed rows**: the field types from MKG's own CSV export turn integers, amounts, booleans and dates into PHP values. Not every type is converted; see [Usage](usage.md#which-values-are-converted).
+- **Safe lookups**: the finders quote and escape their value, and URL-encode primary keys.
+- **Errors you can act on**: a `403` is explained as a wrong base URL, and a redirect or a login page throws instead of looking like "no rows".
+- **Request logging**: every call with method, path, status and duration, and a warning for a slow call.
 
-## Quick example
+## Pages
 
-```php
-use Darvis\MkgClient\Services\DebtorsService;
-use Darvis\MkgClient\Services\OrdersService;
-
-$rows = app(DebtorsService::class)->findDebtorRowsByNumberNameOrEmail('10001');
-
-$headers = app(OrdersService::class)->findHeaderRowsByOrderNumber('500123');
-$lines = app(OrdersService::class)->findOrderLineRowsByOrderNumber('500123');
-```
-
-## Read next
-
-- [Installation & configuration](installation.md): requirements, the MKG side, environment variables and every config key
-- [Usage](usage.md): Laravel and plain PHP, filters, paging, sorting and request logging
-- [Service reference](services.md): every service and its methods
-- [Verification](verification.md): check connectivity and credentials with curl or Postman before writing code
-- [Troubleshooting](troubleshooting.md): 401 versus 403, stalls, missing rows, config and TLS
-- [FAQ](faq.md): the MKG API questions that are hard to find elsewhere
+- [Installation & configuration](installation.md): what you need from MKG, the steps, every setting, and a check that it works
+- [Usage](usage.md): one complete example, rows versus the raw response, filters, paging, errors, plain PHP and request logging
+- [Service reference](services.md): every service and the signature of every public method
+- [Testing](testing.md): test your own code with a Guzzle `MockHandler`, without an MKG installation
+- [Verification](verification.md): check the URL and the credentials with curl before you write code
+- [Troubleshooting](troubleshooting.md): every exception message and log line, with cause and fix
+- [FAQ](faq.md): short answers about the package and the MKG API

@@ -3,27 +3,29 @@
 [![Latest Version](https://img.shields.io/packagist/v/darvis/mkg-client.svg)](https://packagist.org/packages/darvis/mkg-client)
 [![Tests](https://github.com/ArvidDeJong/mkg-client/actions/workflows/tests.yml/badge.svg)](https://github.com/ArvidDeJong/mkg-client/actions/workflows/tests.yml)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net)
-[![Laravel](https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-red.svg)](https://laravel.com)
-[![Total downloads](https://img.shields.io/packagist/dt/darvis/mkg-client.svg)](https://packagist.org/packages/darvis/mkg-client)
 [![License](https://img.shields.io/packagist/l/darvis/mkg-client.svg)](LICENSE)
 
-A PHP client for the REST API of [MKG Software](https://www.mkg.eu), the Dutch ERP
-system. It handles the Tomcat form login and the `JSESSIONID` session for you, and
-gives you a typed service layer over the MKG documents instead of hand-built URLs.
-Framework-agnostic, with a Laravel service provider that registers itself.
-
-An independent open-source package, not affiliated with MKG Software. Developed by
-[Arvid de Jong, ARVID.NL](https://arvid.nl) and published under the Darvis vendor
-namespace. Available for AI and software work: <arvid@darvis.nl>.
+A PHP client that reads data from the REST API of [MKG Software](https://www.mkg.eu), the
+Dutch ERP system. It handles the form login and the `JSESSIONID` session for you, and
+gives you one service class per MKG document instead of hand-built URLs. It works in
+plain PHP and registers itself in Laravel. An independent open-source package, not
+affiliated with MKG Software.
 
 ## Features
 
-- **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic re-login on a `401`
-- **Derived URLs**: set the host and the client builds the REST base and the login URL, so nobody types a retired path
-- **A typed service per document**: `arti`, `debi`, `cprs`, `vorh`, `vorr`, `vopa`, `adrs`, `rela` and `gebr`
-- **Field metadata from CSV**: default field lists and type normalisation per document, overridable per application
-- **Clear errors**: a `403` is explained as a wrong base URL, not retried as a session problem
-- **Request logging**: every call with its duration, and a warning for slow calls, because Laravel's HTTP client profilers never see plain Guzzle traffic
+- **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic new login on a `401`
+- **Derived URLs**: set the host and the client builds the REST base and the login URL
+- **A service per document**: `arti`, `debi`, `cprs`, `vorh`, `vorr`, `vopa`, `adrs`, `rela` and `gebr`, read only
+- **Typed rows**: MKG's field metadata turns integers, amounts, booleans and dates into PHP values; quantities (`aantal`) and a few other types stay as MKG sent them
+- **Safe lookups**: the finders quote and escape their value, and primary keys are URL-encoded
+- **Errors you can act on**: a `403` is explained as a wrong base URL, and a redirect or a login page throws instead of looking like "no rows"
+- **Request logging**: every call with its duration, and a warning for a slow call
+
+## Requirements
+
+- PHP 8.2 or higher
+- An MKG installation with the API set up, an MKG Exchange license and an API key
+- Laravel 11, 12 or 13, only for the Laravel integration
 
 ## Installation
 
@@ -31,70 +33,61 @@ namespace. Available for AI and software work: <arvid@darvis.nl>.
 composer require darvis/mkg-client
 ```
 
-Add the credentials to `.env`; the client derives the REST base and the login URL
-from the host:
-
 ```dotenv
 MKG_HOST=your-mkg-host
-MKG_CUSTOMER=your-customer-code
+MKG_CUSTOMER=your-api-key
 MKG_USERNAME=your-api-username
 MKG_PASSWORD=your-api-password
 ```
 
-See [Installation & configuration](docs/installation.md) for what MKG needs on its
-side, the training environment, every config key and the CSV metadata.
+The client builds the REST base and the login URL from the host. See
+[Installation & configuration](https://arviddejong.github.io/mkg-client/installation.html)
+for what to ask MKG for, every setting, and a command that checks the connection. On
+Laravel 11, read the
+[note about the timeout and TLS settings](https://arviddejong.github.io/mkg-client/troubleshooting.html#laravel-11-ignores-the-timeout-and-tls-settings).
 
-## Usage
+## Quick start
 
 ```php
+use Darvis\MkgClient\Exceptions\MkgHttpException;
 use Darvis\MkgClient\Services\DebtorsService;
 use Darvis\MkgClient\Services\OrdersService;
+use GuzzleHttp\Exception\GuzzleException;
 
-// Laravel
-$rows = app(DebtorsService::class)->findDebtorRowsByNumberNameOrEmail('10001');
-$lines = app(OrdersService::class)->findOrderLineRowsByOrderNumber('500123');
+try {
+    $debtor = app(DebtorsService::class)->findDebtorRowsByDebtorNumber(10001)[0] ?? null;
+
+    $lines = app(OrdersService::class)->findOrderLineRowsByOrderNumber(
+        'VK2606096',
+        ['vorh_num', 'vorr_num', 'arti_code'],
+    );
+} catch (MkgHttpException $e) {
+    // MKG answered with a 4xx, a redirect or something that is not JSON.
+    report($e);
+} catch (GuzzleException $e) {
+    // A timeout, a connection error, a 5xx or a failed login.
+    report($e);
+}
 ```
 
-```php
-use Darvis\MkgClient\Config\ArrayConfigProvider;
-use Darvis\MkgClient\Services\DebtorsService;
-
-// Plain PHP
-$config = new ArrayConfigProvider([
-    'mkg.host' => 'your-mkg-host',
-    'mkg.customer' => 'your-customer-code',
-    'mkg.username' => 'your-api-username',
-    'mkg.password' => 'your-api-password',
-]);
-
-$rows = (new DebtorsService(config: $config))->findDebtorRowsByNumberNameOrEmail('10001');
-```
-
-A `401` means the session expired and is retried once after a fresh login. A `403`
-with an HTML body means the URL path is wrong and never reached the API; it is not
-retried. A redirect, or a `2xx` whose body is not JSON (a login page, a proxy error),
-throws `MkgHttpException` too, so an empty array always means that MKG answered and
-found nothing. MKG caps a result at 1000 rows and returns 100 without `NumRows`, so
-page larger sets. See [Troubleshooting](docs/troubleshooting.md).
-
-The lookups quote and escape their value and URL-encode primary keys. A `filter`
-string you write yourself is sent as it is: never build one from visitor input. In
-Laravel the session cookie is written to the default filesystem disk, which must not
-be public; in plain PHP the cookie file is created for the owner only.
+The first call logs in and stores the session cookie; an empty array means MKG answered
+and found nothing. Pass a field list for orders: the default is every field in the
+package's metadata, 355 for order lines.
+MKG returns at most 1000 rows per call, and 100 without `numRows`.
 
 ## Documentation
 
 Full documentation: **https://arviddejong.github.io/mkg-client/**
 
-| Topic | |
+| Page | |
 | --- | --- |
-| [Installation & configuration](docs/installation.md) | What MKG needs, environment variables, the derived URLs, every config key, CSV metadata |
-| [Usage](docs/usage.md) | Laravel and plain PHP, rows versus raw response, filters, paging, request logging |
-| [Service reference](docs/services.md) | Every service and its public methods |
-| [Verification](docs/verification.md) | Check connectivity and credentials with curl or Postman |
-| [Troubleshooting](docs/troubleshooting.md) | 401 versus 403, stalls, missing rows and fields, config, TLS |
-
-Or start at the [documentation index](docs/README.md), or read the [FAQ](https://arviddejong.github.io/mkg-client/faq.html) with the MKG API answers that are hard to find elsewhere.
+| [Installation & configuration](https://arviddejong.github.io/mkg-client/installation.html) | What to ask MKG for, the steps, every setting, a check that it works |
+| [Usage](https://arviddejong.github.io/mkg-client/usage.html) | A complete example, rows versus the raw response, filters, paging, exceptions, plain PHP |
+| [Service reference](https://arviddejong.github.io/mkg-client/services.html) | Every service and the signature of every public method |
+| [Testing](https://arviddejong.github.io/mkg-client/testing.html) | Test your code with a Guzzle `MockHandler`, without an MKG installation |
+| [Verification](https://arviddejong.github.io/mkg-client/verification.html) | Check the URL and the credentials with curl |
+| [Troubleshooting](https://arviddejong.github.io/mkg-client/troubleshooting.html) | Every exception message and log line, with cause and fix |
+| [FAQ](https://arviddejong.github.io/mkg-client/faq.html) | Short answers about the package and the MKG API |
 
 ## Laravel Boost
 
@@ -102,35 +95,25 @@ The package ships [Laravel Boost](https://laravel.com/docs/boost) resources: a g
 and a `mkg-client-development` skill. Run `php artisan boost:install`, or
 `php artisan boost:update --discover` in a project that already uses Boost.
 
-## Development
+## Testing
 
 ```bash
 composer test      # Pest
-composer lint      # Pint, check only (composer format to fix)
+composer lint      # Pint, check only (composer format fixes)
 composer analyse   # Larastan, level 8
 ```
 
-GitHub Actions runs the tests on PHP 8.2 to 8.4 against Laravel 11, 12 and 13, with both
-the lowest and the latest allowed dependencies. See the [changelog](CHANGELOG.md) for
-release notes.
+## Changelog
 
-## Contributing and security
+See [CHANGELOG.md](CHANGELOG.md).
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Found a security problem? Please report it privately, see [SECURITY.md](SECURITY.md).
+## Contributing
 
-## Author
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-**Arvid de Jong** of **[ARVID.NL](https://arvid.nl)**, published under the Darvis vendor
-namespace ([darvis.nl](https://darvis.nl)).
+## Security
 
-- Email: <arvid@darvis.nl>
-- Website: <https://arvid.nl>
-- GitHub: <https://github.com/ArvidDeJong>
-- LinkedIn: <https://www.linkedin.com/in/arviddejong/?locale=nl>
-
-Arvid de Jong builds AI-assisted tooling and custom software for companies, including
-ERP integrations such as this one. For an enquiry about a project for your own company,
-email <arvid@darvis.nl>.
+Found a security problem? Report it privately, see [SECURITY.md](SECURITY.md).
 
 ## License
 
