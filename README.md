@@ -105,6 +105,10 @@ composer analyse   # Larastan, level 8
 
 See [CHANGELOG.md](CHANGELOG.md).
 
+## Support the package
+
+If darvis/mkg-client saves you time, a star on [GitHub](https://github.com/ArvidDeJong/mkg-client) or a favourite on [Packagist](https://packagist.org/packages/darvis/mkg-client) helps other developers find it.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
