@@ -72,7 +72,7 @@ class SessionCookieManager
 
         $response = $this->client->post($this->endpoints()->auth(), [
             'headers' => [
-                'X-CustomerID' => $this->config->get('mkg.customer'),
+                'X-CustomerID' => $this->customerHeader(),
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
             'form_params' => [
@@ -90,6 +90,16 @@ class SessionCookieManager
     }
 
     /**
+     * Guzzle 8 only accepts string header values; a config provider may hand over an int.
+     */
+    private function customerHeader(): string
+    {
+        $customer = $this->config->get('mkg.customer');
+
+        return is_scalar($customer) ? (string) $customer : '';
+    }
+
+    /**
      * @return array<string, mixed>
      *
      * @throws GuzzleException
@@ -99,8 +109,9 @@ class SessionCookieManager
         $this->ensureAuthenticated();
 
         $headers = [
-            'X-CustomerID' => $this->config->get('mkg.customer'),
-            'Cookie' => $this->sessionCookie,
+            'X-CustomerID' => $this->customerHeader(),
+            // Guzzle 8 refuses null; Guzzle 7 sent it as an empty header, so keep that.
+            'Cookie' => (string) $this->sessionCookie,
             'Accept' => 'application/json',
         ];
 

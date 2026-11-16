@@ -2,7 +2,6 @@
 
 namespace Darvis\MkgClient\Support;
 
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
@@ -48,9 +47,9 @@ final class RequestLogger
                         return $response;
                     },
                     function ($reason) use ($request, $startedAt) {
-                        $status = $reason instanceof RequestException && $reason->hasResponse()
-                            ? $reason->getResponse()?->getStatusCode()
-                            : null;
+                        // Guzzle 7 has getResponse() on RequestException, Guzzle 8 only on ResponseException.
+                        $response = is_object($reason) && method_exists($reason, 'getResponse') ? $reason->getResponse() : null;
+                        $status = $response instanceof ResponseInterface ? $response->getStatusCode() : null;
 
                         $this->report($request, $status, $startedAt, failed: true);
 

@@ -8,7 +8,7 @@
   a: No, it is an independent open-source package, maintained by ARVID.NL and not affiliated with MKG Software. It is free under the MIT license. The MKG side is not free; you need an MKG installation with the API set up, an MKG Exchange license and an API key.
 
 - q: Which PHP and Laravel versions does darvis/mkg-client need?
-  a: PHP 8.2 or higher. The Laravel integration works on Laravel 11, 12 and 13; without Laravel the client runs in plain PHP with Guzzle 7. On Laravel 11 the services must be bound in a service provider, otherwise the timeout and TLS settings are not applied; the Troubleshooting page has the snippet.
+  a: PHP 8.2 or higher. The Laravel integration works on Laravel 11, 12 and 13; without Laravel the client runs in plain PHP with Guzzle 7 or 8. On Laravel 11 the services must be bound in a service provider, otherwise the timeout and TLS settings are not applied; the Troubleshooting page has the snippet.
 
 - q: How do I connect a Laravel application to MKG?
   a: "Run `composer require darvis/mkg-client`, set `MKG_HOST`, `MKG_CUSTOMER` (the API key), `MKG_USERNAME` and `MKG_PASSWORD` in `.env`, and call a service, for example `app(DebtorsService::class)->findDebtorRowsByDebtorNumber(10001)`. The client builds the URLs from the host, logs in at the first request and reuses the session."

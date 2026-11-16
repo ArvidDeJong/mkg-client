@@ -2,8 +2,11 @@
 
 use Darvis\MkgClient\Support\RequestLogger;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
 
@@ -65,3 +68,21 @@ it('does nothing at all without a logger', function () {
 
     expect($response->getStatusCode())->toBe(200);
 });
+
+it('logs a failed call as a warning, with the status when a response arrived', function (Closure $makeReason, ?int $expectedStatus) {
+    $logger = Mockery::mock(LoggerInterface::class);
+    $logger->shouldReceive('warning')
+        ->once()
+        ->withArgs(fn (string $message, array $context): bool => $message === 'MKG request failed.'
+            && $context['status'] === $expectedStatus);
+
+    $request = new Request('GET', 'https://mkg.example.com/mkg/web/v3/MKG/Documents/debi');
+    $stack = HandlerStack::create(new MockHandler([$makeReason($request)]));
+    $stack->push((new RequestLogger($logger, false, 10.0))->middleware());
+
+    // Guzzle 8 moved getResponse() from RequestException to ResponseException; the rejection path must work on both.
+    expect(fn () => (new Client(['handler' => $stack]))->send($request))->toThrow(RequestException::class);
+})->with([
+    'no response' => [fn (Request $request) => new RequestException('Transfer failed', $request), null],
+    'with a response' => [fn (Request $request) => new ServerException('Server error', $request, new Response(503)), 503],
+]);

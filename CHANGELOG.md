@@ -4,6 +4,24 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-16
+
+### Added
+- **Guzzle 8 support.** The package now accepts `guzzlehttp/guzzle` `^7.2|^8.0`, so a host app can
+  move to Guzzle 8. Nothing changes on Guzzle 7. If your own code catches
+  `GuzzleHttp\Exception\ConnectException` around a sync, catch
+  `Psr\Http\Client\NetworkExceptionInterface` instead: on Guzzle 8 a timeout without a response is a
+  `NetworkTimeoutException`, which a `ConnectException` catch misses.
+
+### Fixed
+- **On Guzzle 8 the request log crashed on a failed transfer.** With a logger configured, a call
+  that Guzzle rejected (a timeout, a broken connection) ended in a PHP `Error` instead of the Guzzle
+  exception, because the log looked for the response in a place Guzzle 8 removed. It now logs the
+  warning `MKG request failed.` on both versions, with the status when a response had arrived.
+- **On Guzzle 8 a numeric customer id was refused.** A config provider that returns `mkg.customer` as
+  an int made Guzzle 8 throw before the request. The header is now always sent as text, exactly as
+  Guzzle 7 did.
+
 ## [1.3.2] - 2026-09-21
 
 ### Fixed
