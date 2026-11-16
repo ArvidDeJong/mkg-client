@@ -8,6 +8,7 @@ use Darvis\MkgClient\Services\ArticleService;
 use Darvis\MkgClient\Services\ContactpersonService;
 use Darvis\MkgClient\Services\DebtorsService;
 use Darvis\MkgClient\Services\OrdersService;
+use Darvis\MkgClient\Services\ProductionOrdersService;
 use Darvis\MkgClient\Services\RelationsService;
 use Darvis\MkgClient\Services\UserService;
 use Illuminate\Contracts\Foundation\Application;
@@ -27,6 +28,7 @@ class DarvisMkgClientProvider extends ServiceProvider
         ContactpersonService::class,
         DebtorsService::class,
         OrdersService::class,
+        ProductionOrdersService::class,
         RelationsService::class,
         UserService::class,
     ];

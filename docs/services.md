@@ -119,6 +119,17 @@ getOrderRowFieldMeta(): array
 getOrderRowParameterFieldMeta(): array
 ```
 
+## Production orders: `ProductionOrdersService`
+
+MKG document: `prdh` (production order headers). Without a `fieldList` the service asks for `prdh_num`, `t_vorh_num`, `t_klant`, `sys_dat_wijzig` and `sys_tijd_wijzig`. `t_vorh_num` is the sales order a production order belongs to and `t_klant` the customer name; both are calculated fields that MKG only returns when they are asked for by name, also with `FieldList=*`. A production order for stock has an empty `t_vorh_num`. MKG does not filter on `t_vorh_num`: filter on a database field such as `sys_dat_wijzig` or `prdh_num` and read the sales order from the rows. The package ships no CSV for `prdh`, so the values stay as MKG sent them.
+
+```php
+listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
+findHeaderByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
+findHeaderRowsByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
+extractHeaderRows(array $response): array
+```
+
 ## Addresses: `AddressesService`
 
 MKG document: `adrs`. The address document can differ per MKG setup; the `$document` argument names another one. The `adrs` field list and metadata are used either way.

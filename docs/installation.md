@@ -144,7 +144,7 @@ A published CSV file wins over the one in the package, also after a package upda
 
 ## What the CSV files are for
 
-Every MKG document has a CSV file with its fields, labels and types, exported from MKG: `adrs`, `arti`, `cprs`, `cred`, `debi`, `gebr`, `rela`, `vopa`, `vorh` and `vorr`. The services use them for two things: the default list of fields to request, and the conversion of values to PHP types. The client looks in this order:
+These MKG documents have a CSV file with their fields, labels and types, exported from MKG: `adrs`, `arti`, `cprs`, `cred`, `debi`, `gebr`, `rela`, `vopa`, `vorh` and `vorr`. Production orders (`prdh`) have none: `ProductionOrdersService` sends a fixed default field list and returns the values as MKG sent them, and it does not read a `prdh.csv` in `storage/mkg/` either. The services use them for two things: the default list of fields to request, and the conversion of values to PHP types. The client looks in this order:
 
 1. `storage/mkg/{document}.csv`, your published copy;
 2. `resources/csv/{document}.csv` in the package.

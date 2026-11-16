@@ -40,7 +40,7 @@ Catch `GuzzleHttp\Exception\GuzzleException` to cover everything a call can thro
 
 ## Reading documents
 
-All services live in `Darvis\MkgClient\Services`: `ArticleService` (`arti`), `DebtorsService` (`debi`), `ContactpersonService` (`cprs`), `OrdersService` (`vorh`, `vorr`, `vopa`), `AddressesService` (`adrs`), `RelationsService` (`rela`) and `UserService` (`gebr`).
+All services live in `Darvis\MkgClient\Services`: `ArticleService` (`arti`), `DebtorsService` (`debi`), `ContactpersonService` (`cprs`), `OrdersService` (`vorh`, `vorr`, `vopa`), `ProductionOrdersService` (`prdh`), `AddressesService` (`adrs`), `RelationsService` (`rela`) and `UserService` (`gebr`).
 
 - `find…Rows…()` and `extract…Rows()` return a flat list of rows, normalised.
 - `list…()`, the plain `find…()` and `get…ByPrimaryKey()` return MKG's raw response array.
@@ -78,7 +78,7 @@ $response = $orders->listHeaders(
 $rows = $orders->extractHeaderRows($response);
 ```
 
-Field and document names stay as MKG spells them. `sort` takes a field name, with `-` in front for descending. `AddressesService::list()` and `RelationsService::list()` have no `sort` argument, and only the three `OrdersService` list methods have `skipRows`.
+Field and document names stay as MKG spells them. `sort` takes a field name, with `-` in front for descending. `AddressesService::list()` and `RelationsService::list()` have no `sort` argument, and only the three `OrdersService` list methods and `ProductionOrdersService::listHeaders()` have `skipRows`.
 
 ### Paging
 

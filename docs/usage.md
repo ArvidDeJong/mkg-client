@@ -135,6 +135,7 @@ Every `list…()` and `find…()` method takes a `fieldList`. Without it the ser
 | `ArticleService`, `DebtorsService`, `ContactpersonService`, `UserService` | A short built-in list (9 fields for debtors) |
 | `OrdersService` | Every field in the CSV: 158 for `vorh`, 355 for `vorr`, 16 for `vopa` |
 | `AddressesService`, `RelationsService` | Every field in the CSV: 37 for `adrs`, 113 for `rela` |
+| `ProductionOrdersService` | A fixed built-in list of 5 fields (`prdh_num`, `t_vorh_num`, `t_klant`, `sys_dat_wijzig`, `sys_tijd_wijzig`); there is no CSV for `prdh` |
 
 A list of hundreds of fields makes a long URL and a slow call, and it includes calculated fields. Pass your own list for orders, addresses and relations:
 
@@ -142,7 +143,7 @@ A list of hundreds of fields makes a long URL and a slow call, and it includes c
 $lines = $orders->findOrderLineRowsByOrderNumber('VK2606096', ['vorh_num', 'vorr_num', 'arti_code']);
 ```
 
-`getDefaultOrderFieldList(databaseOnly: true)`, and the same method on the other services, returns only the fields that are stored in the MKG database (89 for `vorh`).
+`getDefaultOrderFieldList(databaseOnly: true)`, and the same method on the other services except `ProductionOrdersService`, returns only the fields that are stored in the MKG database (89 for `vorh`).
 
 ## Filter and sort
 
@@ -170,7 +171,7 @@ The finders build their own filter and make the value safe:
 
 ## Read more than 1000 rows
 
-MKG returns 100 rows when `NumRows` is left out and never more than 1000 per call, without an error or a warning when more exist. The client sends what you pass; it does not page by itself. Page with `skipRows` as the offset, and pass a `sort` so the order is the same on every page. `listHeaders()`, `listRows()` and `listRowParameters()` take `skipRows`; narrow the other documents with a filter.
+MKG returns 100 rows when `NumRows` is left out and never more than 1000 per call, without an error or a warning when more exist. The client sends what you pass; it does not page by itself. Page with `skipRows` as the offset, and pass a `sort` so the order is the same on every page. `listHeaders()`, `listRows()` and `listRowParameters()` of `OrdersService` and `ProductionOrdersService::listHeaders()` take `skipRows`; narrow the other documents with a filter.
 
 ```php
 $page = 0;

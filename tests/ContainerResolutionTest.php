@@ -6,6 +6,7 @@ use Darvis\MkgClient\Services\ArticleService;
 use Darvis\MkgClient\Services\ContactpersonService;
 use Darvis\MkgClient\Services\DebtorsService;
 use Darvis\MkgClient\Services\OrdersService;
+use Darvis\MkgClient\Services\ProductionOrdersService;
 use Darvis\MkgClient\Services\RelationsService;
 use Darvis\MkgClient\Services\UserService;
 use GuzzleHttp\Client;
@@ -41,6 +42,7 @@ it('gives a service from the container the client the package configures', funct
     ContactpersonService::class,
     DebtorsService::class,
     OrdersService::class,
+    ProductionOrdersService::class,
     RelationsService::class,
     UserService::class,
 ]);

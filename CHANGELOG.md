@@ -4,6 +4,17 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-16
+
+### Added
+- **`ProductionOrdersService` for production orders (`prdh`).** `listHeaders()`,
+  `findHeaderByProductionOrderNumber()` and `findHeaderRowsByProductionOrderNumber()` read the
+  production orders, and `extractHeaderRows()` turns a response into flat rows. The default field
+  list asks for `t_vorh_num`, the sales order a production order belongs to, and `t_klant`, the
+  customer name. MKG only returns these calculated fields when they are asked for by name, and does
+  not filter on them: filter on `sys_dat_wijzig` or `prdh_num` and read the sales order from the
+  rows. The package ships no CSV for `prdh`, so the values stay as MKG sent them.
+
 ## [1.4.0] - 2026-11-16
 
 ### Added
