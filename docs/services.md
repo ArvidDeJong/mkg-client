@@ -121,13 +121,19 @@ getOrderRowParameterFieldMeta(): array
 
 ## Production orders: `ProductionOrdersService`
 
-MKG document: `prdh` (production order headers). Without a `fieldList` the service asks for `prdh_num`, `t_vorh_num`, `t_klant`, `sys_dat_wijzig` and `sys_tijd_wijzig`. `t_vorh_num` is the sales order a production order belongs to and `t_klant` the customer name; both are calculated fields that MKG only returns when they are asked for by name, also with `FieldList=*`. A production order for stock has an empty `t_vorh_num`. MKG does not filter on `t_vorh_num`: filter on a database field such as `sys_dat_wijzig` or `prdh_num` and read the sales order from the rows. The package ships no CSV for `prdh`, so the values stay as MKG sent them.
+MKG documents: `prdh` (production order headers) and `prdr` (production order rows). Without a `fieldList` the service asks for `prdh_num`, `t_vorh_num`, `t_klant`, `sys_dat_wijzig` and `sys_tijd_wijzig`. `t_vorh_num` is the sales order a production order belongs to and `t_klant` the customer name; both are calculated fields that MKG only returns when they are asked for by name, also with `FieldList=*`. A production order for stock has an empty `t_vorh_num`. MKG does not filter on `t_vorh_num`: filter on a database field such as `sys_dat_wijzig` or `prdh_num` and read the sales order from the rows. The package ships no CSV for `prdh` or `prdr`, so the values stay as MKG sent them.
+
+For the rows the service asks for `prdh_num`, `prdr_num`, `prdr_volgorde`, `arti_code`, `prdr_oms_1`, `prdr_oms_2`, `prdr_oms_3`, `prdr_aantal`, `eenh_code`, `sys_dat_wijzig` and `sys_tijd_wijzig`. `prdr_oms_1` is the description of the article; on a production order for stock `prdr_oms_2` often holds the color. `findRowsByProductionOrderNumber()` returns MKG's response and `findLineRowsByProductionOrderNumber()` the flat rows. Both sort on `prdr_volgorde` and ask for 1000 rows, the most MKG returns in one call, so an order with more than 100 rows is not cut off at 100.
 
 ```php
 listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
 findHeaderByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
 findHeaderRowsByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
 extractHeaderRows(array $response): array
+listRows(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
+findRowsByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
+findLineRowsByProductionOrderNumber(string|int $productionOrderNumber, array $fieldList = []): array
+extractLineRows(array $response): array
 ```
 
 ## Addresses: `AddressesService`

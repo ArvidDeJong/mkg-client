@@ -4,6 +4,17 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-17
+
+### Added
+- **`ProductionOrdersService` reads production order rows (`prdr`).** `listRows()`,
+  `findRowsByProductionOrderNumber()` and `findLineRowsByProductionOrderNumber()` read the rows of
+  a production order, and `extractLineRows()` turns a response into flat rows. The default field
+  list holds the article, the three description lines, the quantity and the unit. On a production
+  order for stock `prdr_oms_2` often holds the color. The two finders ask MKG for 1000 rows, so an
+  order with more than 100 rows is not cut off silently. The package ships no CSV for `prdr`, so the
+  values stay as MKG sent them.
+
 ## [1.5.0] - 2026-11-16
 
 ### Added

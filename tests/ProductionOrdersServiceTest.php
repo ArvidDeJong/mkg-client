@@ -12,12 +12,13 @@ use GuzzleHttp\Psr7\Response;
 /**
  * @param  array<int, array<string, mixed>>  $history  filled with the requests the service sends
  * @param  array<int|string, mixed>  $prdh  the rows MKG answers with
+ * @param  string  $document  the MKG document the rows are returned under
  */
-function makeProductionOrdersService(array &$history, array $prdh): ProductionOrdersService
+function makeProductionOrdersService(array &$history, array $prdh, string $document = 'prdh'): ProductionOrdersService
 {
     $stack = HandlerStack::create(new MockHandler([
         new Response(200, ['Content-Type' => 'application/json'], (string) json_encode([
-            'response' => ['ResultData' => [['prdh' => $prdh]]],
+            'response' => ['ResultData' => [[$document => $prdh]]],
         ])),
     ]));
     $stack->push(Middleware::history($history));
@@ -109,5 +110,46 @@ it('refuses an empty production order number before any request', function (): v
     $service = makeProductionOrdersService($history, []);
 
     expect(fn () => $service->findHeaderByProductionOrderNumber(''))->toThrow(InvalidArgumentException::class)
+        ->and($history)->toBe([]);
+});
+
+it('asks for the description and color fields of the rows when no field list is given', function (): void {
+    $history = [];
+    $service = makeProductionOrdersService($history, [], 'prdr');
+
+    $service->listRows(filter: 'sys_dat_wijzig = 2026-11-13', numRows: 1000, sort: 'prdh_num', skipRows: 0);
+
+    $query = sentProductionOrderQuery($history);
+
+    expect($history[0]['request']->getUri()->getPath())->toBe('/restapi/prdr')
+        ->and(explode(',', $query['FieldList']))->toContain('prdh_num', 'arti_code', 'prdr_oms_1', 'prdr_oms_2', 'prdr_aantal', 'eenh_code')
+        ->and($query['Filter'])->toBe('sys_dat_wijzig = 2026-11-13')
+        ->and($query['SkipRows'])->toBe('0');
+});
+
+it('returns the flat rows of one production order in the order of MKG', function (): void {
+    $history = [];
+    $rows = [
+        ['prdh_num' => 'PO2600901', 'prdr_volgorde' => 5, 'prdr_oms_1' => 'Daktrim 6310 60X64 Ral 7016 BRON', 'prdr_oms_2' => 'RAL 7016 / AE70017701620'],
+        ['prdh_num' => 'PO2600901', 'prdr_volgorde' => 10, 'prdr_oms_1' => 'Daktrim 6310 60X64 BRON', 'prdr_oms_2' => ''],
+    ];
+    $service = makeProductionOrdersService($history, $rows, 'prdr');
+
+    $found = $service->findLineRowsByProductionOrderNumber('PO2600901');
+
+    $query = sentProductionOrderQuery($history);
+
+    expect($found)->toBe($rows)
+        ->and($query['Filter'])->toBe('prdh_num = PO2600901')
+        ->and($query['Sort'])->toBe('prdr_volgorde')
+        // Without NumRows MKG returns 100 rows and gives no sign that more exist.
+        ->and($query['NumRows'])->toBe('1000');
+});
+
+it('refuses an empty production order number for the rows before any request', function (): void {
+    $history = [];
+    $service = makeProductionOrdersService($history, [], 'prdr');
+
+    expect(fn () => $service->findRowsByProductionOrderNumber(''))->toThrow(InvalidArgumentException::class)
         ->and($history)->toBe([]);
 });

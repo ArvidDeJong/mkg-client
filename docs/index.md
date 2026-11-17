@@ -40,7 +40,7 @@ Then set `MKG_HOST`, `MKG_CUSTOMER`, `MKG_USERNAME` and `MKG_PASSWORD` in `.env`
 
 - **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic new login when MKG answers `401`.
 - **Derived URLs**: set the host and the client builds the REST base and the login URL.
-- **A service per document**: articles (`arti`), debtors (`debi`), contact persons (`cprs`), sales orders (`vorh`, `vorr`, `vopa`), production orders (`prdh`), addresses (`adrs`), relations (`rela`) and users (`gebr`).
+- **A service per document**: articles (`arti`), debtors (`debi`), contact persons (`cprs`), sales orders (`vorh`, `vorr`, `vopa`), production orders (`prdh`, `prdr`), addresses (`adrs`), relations (`rela`) and users (`gebr`).
 - **Typed rows**: the field types from MKG's own CSV export turn integers, amounts, booleans and dates into PHP values. Not every type is converted; see [Usage](usage.md#which-values-are-converted).
 - **Safe lookups**: the finders quote and escape their value, and URL-encode primary keys.
 - **Errors you can act on**: a `403` is explained as a wrong base URL, and a redirect or a login page throws instead of looking like "no rows".
