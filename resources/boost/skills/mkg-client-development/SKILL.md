@@ -40,7 +40,7 @@ Catch `GuzzleHttp\Exception\GuzzleException` to cover everything a call can thro
 
 ## Reading documents
 
-All services live in `Darvis\MkgClient\Services`: `ArticleService` (`arti`), `DebtorsService` (`debi`), `ContactpersonService` (`cprs`), `OrdersService` (`vorh`, `vorr`, `vopa`), `ProductionOrdersService` (`prdh`, `prdr`), `AddressesService` (`adrs`), `RelationsService` (`rela`) and `UserService` (`gebr`).
+All services live in `Darvis\MkgClient\Services`: `ArticleService` (`arti`), `DebtorsService` (`debi`), `ContactpersonService` (`cprs`), `OrdersService` (`vorh`, `vorr`, `vopa`), `ProductionOrdersService` (`prdh`, `prdr`), `PackageListsService` (`pkbh`, `pkbr`), `AddressesService` (`adrs`), `RelationsService` (`rela`) and `UserService` (`gebr`).
 
 - `find…Rows…()` and `extract…Rows()` return a flat list of rows, normalised.
 - `list…()`, the plain `find…()` and `get…ByPrimaryKey()` return MKG's raw response array.
@@ -111,6 +111,7 @@ do {
 - **A `403` is not a permission problem and not an expired session.** Don't add a retry or a fresh login around it. It doubles the traffic against the customer's ERP and fails again.
 - **An empty result means MKG answered and found nothing, within the row cap.** A redirect or a non-JSON `2xx` throws `MkgHttpException` (up to 1.2.1 it came back as `[]`); catch it around a sync and stop the run, don't turn it into an empty list. Rows beyond 100 (or 1000) are still cut off silently.
 - **The default field list of orders, addresses and relations is every field in the CSV.** For `vorh` that is more than 150 fields in the query string, calculated fields included. Pass a `fieldList`, or use `getDefaultOrderFieldList(databaseOnly: true)` and its siblings to keep to database fields.
+- **`pkbr` without a `FieldList` has only its key fields.** MKG answers with `admi_num`, `pkbh_num` and `pkbr_num`, nothing else. `PackageListsService` sends its own row list for that reason; when you pass a `fieldList`, name every field you show (`arti_code`, `pkbr_oms_1`, `pkbr_aantal_pakbon`). `vorh_num` is on the rows, not on the `pkbh` header.
 - **A default field that is missing from the CSV is dropped silently** (`ArticleService`, `DebtorsService`, `ContactpersonService`, `UserService` filter their default list against it). A `fieldList` you pass yourself is sent as it is; a field in it that the CSV does not know comes back without normalisation.
 - **Normalisation follows the CSV type, not the field name.** `integer` becomes `int`; `decimal`, `percentage` and `bedrag` become `float` (also from `1.234,56`); `logical` becomes `bool` (also from `WAAR`, `ONWAAR`, `ja`, `nee`); `datum` becomes `Y-m-d` (from `d-m-Y`); text types become `string`. Every other type, `aantal` included, stays as MKG sent it. `debi_num` and `vorh_num` are `character` in MKG, so they are strings: compare with `'10001'`, not `10001`. The raw `list…()` and `find…()` responses are not normalised at all.
 - **Published CSV files win and go stale.** `php artisan vendor:publish --tag=mkg-csv` copies them to `storage/mkg/`, and `storage/mkg/{document}.csv` is then read instead of the package file, also after a package update. The metadata is cached in a static property per service class, so a queue worker or Octane needs a restart to see a changed CSV.

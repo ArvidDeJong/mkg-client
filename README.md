@@ -15,7 +15,7 @@ affiliated with MKG Software.
 
 - **Login and session handled for you**: the form login, the `JSESSIONID` cookie, the `X-CustomerID` header, and one automatic new login on a `401`
 - **Derived URLs**: set the host and the client builds the REST base and the login URL
-- **A service per document**: `arti`, `debi`, `cprs`, `vorh`, `vorr`, `vopa`, `prdh`, `prdr`, `adrs`, `rela` and `gebr`, read only
+- **A service per document**: `arti`, `debi`, `cprs`, `vorh`, `vorr`, `vopa`, `prdh`, `prdr`, `pkbh`, `pkbr`, `adrs`, `rela` and `gebr`, read only
 - **Typed rows**: MKG's field metadata turns integers, amounts, booleans and dates into PHP values; quantities (`aantal`) and a few other types stay as MKG sent them
 - **Safe lookups**: the finders quote and escape their value, and primary keys are URL-encoded
 - **Errors you can act on**: a `403` is explained as a wrong base URL, and a redirect or a login page throws instead of looking like "no rows"

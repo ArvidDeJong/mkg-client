@@ -136,6 +136,31 @@ findLineRowsByProductionOrderNumber(string|int $productionOrderNumber, array $fi
 extractLineRows(array $response): array
 ```
 
+## Package lists: `PackageListsService`
+
+MKG documents: `pkbh` (package list headers, the pakbon) and `pkbr` (package list rows). Without a `fieldList` the service asks for `pkbh_num`, `admi_num`, `debi_num`, `pkbh_debi_naam_1`, `pkbh_dat_pakbon`, `pkbh_dat_aflever`, `pkbh_colli_aantal`, `pkbh_storno`, `sys_dat_wijzig` and `sys_tijd_wijzig`. A header has no sales order field: `vorh_num` is on the rows, because one package list can ship lines of several sales orders. The package ships no CSV for `pkbh` or `pkbr`, so the values stay as MKG sent them.
+
+Without a `FieldList` MKG returns only the key fields of a row (`admi_num`, `pkbh_num`, `pkbr_num`). For the rows the service therefore asks for `pkbh_num`, `pkbr_num`, `vorh_num`, `vorr_num`, `arti_code`, `pkbr_oms_1`, `pkbr_oms_2`, `pkbr_oms_3`, `pkbr_aantal_verkoop`, `pkbr_aantal_pakbon`, `pkbr_aantal_backorder`, `pkbr_eenh_order`, `pkbr_referentie`, `sys_dat_wijzig` and `sys_tijd_wijzig`. `pkbr_aantal_verkoop` is the ordered quantity, `pkbr_aantal_pakbon` what this package list ships and `pkbr_aantal_backorder` what is still to come. `findRowsByPackageListNumber()` sorts on `pkbr_num`, `findRowsBySalesOrderNumber()` on `pkbh_num`; both ask for 1000 rows, the most MKG returns in one call.
+
+```php
+listHeaders(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
+findHeaderByPackageListNumber(string|int $packageListNumber, array $fieldList = []): array
+findHeaderRowsByPackageListNumber(string|int $packageListNumber, array $fieldList = []): array
+extractHeaderRows(array $response): array
+listRows(array $fieldList = [], ?string $filter = null, ?int $numRows = null, ?string $sort = null, ?int $skipRows = null): array
+findRowsByPackageListNumber(string|int $packageListNumber, array $fieldList = []): array
+findLineRowsByPackageListNumber(string|int $packageListNumber, array $fieldList = []): array
+findRowsBySalesOrderNumber(string|int $salesOrderNumber, array $fieldList = []): array
+findLineRowsBySalesOrderNumber(string|int $salesOrderNumber, array $fieldList = []): array
+extractLineRows(array $response): array
+```
+
+```php
+use Darvis\MkgClient\Services\PackageListsService;
+
+$rows = app(PackageListsService::class)->findLineRowsByPackageListNumber('VP2604512');
+```
+
 ## Addresses: `AddressesService`
 
 MKG document: `adrs`. The address document can differ per MKG setup; the `$document` argument names another one. The `adrs` field list and metadata are used either way.

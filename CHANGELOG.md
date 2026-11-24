@@ -4,6 +4,19 @@ All notable changes to `darvis/mkg-client` will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-24
+
+### Added
+- **`PackageListsService` for package lists (`pkbh`, `pkbr`).** `listHeaders()`,
+  `findHeaderByPackageListNumber()` and `findHeaderRowsByPackageListNumber()` read the package list
+  headers; `listRows()`, `findRowsByPackageListNumber()`, `findLineRowsByPackageListNumber()`,
+  `findRowsBySalesOrderNumber()` and `findLineRowsBySalesOrderNumber()` read the rows, and
+  `extractHeaderRows()` and `extractLineRows()` turn a response into flat rows. Without a
+  `FieldList` MKG returns only the key fields of a row, so the default row field list asks for the
+  sales order, the article, the three description lines, the ordered, shipped and backorder
+  quantities, the unit and the reference. The row finders ask MKG for 1000 rows. The package ships
+  no CSV for `pkbh` or `pkbr`, so the values stay as MKG sent them.
+
 ## [1.6.0] - 2026-11-17
 
 ### Added
